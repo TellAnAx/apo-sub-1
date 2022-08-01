@@ -1,0 +1,19 @@
+﻿nutrient;group1;group2;group3
+N;1;nonmetal;macronutrient
+P;2;nonmetal;macronutrient
+K;3;alkaline metal;macronutrient
+C;1;nonmetal;macronutrient
+H;1;nonmetal;macronutrient
+O;1;nonmetal;macronutrient
+S;1;nonmetal;macronutrient
+B;2;metalloid;micronutrient
+Si;2;metalloid;micronutrient
+Na;3;alkaline metal;
+Ca;3;alkaline earth metal;macronutrient
+Mg;3;alkaline earth metal;macronutrient
+Mn;3;transition;micronutrient
+Cl;3;nonmetal;micronutrient
+Fe;4;transition metal;micronutrient
+Cu;4;transition metal;micronutrient
+Zn;4;transition metal;micronutrient
+Mo;4;transition metal;micronutrient

@@ -1,0 +1,3 @@
+"0","# Load data"
+"0","masterfile_nutrients <- loadWorkbook(filename = ""/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Masterfile Nutrients.xlsx"")"
+"0","empirical_data <- readWorksheet(masterfile_nutrients, sheet = 'waterAVERAGE')"

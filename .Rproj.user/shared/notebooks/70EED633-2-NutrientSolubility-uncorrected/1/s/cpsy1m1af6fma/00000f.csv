@@ -1,0 +1,4 @@
+"0","resh_hydroponic_plant_production <- loadWorkbook(filename = ""/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Resh - Hydroponic Plant Production.xlsx"")"
+"0","resh <- readWorksheet(resh_hydroponic_plant_production, sheet = ""nutrient solutions"", region = c('A', 'C2:Q50'))"
+"0",""
+"0","resh <- data.frame(resh[[2]], row.names = resh[[1]][2:49,1])"

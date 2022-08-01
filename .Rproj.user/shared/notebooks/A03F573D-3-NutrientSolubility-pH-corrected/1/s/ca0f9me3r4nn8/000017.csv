@@ -1,0 +1,3 @@
+"0","procdata %>% "
+"0","  select(Ca_in_CaCO3:Ni_in_Ni3PO42) %>% "
+"0","  print()"

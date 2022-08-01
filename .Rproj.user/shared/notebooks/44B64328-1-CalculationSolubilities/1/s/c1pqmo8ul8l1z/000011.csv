@@ -1,0 +1,5 @@
+"0","plotdata %>%"
+"0","  ggplot(aes(x = cation, y = solCation_mg, color = anion)) + "
+"0","  geom_point() + "
+"0","  scale_y_continuous(trans='log10') +"
+"0","  facet_wrap(facets = vars(cation), scales = ""free"")"

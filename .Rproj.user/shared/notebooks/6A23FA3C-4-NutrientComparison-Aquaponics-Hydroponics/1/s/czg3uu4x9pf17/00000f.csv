@@ -1,0 +1,11 @@
+"0","library(XLConnect)"
+"2","XLConnect 1.0.5 by Mirai Solutions GmbH [aut],
+  Martin Studer [cre],
+  The Apache Software Foundation [ctb, cph] (Apache POI),
+  Graph Builder [ctb, cph] (Curvesapi Java library),
+  Brett Woolridge [ctb, cph] (SparseBitSet Java library)
+"
+"2","https://mirai-solutions.ch
+https://github.com/miraisolutions/xlconnect
+"
+"0","library(tidyverse)"

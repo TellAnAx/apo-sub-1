@@ -1,0 +1,8 @@
+"0","lowSolubility <- cationSolubility %>% "
+"0","  bind_rows(anionSolubility) %>% "
+"0","  mutate("
+"0","    # Conversion of nutrient into factor"
+"0","    nutrient = factor(nutrient, "
+"0","                            levels = c('Fe', 'Cu', 'Ca', 'Ni', 'Zn', 'Mn', 'Mg', 'B', 'K', 'NH4', 'PO4', 'OH', 'CO3', 'SO4', 'SO3', 'H2PO4', 'HCO3', 'NO3', 'Cl', 'HPO4'),"
+"0","                            labels = c('Fe', 'Cu', 'Ca', 'Ni', 'Zn', 'Mn', 'Mg', 'B', 'K', 'N', 'P', 'OH', 'CO3', 'S', 'SO3', 'H2PO4', 'HCO3', 'NO3', 'Cl', 'HPO4'))) %>% "
+"0","  print()"

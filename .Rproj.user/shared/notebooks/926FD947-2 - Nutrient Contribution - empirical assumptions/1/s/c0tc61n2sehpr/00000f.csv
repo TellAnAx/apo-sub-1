@@ -1,0 +1,6 @@
+"0","# Load data"
+"0","masterfile_nutrients <- loadWorkbook(""/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Masterfile Nutrients.xlsx"")"
+"0",""
+"0","assumption_data_general <- readWorksheet(masterfile_nutrients, sheet = 'general', header = TRUE, startRow = 1)"
+"0","assumption_data_rearing <- readWorksheet(masterfile_nutrients, sheet = 'rearing', header = TRUE, startRow = 2)"
+"0","assumption_data_feed <- readWorksheet(masterfile_nutrients, sheet = 'feedIN', header = TRUE, startRow = 2)"

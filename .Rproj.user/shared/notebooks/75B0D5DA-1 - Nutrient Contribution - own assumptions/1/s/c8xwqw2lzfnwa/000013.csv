@@ -1,0 +1,10 @@
+"0","plotdata %>%"
+"0","  left_join(nutrientClass, by = c(""compound"" = ""nutrient"")) %>%"
+"0","  #filter(compound != ""N"") %>% "
+"0","  mutate(`Total (mmol/L)` = `Total (mol/L)` * 1e3) %>% "
+"0","  ggplot(aes(x = compound, y = `Total (mmol/L)`, fill = Contribution)) + "
+"0","  geom_col(position = ""dodge"") + "
+"0","  facet_wrap(facets = vars(compound), scales = 'free')"
+"2","Warnung:"
+"2"," Removed 2 rows containing missing values (geom_col).
+"
