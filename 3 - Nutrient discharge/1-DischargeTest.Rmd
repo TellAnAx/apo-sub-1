@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 V_tot <- 10000 # System volume in L
 
 # Animal stock
-stockingDensity <- 5 # Stocking density in kg/m3
+stockingDensity <- 50 # Stocking density in kg/m3
 
 # Water
 exchangeRate <- 5 # Water exchange rate in percent
@@ -41,11 +41,11 @@ m_feed <- biomass * (feedingRate/100) # Mass of input feed
 m_feedNUT <- m_feed*feedNutrient
 
 
-m_in <- (m_waterNUT + m_feedNUT)
-c_in <- m_in/V_in
+m_in <- (m_waterNUT + m_feedNUT) # Total mass in
+c_in <- m_in/V_in # Resulting concentration in
 
-
-HRT <- V_tot/(exchangeRate/100)
+# Hydraulic retention time
+hrt <- V_tot*(exchangeRate/100)/V_tot
 ```
 
 
@@ -53,10 +53,24 @@ HRT <- V_tot/(exchangeRate/100)
 In the following, the outflow concentration is defined according to the **CFSR** model.
 
 ```{r Define function}
-calc_C_out <- function(c_in, t, HRT){
-  c_out <- c_in * (1 - exp(-(10*HRT/HRT)))
+
+calc_C_out <- function(c_in = c_in, t = 5, HRT = hrt){
+  
+  c_out <- c_in * (1 - exp(-(t/HRT)))
   
   return(c_out)
+}
+```
+
+
+
+```{r}
+results <- data.frame()
+for(day in 1:200){
+  
+  results[day,1] <- day
+  
+  results[day,2] <- calc_C_out(c_in = c_in, t = day, HRT = hrt)
 }
 ```
 
