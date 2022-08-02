@@ -1,0 +1,62 @@
+---
+title: "Nutrient discharge - Test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+```{r Define initial variables}
+#System
+V_tot <- 10000 # System volume in L
+
+# Animal stock
+stockingDensity <- 5 # Stocking density in kg/m3
+
+# Water
+exchangeRate <- 5 # Water exchange rate in percent
+waterNutrient <- 1
+  
+# Feed
+feedingRate <- 2
+feedNutrient <- 100
+```
+
+
+
+```{r Calculate resulting variables}
+# Water
+V_in <- V_tot*(exchangeRate/100) # Volume of input water
+m_waterNUT <- V_in*waterNutrient
+
+# Biomass
+biomass <- V_tot * stockingDensity*1e-3
+
+# Feed
+m_feed <- biomass * (feedingRate/100) # Mass of input feed
+m_feedNUT <- m_feed*feedNutrient
+
+
+m_in <- (m_waterNUT + m_feedNUT)
+c_in <- m_in/V_in
+
+
+HRT <- V_tot/(exchangeRate/100)
+```
+
+
+
+In the following, the outflow concentration is defined according to the **CFSR** model.
+
+```{r Define function}
+calc_C_out <- function(c_in, t, HRT){
+  c_out <- c_in * (1 - exp(-(10*HRT/HRT)))
+  
+  return(c_out)
+}
+```
+
