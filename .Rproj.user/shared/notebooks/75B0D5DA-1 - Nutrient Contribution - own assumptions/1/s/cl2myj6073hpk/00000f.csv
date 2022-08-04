@@ -1,5 +1,0 @@
-"0","# Calculate outputs"
-"0","biomass           <- rearingV * stockingDensity       # Total biomass of stock (kg)"
-"0","dailyFeed         <- biomass * (FR / 100)             # Total mass of feed per day (kg/day)"
-"0","dailyFreshwater   <- totalV * (waterExchange / 100)   # Total volume of freshwater per day (m^3/day)"
-"0","waterEx_perFeed   <- (dailyFreshwater * 1e3) / dailyFeed   # Water exchange per feed unit (L/kg/day)"

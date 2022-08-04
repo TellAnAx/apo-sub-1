@@ -1,8 +1,0 @@
-"0","# Load digestibility data"
-"0","feed_data <- read.csv2("
-"0","  ""data/nutrient_contribution.csv"""
-"0","  )"
-"0",""
-"0","# Convert classes"
-"0","feed_data[,1] <- factor(feed_data[,1], levels = c('N', 'P', 'K', 'Ca', 'Mg', 'S', 'B', 'Fe', 'Mn', 'Zn', 'Cu', 'Mo', 'Ni', 'Na'))"
-"0","feed_data[,2:5] <- apply(feed_data[,2:5], 2, as.numeric)"
