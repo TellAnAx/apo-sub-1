@@ -81,6 +81,9 @@ solubility_data <- solubility_data %>%
   filter(chemFormula != "Fe(OH)2" & chemFormula != "Fe(OH)3" & chemFormula != "FeCO3")
 
 solubility_data
+
+# Write solubility data
+write.csv(solubility_data, 'data/solubilityData_for4-NutrientComparison.csv')
 ```
 
 
@@ -97,7 +100,24 @@ All concentrations are initially reported in mg/L.
 procdata <- empirical_data %>% 
   
   # Rename columns
-  rename('NH4-N' = 'N.NH4_mgL', 'NO2-N' = 'N.NO2_mgL', 'NO3-N' = 'N.NO3_mgL', 'PO4-P' = 'P.PO4_mgL', 'K' = 'K_mgL', 'Ca' = 'Ca_mgL', 'Mg' = 'Mg_mgL', 'SO4-S' = 'S.SO4_mgL', 'B' = 'B_mgL', 'Fe' = 'Fe_mgL', 'Mn' = 'Mn_mgL', 'Cu' = 'Cu_mgL', 'Zn' = 'Zn_mgL', 'Na' = 'Na_mgL', 'Mo' = 'Mo_mgL', 'Ni' = 'Ni_mgL') %>% 
+  rename(
+    'NH4-N' = 'N.NH4_mgL', 
+    'NO2-N' = 'N.NO2_mgL', 
+    'NO3-N' = 'N.NO3_mgL', 
+    'PO4-P' = 'P.PO4_mgL', 
+    'K' = 'K_mgL', 
+    'Ca' = 'Ca_mgL', 
+    'Mg' = 'Mg_mgL', 
+    'SO4-S' = 'S.SO4_mgL', 
+    'B' = 'B_mgL', 
+    'Fe' = 'Fe_mgL', 
+    'Mn' = 'Mn_mgL', 
+    'Cu' = 'Cu_mgL', 
+    'Zn' = 'Zn_mgL', 
+    'Na' = 'Na_mgL', 
+    'Mo' = 'Mo_mgL', 
+    'Ni' = 'Ni_mgL'
+    ) %>% 
 
   select(-ends_with(c('const', 'belowLimit'))) %>% 
 

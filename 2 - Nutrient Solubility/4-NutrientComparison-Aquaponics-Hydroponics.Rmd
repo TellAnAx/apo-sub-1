@@ -12,6 +12,7 @@ Conditions in aquaponic systems differ from those in hydroponics. The main diffe
 - pH
 - DOM
 
+
 The question arising is now whether the recommended elemental concentrations for hydroponic nutrient solutions can actually be reached in aquaponic systems from a chemical viewpoint or whether precipitation occurs due to the higher pH in the system.
 
 
@@ -87,3 +88,59 @@ targetConc <- resh_data %>%
   arrange(desc(mean_molL)) %>% 
   print()
 ```  
+
+
+
+## 1.4 Consideration of environmental aspects
+Due to the fact that conditions in hydroponic systems differ from those observed in aquaculture, some assumptions can be made such as the pH being maintained at acidic levels. Furthermore, it can be assumed that the $CO_{2}$ saturation of the water is likely comparably high because no gas stripping technology is applied and in some greenhouses the atmospheric $CO_{2}$ concentration is even artificially increased.
+
+|Variable   |Assumption|
+|-----------|----------|
+|pH         |6.0       |
+|$p(CO_{2})$|0.54 atm  |
+
+```{r include=FALSE}
+pH <- 6
+```
+
+
+It is generally assumed that the pH ranges around an average 6.0, while the atmospheric concentration of $CO_{2}$ is 0.54 atm. The correction of the concentrations for pH can be done using self-written speciation functions.
+
+```{r Load correction functions}
+# PO4
+source('R/speciation - c_T-PO4.R')
+
+source('R/speciation - OH.R')
+
+source('R/speciation - pCO2-CO3.R')
+
+source('R/speciation - c_T-SO4.R')
+```
+
+
+
+Eventually, after some data wrangling, the functions can be applied to the dataset.
+
+```{r}
+targetConc %>%
+  select(c(nutrient, mean_molL)) %>% 
+  pivot_wider(names_from = 'nutrient', values_from = 'mean_molL') %>% 
+  
+  # Calculate species
+  mutate(
+    species_PO4 = calc_PO4(c_tot = P, pH = pH, form_P = 'po4-p', unit = 'mol'),
+    
+    species_OH = calc_OH(pH = pH),
+    
+    species_CO3 = calc_CO3(pH = pH, pCO2 = 0.054)
+  )
+```
+
+
+
+The next step after the pH correction is to calculate theoretical lowest ('worst case') solubilities of all compounds.
+
+```{r}
+read.csv('data/solubilityData_for4-NutrientComparison.csv')
+```
+
