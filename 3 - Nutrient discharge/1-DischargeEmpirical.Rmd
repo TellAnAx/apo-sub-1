@@ -34,7 +34,6 @@ library(tidyverse)
 ## Load data
 ```{r Load workbook}
 # Load workbook
-getwd()
 masterfile_nutrients <- loadWorkbook(filename = "../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx")
 ```
 
@@ -57,14 +56,36 @@ water <- readWorksheet(masterfile_nutrients, 'waterIN', startRow = 2, endCol = 2
 
 
 ## Tidy data
+Initially, only the observations that were already pre-selected during the analysis of nutrient concentrations etc. should be used. Thus, the total observations are united with the 'samples' dataset, containing only the identifiers of the pre-selected observations.
+
 ```{r}
-samples %>% 
+procdata <- samples %>% 
   left_join(rearing) %>% 
   left_join(feed) %>% 
-  left_join(water) %>% 
+  left_join(water)
+```
+
+
+
+# Calculations
+
+## Hydraulic Retention Time
+
+```{r}
+procdata <- procdata %>% 
   mutate(
-    hrt = Vtot_m3 / (Vtot_m3 * exchRate),
-    feed_kgm3 = feed_kgd / (Vtot_m3 * exchRate)
+    hrt = Vtot_m3 / (Vtot_m3 * exchRate)
+  )
+```
+
+
+
+## Feed input
+
+```{r}
+procdata <- procdata %>% 
+  mutate(
+    feed_kgm3 = feed_kgd / (Vtot_m3 * exchRate), # Input per m3
   )
 ```
 
