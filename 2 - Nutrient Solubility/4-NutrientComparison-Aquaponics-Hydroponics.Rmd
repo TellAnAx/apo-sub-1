@@ -103,6 +103,7 @@ pH <- 6
 ```
 
 
+
 It is generally assumed that the pH ranges around an average 6.0, while the atmospheric concentration of $CO_{2}$ is 0.54 atm. The correction of the concentrations for pH can be done using self-written speciation functions.
 
 ```{r Load correction functions}
@@ -118,7 +119,7 @@ source('R/speciation - c_T-SO4.R')
 
 
 
-Eventually, after some data wrangling, the functions can be applied to the dataset.
+Eventually, the functions can be applied to the dataset.
 
 ```{r}
 targetConc %>%
