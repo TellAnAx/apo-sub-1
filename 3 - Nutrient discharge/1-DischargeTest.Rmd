@@ -1,0 +1,107 @@
+---
+title: "Nutrient discharge - Test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+```{r Define initial variables}
+#System
+V_tot <- 10000 # System volume in L
+
+# Animal stock
+stockingDensity <- 50 # Stocking density in kg/m3
+
+# Water
+exchangeRate <- 5 # Water exchange rate in percent
+waterNutrient <- 1
+  
+# Feed
+feedingRate <- 2
+feedNutrient <- 100
+```
+
+
+
+```{r Calculate resulting variables}
+# Water
+V_in <- V_tot*(exchangeRate/100) # Volume of input water
+m_waterNUT <- V_in*waterNutrient
+
+# Biomass
+biomass <- V_tot * stockingDensity*1e-3
+
+# Feed
+m_feed <- biomass * (feedingRate/100) # Mass of input feed
+m_feedNUT <- m_feed*feedNutrient
+
+
+m_in <- (m_waterNUT + m_feedNUT) # Total mass in
+c_in <- m_in/V_in # Resulting concentration in
+
+# Hydraulic retention time
+hrt <- V_tot*(exchangeRate/100)/V_tot
+```
+
+
+
+In the following, the outflow concentration is defined according to the **CFSR** model.
+
+```{r Define function}
+
+calc_C_out <- function(c_in = c_in, t = 5, HRT = hrt){
+  
+  c_out <- c_in * (1 - exp(-(t/HRT)))
+  
+  return(c_out)
+}
+```
+
+
+
+```{r}
+results <- data.frame()
+for(day in 1:200){
+  
+  results[day,1] <- day
+  
+  results[day,2] <- calc_C_out(c_in = c_in, t = day, HRT = hrt)
+}
+```
+
+
+
+
+
+
+```{r}
+init = 3.7
+
+hrt <- 100/20
+
+c_in <- 1
+
+time <- 1:50
+
+c_out_in <- 1-exp(-(time/hrt))
+
+c_out <- c_in*(1-exp(-(time/hrt)))
+c_out2 <- (c_in+init)*(1-exp(-(time/hrt)))
+
+
+plot(c_out_in~time)
+
+plot(c_out~time, ylim = c(0,5))
+points(c_out2~time, col = 'red')
+abline(h = 1+init)
+cat(
+  "Hydraulic retention time =", hrt, 
+  "\n Initial concentration =", init
+  )
+```
+

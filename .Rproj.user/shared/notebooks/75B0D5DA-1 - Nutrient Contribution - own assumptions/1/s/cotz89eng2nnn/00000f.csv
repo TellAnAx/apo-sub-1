@@ -1,6 +1,0 @@
-"0","# Load nutrient data"
-"0","data <- read.csv2(""data/nutrient_contribution.csv"")"
-"0",""
-"0","# Convert classes"
-"0","data[,1] <- factor(data[,1], levels = c('N', 'P', 'K', 'Ca', 'Mg', 'S', 'B', 'Fe', 'Mn', 'Zn', 'Cu', 'Mo', 'Ni'))"
-"0","data[,2:5] <- apply(data[,2:5], 2, as.numeric)"

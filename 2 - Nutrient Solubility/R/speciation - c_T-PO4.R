@@ -18,7 +18,7 @@
 
 
 
-calc_PO4 <- function(c_tot, pH, form_P = c("PO4-P", "PO4"), unit = c("mg", "mol")){
+calc_PO4 <- function(c_tot, pH, form_P = c("po4-p", "po4"), unit = c("mg", "mol")){
   
   # Define constants
   Ka1 <- 7.52e-3
@@ -26,7 +26,7 @@ calc_PO4 <- function(c_tot, pH, form_P = c("PO4-P", "PO4"), unit = c("mg", "mol"
   Ka3 <- 3.5e-13
   
   # Convert Species
-  if(form_P == "PO4"){
+  if(form_P == "po4"){
     c_tot_conv <- c_tot * 0.33 # Conversion of [PO4] into [PO4-P]
   } else {
     c_tot_conv <- c_tot

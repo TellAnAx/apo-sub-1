@@ -1,6 +1,0 @@
-"0","water_quality <- loadWorkbook('/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Water Quality.xlsx')"
-"0",""
-"0","water_data <- readWorksheet(water_quality, sheet = 'municipalTap', startRow = 2"
-"0","  )"
-"0",""
-"0","water_data[,grep(""belowLimit"", colnames(water_data))] <- apply(water_data[,grep(""belowLimit"", colnames(water_data))], 2, as.logical)"

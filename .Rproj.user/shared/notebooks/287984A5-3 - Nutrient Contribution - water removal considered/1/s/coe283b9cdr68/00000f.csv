@@ -1,2 +1,0 @@
-"0","# Feed and digestibility data"
-"0","feed_data <- read.csv2(""data/nutrient_contribution.csv"")"
