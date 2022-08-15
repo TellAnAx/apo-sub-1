@@ -163,11 +163,13 @@ procdata <- targetConc %>%
   
   # Calculate species
   mutate(
-    species_PO4 = calc_PO4(c_tot = P, pH = pH, form_P = 'po4-p', unit = 'mol'),
+    species_PO4_molL = calc_PO4(c_tot = P, pH = pH, form_P = 'po4-p', unit = 'mol'),
     
-    species_OH = calc_OH(pH = pH),
+    species_OH_molL = calc_OH(pH = pH),
     
-    species_CO3 = calc_CO3(pH = pH, pCO2 = pCO2_atm)
+    species_CO3_molL = calc_CO3(pH = pH, pCO2 = pCO2_atm),
+    
+    species_SO4_molL = calc_SO4(c_tot = S, pH = pH, form_S = 'SO4-S', unit = 'mol')
   ) %>% 
   
   print()
@@ -177,6 +179,16 @@ procdata <- targetConc %>%
 
 ```{r}  
 procdata %>% 
+  
+  select(
+    -c(
+      P
+      ,S
+      ,species_OH_molL
+      ,species_CO3_molL
+    )
+  ) %>% 
+  
   pivot_longer(
     cols = everything(),
     names_to = 'nutrient',
@@ -196,16 +208,136 @@ The next step after the pH correction is to calculate theoretical lowest ('worst
 
 ```{r}
 # Import solubility data
-solubilityData <- read.csv('data/solubilityData_for4-NutrientComparison.csv')
+solubility_data <- read.csv('data/solubilityData_for4-NutrientComparison.csv')
 
 #
-procdata %>% 
-  pivot_wider(
-    names_from = 'nutrient',
-    values_from = 'conc_molL'
-  ) %>% 
-  
-  # Now same as in 3-NutrinetSolubility line 182
+plotdata <- procdata %>% 
 
+mutate(
+    # CaCO3
+    Ca_in_CaCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "CaCO3",)] / species_CO3_molL,
+    Ca_found_greater_CaCO3 = Ca > Ca_in_CaCO3,
+    CaCO3_diff = Ca - Ca_in_CaCO3,
+    CaCO3_prop = Ca / Ca_in_CaCO3,
+    
+    # Ca(OH)2
+    Ca_in_CaOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Ca(OH)2",)] / species_OH_molL^2,
+    Ca_found_greater_CaOH2 = Ca > Ca_in_CaOH2,
+    CaOH2_diff = Ca - Ca_in_CaOH2,
+    CaOH2_prop = Ca / Ca_in_CaOH2,
+    
+    # Ca3PO42
+    Ca_in_Ca3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Ca3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Ca_found_greater_Ca3PO42 = Ca > Ca_in_Ca3PO42,
+    Ca3PO42_diff = Ca - Ca_in_Ca3PO42,
+    Ca3PO42_prop = Ca / Ca_in_Ca3PO42,
+
+    
+    # CaSO4
+    Ca_in_CaSO4 = solubility_data$Ks0[which(solubility_data$chemFormula == "CaSO4",)] / species_SO4_molL,
+    Ca_found_greater_CaSO4 = Ca > Ca_in_CaSO4,
+    CaSO4_diff = Ca - Ca_in_CaSO4,
+    CaSO4_prop = Ca / Ca_in_CaSO4,
+    
+    # MgCO3
+    Mg_in_MgCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "MgCO3",)] / species_CO3_molL,
+    Mg_found_greater_MgCO3 = Mg > Mg_in_MgCO3,
+    MgCO3_diff = Mg - Mg_in_MgCO3,
+    MgCO3_prop = Mg / Mg_in_MgCO3,
+    
+    # Mg(OH)2
+    Mg_in_MgOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Mg(OH)2",)] / species_OH_molL^2,
+    Mg_found_greater_MgOH2 = Mg > Mg_in_MgOH2,
+    MgOH2_diff = Mg - Mg_in_MgOH2,
+    MgOH2_prop = Mg / Mg_in_MgOH2,
+
+    
+    # Mg3PO42
+    Mg_in_Mg3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Mg3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Mg_found_greater_Mg3PO42 = Mg > Mg_in_Mg3PO42,
+    Mg3PO42_diff = Mg - Mg_in_Mg3PO42,
+    Mg3PO42_prop = Mg / Mg_in_Mg3PO42,
+
+    # FePO4
+    Fe_in_FePO4 = solubility_data$Ks0[which(solubility_data$chemFormula == "FePO4 x 2 H2O",)] / species_PO4_molL,
+    Fe_found_greater_FePO4 = Fe > Fe_in_FePO4,
+    FePO4_diff = Fe - Fe_in_FePO4,
+    FePO4_prop = Fe / Fe_in_FePO4,
+    
+    # MnCO3
+    Mn_in_MnCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "MnCO3",)] / species_CO3_molL,
+    Mn_found_greater_MnCO3 = Mn > Mn_in_MnCO3,
+    MnCO3_diff = Mn - Mn_in_MnCO3,
+    MnCO3_prop = Mn / Mn_in_MnCO3,
+    
+    # Cu3PO42
+    Cu_in_Cu3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Cu3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Cu_found_greater_Cu3PO42 = Cu > Cu_in_Cu3PO42,
+    Cu3PO42_diff = Cu - Cu_in_Cu3PO42,
+    Cu3PO42_prop = Cu / Cu_in_Cu3PO42,
+    
+    # ZnCO3
+    Zn_in_ZnCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "ZnCO3",)] / species_CO3_molL,
+    Zn_found_greater_ZnCO3 = Zn > Zn_in_ZnCO3,
+    ZnCO3_diff = Zn - Zn_in_ZnCO3,
+    ZnCO3_prop = Zn / Zn_in_ZnCO3,
+    
+    # Zn(OH)2
+    Zn_in_ZnOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Zn(OH)2",)] / species_OH_molL^2,
+    Zn_found_greater_ZnOH2 = Zn > Zn_in_ZnOH2,
+    ZnOH2_diff = Zn - Zn_in_ZnOH2,
+    ZnOH2_prop = Zn / Zn_in_ZnOH2
+  )
+```
+
+
+
+
+```{r}
+plotdata <- plotdata %>% 
+  select(ends_with('_prop')) %>% 
+  pivot_longer(
+    cols = everything(),
+    names_to = 'substance',
+    values_to = 'proportion'
+  ) %>% 
+  mutate(
+    substance = sub('_prop', '', substance)
+  ) %>% 
+  filter(
+    proportion != Inf
+    ) %>% 
+  print()
+```
+
+
+
+
+```{r}
+plotdata %>% 
+  
+  mutate(
+    substance = as.factor(substance),
+    treshold_label = if_else(proportion > 1, true = '2', false = '1')
+    ) %>% 
+  
+  ggplot(aes(
+    x = substance,
+    y = proportion,
+    fill = treshold_label
+    )) + 
+    geom_boxplot() + 
+    geom_hline(yintercept = 1, linetype = 'dashed', color = 'red', alpha = 0.75) +
+    scale_y_log10() + 
+    #facet_wrap(facets = vars(substance), scales = 'free') + 
+    labs(
+      x = 'Empirical solubility compared with solubility of salt',
+      y = 'log(proportion)'
+    ) + 
+    theme_minimal() + 
+    theme(
+      axis.text.x = element_text(angle = 45),
+      legend.position = 'none'
+      )
 ```
 
