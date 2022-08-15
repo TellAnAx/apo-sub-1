@@ -64,7 +64,7 @@ print(resh_data)
 ```{r}
 targetConc <- resh_data %>% 
   
-  # Calculate total N
+  # Calculate total N (TIN) by summing up NH4 and NO3
   mutate(
     N = NH4 + NO3
   ) %>% 
@@ -77,15 +77,14 @@ targetConc <- resh_data %>%
     values_to = 'concentration'
     ) %>% 
   
-  # Remove missing values
-  drop_na() %>% 
-  group_by(nutrient) %>% 
-  summarise(mean_mgL = mean(concentration)) %>% 
+  drop_na() %>%   # Remove missing values
+  #group_by(nutrient) %>% 
+  #summarise(mean_mgL = mean(concentration)) %>% 
   left_join(molarWeight, by = c('nutrient' = 'element')) %>% 
   mutate(
     g_per_mol = as.numeric(g_per_mol),
-    mean_molL = mean_mgL * g_per_mol * 1e-3) %>% 
-  arrange(desc(mean_molL)) %>% 
+    mean_molL = concentration * g_per_mol * 1e-3) %>% 
+  arrange(desc(concentration)) %>% 
   print()
 ```  
 

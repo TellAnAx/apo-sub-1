@@ -221,7 +221,8 @@ To calculate the total loss of a substance over time in terms of mass, Equation 
 \begin{align}
 	c_{out} = \int_{0}^{t} c_{in}(1 - \exp^{-\frac{t}{\tau}})\\
 	c_{out} = c_{in}\int_{0}^{t} 1 - \exp^{-\frac{t}{\tau}}\\
-	c_{out} = c_{in} + \exp^{-\frac{t}{\tau}}
+	m_{out} = c_{in} V_{out} \int_{0}^{t} 1 - \exp^{-\frac{t}{\tau}}\\
+	m_{out} = c_{in} V_{out} + \tau \cdot \exp^{-\frac{t}{\tau}} + c
 \end{align}
 
 
