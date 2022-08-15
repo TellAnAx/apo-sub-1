@@ -145,7 +145,7 @@ procdata <- empirical_data %>%
 
 
 ```{r Convert procdata to mol}
-# Read molar weight data
+# Import molar weight data
 molarWeight <- read.csv2(file = 'data/molarWeight.csv')
 
 # 
@@ -274,6 +274,9 @@ procdata <- procdata %>%
     Ni3PO42_diff = Ni - Ni_in_Ni3PO42,
     Ni3PO42_prop = Ni / Ni_in_Ni3PO42
   ) %>% 
+  
+  write_csv(file = 'data/interm/nutrientSolubility_pHcorrected.csv') %>% 
+  
   print()
 ```  
 

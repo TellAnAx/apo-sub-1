@@ -6,6 +6,13 @@ date: '2022-07-07'
 output: html_document
 ---
 
+```{r}
+library(XLConnect)
+library(tidyverse)
+```
+
+
+
 # General
 Conditions in aquaponic systems differ from those in hydroponics. The main differences with regards to physicochemical conditions are
 
@@ -18,13 +25,13 @@ The question arising is now whether the recommended elemental concentrations for
 
 
 
-```{r}
-library(XLConnect)
-library(tidyverse)
-```
+
 
 
 # 1. Hydroponic data
+Nutrient solution composition data presented by Resh (Hydroponic Food Production) was extracted from the book and used for the following calculations.
+
+
 
 ## 1.1 Load data
 ```{r Resh Workbook loading}
@@ -61,6 +68,10 @@ print(resh_data)
 
 
 ## 1.3 Create dataset with target concentrations in hydroponics
+The nutrient data is all given in mg/L. These mass concentrations are not suitable for the correction by pH. Thus, data has to be converted into molar concentrations for further calculations.
+
+
+
 ```{r}
 targetConc <- resh_data %>% 
   
@@ -74,57 +85,81 @@ targetConc <- resh_data %>%
   pivot_longer(
     everything(),
     names_to = 'nutrient',
-    values_to = 'concentration'
+    values_to = 'conc_mgL'
     ) %>% 
   
   drop_na() %>%   # Remove missing values
+  
   #group_by(nutrient) %>% 
   #summarise(mean_mgL = mean(concentration)) %>% 
+  
   left_join(molarWeight, by = c('nutrient' = 'element')) %>% 
+  
   mutate(
     g_per_mol = as.numeric(g_per_mol),
-    mean_molL = concentration * g_per_mol * 1e-3) %>% 
-  arrange(desc(concentration)) %>% 
+    mol_per_L = conc_mgL * 1e-3 / g_per_mol # Conversion into mol/L
+    ) %>% 
+  
+  arrange(desc(mol_per_L)) %>% 
+  
   print()
 ```  
 
 
 
-## 1.4 Consideration of environmental aspects
+## 1.4 Recalculation considering environmental aspects
 Due to the fact that conditions in hydroponic systems differ from those observed in aquaculture, some assumptions can be made such as the pH being maintained at acidic levels. Furthermore, it can be assumed that the $CO_{2}$ saturation of the water is likely comparably high because no gas stripping technology is applied and in some greenhouses the atmospheric $CO_{2}$ concentration is even artificially increased.
+The pH and $p(CO_{2})$ values utilized for the following calculations are thus presentedin the following table.
+
+
 
 |Variable   |Assumption|
 |-----------|----------|
 |pH         |6.0       |
 |$p(CO_{2})$|0.54 atm  |
 
-```{r include=FALSE}
+
+
+```{r Assumptions, include=FALSE}
 pH <- 6
+pCO2_atm <- 0.054
 ```
 
 
 
-It is generally assumed that the pH ranges around an average 6.0, while the atmospheric concentration of $CO_{2}$ is 0.54 atm. The correction of the concentrations for pH can be done using self-written speciation functions.
+The correction of the concentrations for pH can eventually be done using self-written speciation functions.
 
-```{r Load correction functions}
-# PO4
+```{r Load species correction functions}
+# Phosphate
 source('R/speciation - c_T-PO4.R')
 
+# Hydroxide
 source('R/speciation - OH.R')
 
+# Carbonate
 source('R/speciation - pCO2-CO3.R')
 
+# Sulfate
 source('R/speciation - c_T-SO4.R')
 ```
 
 
 
 Eventually, the functions can be applied to the dataset.
+**The extra idented rows are a workaround to make *pivot_wider()* work.**
 
 ```{r}
-targetConc %>%
-  select(c(nutrient, mean_molL)) %>% 
-  pivot_wider(names_from = 'nutrient', values_from = 'mean_molL') %>% 
+procdata <- targetConc %>%
+  
+  select(c(nutrient, mol_per_L)) %>% 
+  
+      group_by(nutrient) %>% # Workaround pivot_wider()
+      mutate(row = row_number()) %>% # Workaround pivot_wider()
+  
+  pivot_wider(names_from = nutrient, values_from = mol_per_L) %>% 
+  
+      select(-row) %>%  # Workaround pivot_wider()
+
   
   # Calculate species
   mutate(
@@ -132,8 +167,27 @@ targetConc %>%
     
     species_OH = calc_OH(pH = pH),
     
-    species_CO3 = calc_CO3(pH = pH, pCO2 = 0.054)
-  )
+    species_CO3 = calc_CO3(pH = pH, pCO2 = pCO2_atm)
+  ) %>% 
+  
+  print()
+```
+
+
+
+```{r}  
+procdata %>% 
+  pivot_longer(
+    cols = everything(),
+    names_to = 'nutrient',
+    values_to = 'conc_molL'
+  ) %>% 
+  
+  drop_na() %>% 
+  
+  ggplot(aes(y = conc_molL)) + 
+  geom_boxplot() + 
+  facet_wrap(facets = vars(nutrient), scales = 'free')
 ```
 
 
@@ -141,6 +195,17 @@ targetConc %>%
 The next step after the pH correction is to calculate theoretical lowest ('worst case') solubilities of all compounds.
 
 ```{r}
-read.csv('data/solubilityData_for4-NutrientComparison.csv')
+# Import solubility data
+solubilityData <- read.csv('data/solubilityData_for4-NutrientComparison.csv')
+
+#
+procdata %>% 
+  pivot_wider(
+    names_from = 'nutrient',
+    values_from = 'conc_molL'
+  ) %>% 
+  
+  # Now same as in 3-NutrinetSolubility line 182
+
 ```
 
