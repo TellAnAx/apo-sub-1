@@ -28,7 +28,7 @@ The question arising is now whether the recommended elemental concentrations for
 
 
 
-# 1. Hydroponic data
+# 1. Preparations
 Nutrient solution composition data presented by Resh (Hydroponic Food Production) was extracted from the book and used for the following calculations.
 
 
@@ -58,6 +58,8 @@ molarWeight <- read.csv2('data/molarWeight.csv')
 ## 1.2 Data wrangling
 ```{r}
 resh_data <- data.frame(resh_data[[2]], row.names = resh_data[[1]][2:49,1])
+
+resh_data <- resh_data[7,]
 
 resh_data <- resh_data %>% 
   rename('P' = 'PO4_P_mgL', 'K' = 'K_mgL', 'Ca' = 'Ca_mgL', 'Mg' = 'Mg_mgL', 'S' = 'SO4_S_mgL', 'B' = 'B_mgL', 'Fe' = 'Fe_mgL', 'Mn' = 'Mn_mgL', 'Cu' = 'Cu_mgL', 'Zn' = 'Zn_mgL', 'Na' = 'Na_mgL', 'NH4' = 'NH4_N_mgL', 'Mo' = 'Mo_mgL', 'NO3' = 'NO3_N_mgL', 'Cl' = 'Cl_mgL') 
@@ -127,7 +129,7 @@ pCO2_atm <- 0.054
 
 # Values in aquaculture/aquaponics
 pH2 <- 7.5
-pCO2_atm2 <- 0.027
+pCO2_atm2 <- 0.054
 ```
 
 
@@ -209,7 +211,8 @@ procdata %>%
 
 
 
-The next step after the pH correction is to calculate theoretical lowest ('worst case') solubilities of all compounds.
+The next step after the pH correction is to calculate theoretical lowest ('worst case') solubilities of all compounds ('X_in_XY' denoting for the theoretical maximum concentration of a compound under the given conditions).
+Furthermore, a logical test is conducted, assessing whether the recommended concentration is larger than the theoretical solubility. Also, the difference between the recommendation and the theoretical solubility and their proportions are calculated.
 
 ```{r}
 # Import solubility data
@@ -298,6 +301,10 @@ mutate(
 
 
 
+
+# 2. Comparison between recommendation and theoretical maximum concentration
+In the following, the dataset is reduced to the calculated proportions between the concentrations that are recommended and the concentrations that are resulting from the theoretical solubility calculations
+
 ```{r}
 plotdata <- plotdata %>% 
   
@@ -343,7 +350,7 @@ plotdata %>%
     scale_y_log10() + 
     #facet_wrap(facets = vars(substance), scales = 'free') + 
     labs(
-      x = 'Empirical solubility compared with solubility of salt',
+      x = 'Recommendation compared with theoretical solubility',
       y = 'log(proportion)'
     ) + 
     theme_minimal() + 
@@ -355,14 +362,16 @@ plotdata %>%
 
 
 
+š
+
+# 3. Comparison between different environmental conditions
 
 
 
 
 
 
-
-```{r}
+```{r Calculate species concentrations under secondary conditions for comparison}
 procdata2 <- targetConc %>%
   
   select(c(nutrient, mol_per_L)) %>% 
@@ -392,7 +401,7 @@ procdata2 <- targetConc %>%
 
 
 
-```{r}
+```{r Calculate resulting solubility data under secondary conditions for comparison}
 plotdata2 <- procdata2 %>% 
 
 mutate(
@@ -476,7 +485,7 @@ mutate(
 
 
 
-```{r}
+```{r Convert comparison data into longtable and add pH and pCO2 identifier}
 plotdata2 <- plotdata2 %>% 
   
   select(ends_with('_prop')) %>% 
@@ -504,7 +513,7 @@ plotdata2 <- plotdata2 %>%
 
 
 
-```{r}
+```{r Plot data for comparison}
 plotdata %>% 
   
   bind_rows(plotdata2) %>% 
@@ -524,9 +533,11 @@ plotdata %>%
   ggplot(aes(
     x = substance,
     y = proportion,
-    fill = pH
+    shape = pH,
+    color = pCO2
     )) + 
-    geom_boxplot() + 
+    geom_point() + 
+
     geom_hline(yintercept = 1, linetype = 'dashed', color = 'red', alpha = 0.75) +
   
     scale_y_log10() + 
@@ -534,13 +545,11 @@ plotdata %>%
     facet_wrap(facets = vars(substance), scales = 'free') + 
   
     labs(
-      x = 'Concentration compared with theoretical solubility',
+      x = 'Recommendation compared with theoretical solubility',
       y = 'log(proportion)'
     ) + 
     theme_minimal() + 
     theme(
-      #axis.text.x = element_text(angle = 45)
       axis.text.x = element_blank()
-      #,legend.position = 'none'
       )
 ```
