@@ -1,0 +1,4 @@
+"0","procdata <- procdata %>% "
+"0","  mutate("
+"0","    feed_kgm3 = feed_kgd / (Vtot_m3 * exchRate), # Input per m3"
+"0","  )"

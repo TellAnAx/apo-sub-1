@@ -1,0 +1,6 @@
+"0","resh_data <- data.frame(resh_data[[2]], row.names = resh_data[[1]][2:49,1])"
+"0",""
+"0","resh_data <- resh_data %>% "
+"0","  rename('P' = 'PO4_P_mgL', 'K' = 'K_mgL', 'Ca' = 'Ca_mgL', 'Mg' = 'Mg_mgL', 'S' = 'SO4_S_mgL', 'B' = 'B_mgL', 'Fe' = 'Fe_mgL', 'Mn' = 'Mn_mgL', 'Cu' = 'Cu_mgL', 'Zn' = 'Zn_mgL', 'Na' = 'Na_mgL', 'NH4' = 'NH4_N_mgL', 'Mo' = 'Mo_mgL', 'NO3' = 'NO3_N_mgL', 'Cl' = 'Cl_mgL') "
+"0",""
+"0","print(resh_data)"

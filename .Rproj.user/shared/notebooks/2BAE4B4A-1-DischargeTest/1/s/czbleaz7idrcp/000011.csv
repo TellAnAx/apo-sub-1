@@ -1,0 +1,7 @@
+"0","results <- data.frame()"
+"0","for(day in 1:100){"
+"0","  "
+"0","  results[day,1] <- day"
+"0","  "
+"0","  results[day,2] <- calc_C_out(c_in = c_in, t = day, HRT = hrt)"
+"0","}"

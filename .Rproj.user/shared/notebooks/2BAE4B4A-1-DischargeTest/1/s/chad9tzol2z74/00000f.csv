@@ -1,0 +1,5 @@
+"0","calc_C_out <- function(c_in = c_in, t = 5, HRT = hrt){"
+"0","  c_out <- c_in * (1 - exp(-(t/HRT)))"
+"0","  "
+"0","  return(c_out)"
+"0","}"
