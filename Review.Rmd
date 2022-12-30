@@ -21,8 +21,8 @@ However, an early attempt to formulate a "designer diet" for aquaponics was made
 
 
 ```{r Setup, message=FALSE, warning=FALSE, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, include = FALSE)
-
+#knitr::opts_chunk$set(echo = TRUE, include = FALSE)
+knitr::opts_chunk$set(eval = FALSE)
 
 source('R/init.R') # Load packages and functions
 ```
@@ -36,7 +36,7 @@ Aquaponic systems require a high initial investment and come with comparably hig
 As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B). The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion (Mengel and Kirkby, 2001). 
 The main source of nutrients in aquaponics is claimed to be the feed for the aquatic livestock, hereinafter denoted as aquafeed. Before becoming available for plant uptake, aquafeeds are ingested by the cultivated animals and the digestible mass fraction is utilized for the basal metabolism or somatic growth (Fish Nutrition). The indigestible mass fraction is excreted in form of both solid and dissolved matter, with the latter eventually being available for plant uptake. However, comparing the nutrient profile of plant-available fish excreta with nutrient solutions commonly used in hydroponics, deviations from the optimum were reported (Shaw et al., 2022; Lunda et al., 2019; Robaina et al., 2019). To counteract these imbalances, it was suggested to complement aquaponic nutrient solutions with the missing nutrients. Studies showed that this practice leads to plant growth equal or even better than observed in hydroponics (Delaide, 2016; Monsees, 2019; Rodgers, 2022). Though, the supplementation of individual nutrients requires their continuous monitoring to ensure that optimum levels are met and maintained. This adds additional expenses to the budget.
 In hydroponics, on the other hand, plant nutrients are supplied in form of commercially available and chemically fine-tuned plant fertilizers with dosage recommendations. It is usually sufficient to monitor the nutrient depletion via plant uptake by determining the electric conductivity (EC) of the nutrient solution as sum parameter (Resh, 2013). Taking into account that labour costs can be accounted for 40-50% of the total operational costs of aquaponic facilities (Baganz; Engle; Quagrainie, 2017), an entrepreneur who is carefully weighing whether to invest in aquaponics or hydroponics might opt for the latter.
-To circumvent the stated obstacles with respect to nutrient management in aquaponics, several suggestions were made such as the development of tailored aquafeeds, the use of substances such as potassium hydroxide (KOH), calcium hydroxide (Ca(OH)$_{2}$) or calcium carbonate (limestone, Ca(CO$_{3}$)) as alternatives for the sodium hydrogen carbonate (soda, NaHCO$_{3}$) that is used in conventional aquaculture for pH control (Seawright, 1998; Goddek et al., 2019). However, it needs to be emphasised that the development of an “off-the-shelf” solution for a problem implies that its application yields comparable results over a broad range of conditions. Therefore, three considerations are of striking importance within the context of an improved nutrient supply in aquaponics:
+To circumvent the stated obstacles with respect to nutrient management in aquaponics, several suggestions were made such as the development of tailored aquafeeds, and usage of substances that are an alternative for the sodium hydrogen carbonate (soda, NaHCO$_{3}$) that is used in conventional aquaculture for pH control (Seawright, 1998; Goddek et al., 2019). However, it needs to be emphasised that the development of an “off-the-shelf” solution for a problem implies that its application yields comparable results over a broad range of conditions. Therefore, three considerations are of striking importance within the context of an improved nutrient supply in aquaponics:
 
 1. It is necessary to identify the nutrients that can be supplied without facing over- or undersupply due to variability in other nutrient sources that were not considered. Thus, the **source of nutrients** and their variability must be examined closely.
 2. Independent from the supply route, it must be taken into account that the introduction of a substance into an aqueous system does not necessarily lead to an increase in its' concentration in solution. The **behavior of the nutrients** has to be considered.
@@ -92,7 +92,14 @@ Aquafeeds are usually considered as main nutrient input in aquaponic systems (Ro
 
 
 
-When discussing feed as input route, it is furthermore important to consider its digestibility and the route of excretion. Aquatic animals excrete nutrients both in ionic form via their gills and as solid feces. Consequently, excreted nutrients differ in their plant availability.
+When discussing feed as input route, it is furthermore important to consider its digestibility and the route of excretion. Aquatic animals excrete nutrients both in ionic form via their gills and as solid feces. Consequently, excreted nutrients differ in their plant availability according to the major pathway of excretion.
+
+- Ca excreted primarily via gills and kidney (Lall 1989)
+- Cu toxicity 13 mg/kg feed (Tacon 1990), 655 mg/kg feed (Knox et al., 1982, Lanno et al., 1985), 1 mg/L (Fiedman and Shibko, 1972); excess dietary Cu is not taken up but excreted as feces (Lall), thus Cu is reduced in feeds to minimise excretino into environment
+- Mg renal excretion (Oikari and Rankin 1985)
+- P 90% excretion via urine (Lall 1989; tomiyama et al. 1956); 30-64% of P excreted as particulate P; 28% P supplied via feed is wasted in dissolved form (Lall)
+- Zn excreted by kidneys and gill chloride cells and feces 
+- Mn renal excretion is negligible (Lall), instead feces
 
 
 
@@ -101,9 +108,7 @@ The biofilter in the aquaculture unit plays an important role as it is accomodat
 
 2 NH$_{3}$ + 4 O$_{2}$ -> 2 NO$_{3}^{-}$ + 2 H$_{2}$O + 3 H$^{+}$
 
-The activity of nitrifyers is pH-dependent (Ward et al., 2011). Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, several substances are used that are usually termed as pH buffers. However, this is incorrect, because a buffer comprises the use of a weak acid or base in combination with its conjugated counterpart and leads to the maintenance of a specific pH level. The commonly used hydroxides, on the other hand, are strong bases that are fully dissociating in water. In the following, ‘pH buffers’ will thus be termed auxiliary substances (AS). 
-
-Hydrogen carbonates or hydroxides are commonly used due to their cheap price.
+The activity of nitrifyers is pH-dependent (Ward et al., 2011). Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, NaHCO$_{3}$ is commonly used in aquaculture. However, its use in aquaponics would lead to a high daily input of Na which should be avoided due to its phytotoxicity at high concentrations (Wang). Therefore, the usage of other substances such as potassium hydroxide (KOH), calcium hydroxide (Ca(OH)$_{2}$), calcium carbonate (limestone, Ca(CO$_{3}$)) or calcium oxide (quicklime, CaO) is common in aquaponics. The term "pH buffer" will be avoided within this context as the hydroxides are strong bases that are fully dissociating in water and thus not having buffering capacity. 
 
 
 
@@ -112,16 +117,51 @@ Hydrogen carbonates or hydroxides are commonly used due to their cheap price.
 
 ## Nutrient fate and behavior
 Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successfull nutrient management (see e.g. Sambo et al,. 2019). The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrained. The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature (see e.g. Jensen, Sig and Stumm, Stumm and Morgan).
-Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. If the saturation concentration is exceeded, precipitation occurs. Saturation concentrations are either determined empirically or derived from thermodynamic data and expressed as solubility product constants $K_{sp}$.
-The formation of salts can also be seen as result of neutralisation reactions. They thus consist of the conjugated weak bases and acids of their strong acids and bases, respectively. When their ions dissolve, or their strong acids or bases are introduced into the system, they are undergoing acid-base reactions with water. As an example, the reactions of phosphoric acid (H$_{3}$PO$_{4}$) with water are 
+Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. The saturation concentration of a salt can be described using solubility product constants $K_{sp}$, which are the product of the concentration of the cation(s) and the anion(s) at saturation concentration, as shown in **equation XXX**, with square brackets denoting for molar concentrations.
 
-H$_{3}$PO$_{4}$ + H$_{2}$O <-> H$_{2}$PO$_{4}^{-}$ + H$_{3}$O$^{+}$ $K_{1}$ = `r 10^{2.1}`
+$$
+K_{sp} = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
+$$
 
-H$_{2}$PO$_{4}^{-}$ + H$_{2}$O <-> HPO$_{4}^{2-}$ + H$_{3}$O$^{+}$ $K_{2}$ = `r 10^{7.2}`
+$K_{sp}$ is either determined empirically or derived from thermodynamic data. The saturation concentration $S$ of the salt can eventually be calculated by rearrangement of **equation XXX** as shown in **equation XXX**.
 
-HPO$_{4}^{2-}$ + H$_{2}$O <-> PO$_{4}^{3-}$ + H$_{3}$O$^{+}$ $K_{3}$ = `r 10^{12.0}`
+$$
+\begin{align}
+	S = \sqrt[m+n]{\frac{K_{sp}}{m^{m} \cdot n^{n}}}
+\end{align}
+$$
 
-The reactions show that H$_{3}$PO$_{4}$ is present in four different forms, the so-called species, which there are H$_{3}$PO$_{4}$, H$_{2}$PO$_{4}^{-}$, HPO$_{4}^{2-}$ and PO$_{4}^{3-}$. These species differ in their chemical behavior. The extent to which the described dissociation reactions (the removal of H$^{+}$) occurs depends on the characteristic equilibrium constant $K$ of each reaction step and the pH of the system. 
+If the concentrations of the cation(s) and anion(s) in solution are known, it is possible to calculate the ion product $Q$ analogously to the calculation of $K_{sp}$ as shown in **equation XXX**, substituting $[cation]$ and $[anion]$ by the corresponding determined concentrations.
+
+$$
+Q = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
+$$
+
+$K_{sp}$ can now be compared with $Q$ to evaluate whether the solution is saturated or not by calculating the saturation index $U$ as shown in **equation XX**. If the saturation concentration is exceeded ($Q > K_{sp}$ and $\log{\frac{Q}{K}} > 0$), precipitation occurs. 
+
+$$
+U = \log{\frac{Q}{K_{sp}}}
+$$
+
+The formation of a salt can also be seen as the result of a neutralisation reaction. The reaction of phosphoric acid (H$_{3}$PO$_{4}$) with sodium hydroxide (NaOH) can be written in a simplified way as 
+
+H$_{3}$PO$_{4}$ + NaOH <-> NaH$_{2}$PO$_{4}$ + H$_{2}$O
+
+, yielding sodium dihydrogen phosphate NaH$_{2}$PO$_{4}$ as product. A salt thus consist of the conjugated weak base (H$_{2}$PO$_{4}^{-}$) and acid (Na$^{+}$) of the strong acid (H$_{3}$PO$_{4}$) and base (NaOH) that led to its formation.
+
+
+
+When its ions dissolve, or its strong acids or bases are introduced into the system, they are undergoing acid-base reactions with water. As an example, the reactions of phosphoric acid (H$_{3}$PO$_{4}$) with water are 
+
+H$_{3}$PO$_{4}$ + H$_{2}$O <-> H$_{2}$PO$_{4}^{-}$ + H$_{3}$O$^{+}$ $K_{a1} = 10^{2.1}$
+
+H$_{2}$PO$_{4}^{-}$ + H$_{2}$O <-> HPO$_{4}^{2-}$ + H$_{3}$O$^{+}$ $K_{a2} = 10^{7.2}$
+
+HPO$_{4}^{2-}$ + H$_{2}$O <-> PO$_{4}^{3-}$ + H$_{3}$O$^{+}$ $K_{a3} = 10^{12.0}$
+
+The reactions show that H$_{3}$PO$_{4}$ is present in four different forms, the so-called species, which there are H$_{3}$PO$_{4}$, H$_{2}$PO$_{4}^{-}$, HPO$_{4}^{2-}$ and PO$_{4}^{3-}$. These species differ in their chemical behavior. The extent to which the described dissociation reactions (the removal of H$^{+}$) occurs depends on the pH of the system and can be mathematically described by a characteristic equilibrium constant $K$ for each reaction step. 
+
+
 If, for instance, both PO$_{4}^{3-}$ and Fe$^{3+}$ ions are present in solution and $Q > K_{sp}$ , they will eventually form precipitates. This could be avoided by complex formation reactions where a chelating agent, hereinafter denoted as ligands, forms a complex molecule which is "hidden" and thus excluded from precipitation. Complex molecules are formed especially with cations of transition metal and they can lead to concentrations of these metals that are exceeding their saturation concentrations by three to four orders of magnitude (see e.g. Jensen, 2003).
 The effects and constraints that are resulting from the described reactions under conditions that are typical for hydroponics were exhaustively described (De Rijck and Shrevens papers). However, no such work has been conducted for aquaponics.
 
