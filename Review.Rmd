@@ -34,9 +34,9 @@ source('R/init.R') # Load packages and functions
 # Introduction
 Aquaponic systems require a high initial investment and come with comparably high labor costs due to the complexicity of the system (Turnsek et al., Quagrainie, 2017). One aspect that is contributing to high operating costs in aquaponics is the lack of “off-the-shelf” solutions for the management of plant nutrients. 
 As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B). The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion (Mengel and Kirkby, 2001). 
-The main source of nutrients in aquaponics is claimed to be the feed for the aquatic livestock, hereinafter denoted as aquafeed. Before becoming available for plant uptake, aquafeeds are ingested by the cultivated animals and the digestible mass fraction is utilized for the basal metabolism or somatic growth (Fish Nutrition). The indigestible mass fraction is excreted in form of solid or dissolved matter, with the latter eventually being available for plant uptake. However, comparing the nutrient profile of plant-available fish excreta with nutrient solutions commonly used in hydroponics, deviations from the optimum were reported (Shaw et al., 2022; Lunda et al., 2019; Robaina et al., 2019). To counteract these imbalances, it was suggested to complement aquaponic nutrient solutions with the missing nutrients. Studies showed that this practice leads to plant growth equal or even better than observed in hydroponics (Delaide, 2016; Monsees, 2019; Rodgers, 2022). Though, the supplementation of individual nutrients requires their continuous monitoring to ensure that optimum levels are met and maintained. This adds additional expenses to the budget.
+The main source of nutrients in aquaponics is claimed to be the feed for the aquatic livestock, hereinafter denoted as aquafeed. Before becoming available for plant uptake, aquafeeds are ingested by the cultivated animals and the digestible mass fraction is utilized for the basal metabolism or somatic growth (Fish Nutrition). The indigestible mass fraction is excreted in form of both solid and dissolved matter, with the latter eventually being available for plant uptake. However, comparing the nutrient profile of plant-available fish excreta with nutrient solutions commonly used in hydroponics, deviations from the optimum were reported (Shaw et al., 2022; Lunda et al., 2019; Robaina et al., 2019). To counteract these imbalances, it was suggested to complement aquaponic nutrient solutions with the missing nutrients. Studies showed that this practice leads to plant growth equal or even better than observed in hydroponics (Delaide, 2016; Monsees, 2019; Rodgers, 2022). Though, the supplementation of individual nutrients requires their continuous monitoring to ensure that optimum levels are met and maintained. This adds additional expenses to the budget.
 In hydroponics, on the other hand, plant nutrients are supplied in form of commercially available and chemically fine-tuned plant fertilizers with dosage recommendations. It is usually sufficient to monitor the nutrient depletion via plant uptake by determining the electric conductivity (EC) of the nutrient solution as sum parameter (Resh, 2013). Taking into account that labour costs can be accounted for 40-50% of the total operational costs of aquaponic facilities (Baganz; Engle; Quagrainie, 2017), an entrepreneur who is carefully weighing whether to invest in aquaponics or hydroponics might opt for the latter.
-To circumvent the stated obstacles with respect to nutrient management in aquaponics, several suggestions were made such as the development of tailored aquafeeds, the use of substances such as potassium hydroxide (KOH), calcium hydroxide (Ca(OH)2) or calcium carbonate (limestone, Ca(CO3)) as alternatives for the sodium hydrogen carbonate (soda, NaHCO3) that is used in conventional aquaculture for pH control (Seawright, 1998; Goddek et al., 2019). However, it needs to be emphasised that the development of an “off-the-shelf” solution for a problem implies that its application yields comparable results over a broad range of conditions. Therefore, within the context of an improved nutrient supply in aquaponics, three considerations are of striking importance:
+To circumvent the stated obstacles with respect to nutrient management in aquaponics, several suggestions were made such as the development of tailored aquafeeds, the use of substances such as potassium hydroxide (KOH), calcium hydroxide (Ca(OH)$_{2}$) or calcium carbonate (limestone, Ca(CO$_{3}$)) as alternatives for the sodium hydrogen carbonate (soda, NaHCO$_{3}$) that is used in conventional aquaculture for pH control (Seawright, 1998; Goddek et al., 2019). However, it needs to be emphasised that the development of an “off-the-shelf” solution for a problem implies that its application yields comparable results over a broad range of conditions. Therefore, three considerations are of striking importance within the context of an improved nutrient supply in aquaponics:
 
 1. It is necessary to identify the nutrients that can be supplied without facing over- or undersupply due to variability in other nutrient sources that were not considered. Thus, the **source of nutrients** and their variability must be examined closely.
 2. Independent from the supply route, it must be taken into account that the introduction of a substance into an aqueous system does not necessarily lead to an increase in its' concentration in solution. The **behavior of the nutrients** has to be considered.
@@ -128,7 +128,7 @@ The effects and constraints that are resulting from the described reactions unde
 
 
 ## Chemical modeling
-Solving equilibrium problems in systems with only one or two compounds and their species is comparably simple. However, the complexity increases dramatically in multi-compound systems, making the use of computers necessary. 
+Solving equilibrium problems in systems with only one or two compounds and their species is comparably simple. However, the complexity increases dramatically in multi-compound systems, making the use of computers and dedicated software necessary. 
 
 
 
@@ -145,7 +145,7 @@ Given these inputs, recommendations with regards to the formulation of tailored 
 # Methodology
 
 ## Software
-All calculations were conducted using the applications GSS and Spec8 from The Geochemist's Workbench 2022 Community Edition (v16.0.0) and R (v4.2.2) with RStudio ("Spotted Wakerobin" Release) as graphical user interface.
+All calculations were conducted using Visual MINTEQ (v3.1) without modifications of the default database and R (v4.2.2) with RStudio ("Spotted Wakerobin" Release) as graphical user interface.
 
 
 
@@ -329,6 +329,11 @@ It can be clearly seen from the plots that the pH adjusting substances become th
 
 
 ## Fate and behavior of nutrients
+
+
+
+
+
 Mineral saturation indices were calculated for literature data to assess whether the solubility of a plant nutrient is controlled by the formation of precipitates, thus not enabling further dissolution, or not. 
 
 ```{r}

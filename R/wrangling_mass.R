@@ -1,4 +1,4 @@
-mass %>% 
+boxplot_precipitated <- mass %>% 
   
   rename(
     "component" = Component,
@@ -21,13 +21,23 @@ mass %>%
   #    percentage < 100
   #) %>% 
   
+  filter(fate == "precipitated") %>%  
+  
   mutate(
     component = as.factor(component)
   ) %>% 
   
-  ggplot(aes(x = percentage, y = component, fill = component)) + 
+  ggplot(aes(y = percentage, x = component, fill = component)) + 
     geom_boxplot() + 
-    facet_wrap(facets = vars(fate)) + 
-  theme(
-    legend.position = "none"
-  )
+    geom_hline(yintercept = 0, color = "darkgreen", linetype = "dashed") + 
+    geom_hline(yintercept = 100, color = "red", linetype = "dashed") + 
+    theme(
+      legend.position = "none",
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    )
+
+
+
+boxplot_precipitated
+
+ggsave('plots/boxplot_precipitated_vm.png')

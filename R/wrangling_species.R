@@ -6,7 +6,7 @@
 #
 
 
-species %>% 
+boxplot_dom <- species %>% 
   
   rename(
     "component" = Component,
@@ -28,6 +28,14 @@ species %>%
     theme(
       legend.position = "none"
     )
+
+
+
+boxplot_dom
+
+ggsave('plots/boxplot_species_dom_vm.png')
+
+
 
 ###----------------------------------------------------------------------------
 ###----------------------------------------------------------------------------

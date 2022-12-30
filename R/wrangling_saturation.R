@@ -1,7 +1,9 @@
-test <- saturation %>% 
+boxplot_saturation <- saturation %>% 
+  
   rename(
     "logQK" = Sat..index
   ) %>% 
+  
   mutate(
     cation = if_else(Col5 == "H+1", if_else(Col8 > Col6 & Col9 != "H2O", Col9, Col7), Col5),
     anion = if_else(is.na(Col11) == TRUE & is.na(Col9) == TRUE, Col7, Col11),
@@ -10,21 +12,30 @@ test <- saturation %>%
   ) %>% 
   
   filter(logQK > -5) %>% 
-  ggplot(aes(y = logQK, fill = anion)) +
+  
+  ggplot(aes(x = anion, y = logQK, fill = anion)) +
     geom_boxplot() +
     geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
-    facet_wrap(facets = vars(cation)
-               #, scales = "free"
-               ) +
+    facet_wrap(facets = vars(cation)) +
     labs(
-      y = 'log(Q/K)',
-      fill = 'Anion'
+      x = "Anion",
+      y = 'log(Q/K)'
     ) +
     theme(
-      legend.position = 'bottom',
-      axis.ticks.x = element_blank(),
-      axis.text.x = element_blank()
+      legend.position = 'none',
+      #axis.ticks.x = element_blank(),
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
     )
 
 
 
+
+boxplot_saturation
+
+ggsave('plots/boxplot_empirical_saturation_vm.png')
+
+
+
+###----------------------------------------------------------------------------
+###----------------------------------------------------------------------------
+###----------------------------------------------------------------------------
