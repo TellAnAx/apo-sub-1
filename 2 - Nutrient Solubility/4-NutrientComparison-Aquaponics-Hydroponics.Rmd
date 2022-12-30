@@ -9,6 +9,7 @@ output: html_document
 ```{r}
 library(XLConnect)
 library(tidyverse)
+library(rlang)
 ```
 
 
@@ -35,8 +36,12 @@ Nutrient solution composition data presented by Resh (Hydroponic Food Production
 
 ## 1.1 Load data
 ```{r Resh Workbook loading}
+getwd()
 # Load Workbook
-resh_hydroponic_plant_production <- loadWorkbook(filename = "/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Resh - Hydroponic Plant Production.xlsx")
+#resh_hydroponic_plant_production <- loadWorkbook(filename = "/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Resh - Hydroponic Plant Production.xlsx")
+
+# Load Workbook
+resh_hydroponic_plant_production <- loadWorkbook(filename = "data/Resh - Hydroponic Plant Production.xlsx")
 ```
 
 
@@ -211,6 +216,37 @@ procdata %>%
 
 
 
+
+```{r}  
+procdata %>% 
+  
+  select(
+    -c(
+      P
+      ,S
+      ,species_OH_molL
+      ,species_CO3_molL
+    )
+  ) %>% 
+  
+  pivot_longer(
+    cols = everything(),
+    names_to = 'nutrient',
+    values_to = 'conc_molL'
+  ) %>% 
+  
+  drop_na() %>% 
+  
+  ggplot(aes(y = conc_molL)) + 
+  geom_boxplot() + 
+  scale_y_log10() + 
+  facet_wrap(facets = vars(nutrient), scales = 'free')
+```
+
+
+
+
+
 The next step after the pH correction is to calculate theoretical lowest ('worst case') solubilities of all compounds ('X_in_XY' denoting for the theoretical maximum concentration of a compound under the given conditions).
 Furthermore, a logical test is conducted, assessing whether the recommended concentration is larger than the theoretical solubility. Also, the difference between the recommendation and the theoretical solubility and their proportions are calculated.
 
@@ -348,7 +384,7 @@ plotdata %>%
     geom_boxplot() + 
     geom_hline(yintercept = 1, linetype = 'dashed', color = 'red', alpha = 0.75) +
     scale_y_log10() + 
-    #facet_wrap(facets = vars(substance), scales = 'free') + 
+    facet_wrap(facets = vars(substance), scales = 'free') + 
     labs(
       x = 'Recommendation compared with theoretical solubility',
       y = 'log(proportion)'
@@ -362,11 +398,12 @@ plotdata %>%
 
 
 
-š
+
 
 # 3. Comparison between different environmental conditions
+The pH in hydroponic and aquaponic systems differs, together with the concentration of carbonate. 
 
-
+In the following, solubilities at different pH values will be compared.
 
 
 
@@ -552,4 +589,585 @@ plotdata %>%
     theme(
       axis.text.x = element_blank()
       )
+```
+
+
+
+
+
+# 4. Continuous data
+In the following, the solubility-to-target-concentration ratio is calculated for a pH range from 5.5 to 8.0, considering the effect of the pH on the speciation and thus concentration of phosphate, carbonate, sulfate and hydroxide anions. 
+
+
+```{r Calculate species concentrations under secondary conditions for comparison}
+
+procdata3 <- data.frame()
+pH_seq <- seq(5.5, 8, 0.1)
+
+
+for(pH in pH_seq){
+  temp <- targetConc %>%
+  
+  select(c(nutrient, mol_per_L)) %>% 
+  
+      group_by(nutrient) %>% # Workaround pivot_wider()
+      mutate(row = row_number()) %>% # Workaround pivot_wider()
+  
+  pivot_wider(names_from = nutrient, values_from = mol_per_L) %>% 
+  
+      select(-row) %>%  # Workaround pivot_wider()
+
+  
+  # Calculate species
+  mutate(
+    species_PO4_molL = calc_PO4(c_tot = P, pH = pH, form_P = 'po4-p', unit = 'mol'),
+    
+    species_OH_molL = calc_OH(pH = pH),
+    
+    species_CO3_molL = calc_CO3(pH = pH, pCO2 = pCO2_atm2),
+    
+    species_SO4_molL = calc_SO4(c_tot = S, pH = pH, form_S = 'SO4-S', unit = 'mol')
+  )
+  
+  
+  # Merge temporary data
+  procdata3 <- rbind(procdata3, temp)
+}
+
+procdata3$pH <- pH_seq
+
+print(procdata3)
+```
+
+
+
+
+```{r Calculate resulting solubility data under secondary conditions for comparison}
+plotdata3 <- procdata3 %>% 
+
+mutate(
+    # CaCO3
+    Ca_in_CaCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "CaCO3",)] / species_CO3_molL,
+    Ca_found_greater_CaCO3 = Ca > Ca_in_CaCO3,
+    CaCO3_diff = Ca - Ca_in_CaCO3,
+    CaCO3_prop = Ca / Ca_in_CaCO3,
+    
+    # Ca(OH)2
+    Ca_in_CaOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Ca(OH)2",)] / species_OH_molL^2,
+    Ca_found_greater_CaOH2 = Ca > Ca_in_CaOH2,
+    CaOH2_diff = Ca - Ca_in_CaOH2,
+    CaOH2_prop = Ca / Ca_in_CaOH2,
+    
+    # Ca3PO42
+    Ca_in_Ca3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Ca3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Ca_found_greater_Ca3PO42 = Ca > Ca_in_Ca3PO42,
+    Ca3PO42_diff = Ca - Ca_in_Ca3PO42,
+    Ca3PO42_prop = Ca / Ca_in_Ca3PO42,
+
+    
+    # CaSO4
+    Ca_in_CaSO4 = solubility_data$Ks0[which(solubility_data$chemFormula == "CaSO4",)] / species_SO4_molL,
+    Ca_found_greater_CaSO4 = Ca > Ca_in_CaSO4,
+    CaSO4_diff = Ca - Ca_in_CaSO4,
+    CaSO4_prop = Ca / Ca_in_CaSO4,
+    
+    # MgCO3
+    Mg_in_MgCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "MgCO3",)] / species_CO3_molL,
+    Mg_found_greater_MgCO3 = Mg > Mg_in_MgCO3,
+    MgCO3_diff = Mg - Mg_in_MgCO3,
+    MgCO3_prop = Mg / Mg_in_MgCO3,
+    
+    # Mg(OH)2
+    Mg_in_MgOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Mg(OH)2",)] / species_OH_molL^2,
+    Mg_found_greater_MgOH2 = Mg > Mg_in_MgOH2,
+    MgOH2_diff = Mg - Mg_in_MgOH2,
+    MgOH2_prop = Mg / Mg_in_MgOH2,
+
+    
+    # Mg3PO42
+    Mg_in_Mg3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Mg3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Mg_found_greater_Mg3PO42 = Mg > Mg_in_Mg3PO42,
+    Mg3PO42_diff = Mg - Mg_in_Mg3PO42,
+    Mg3PO42_prop = Mg / Mg_in_Mg3PO42,
+
+    # FePO4
+    Fe_in_FePO4 = solubility_data$Ks0[which(solubility_data$chemFormula == "FePO4 x 2 H2O",)] / species_PO4_molL,
+    Fe_found_greater_FePO4 = Fe > Fe_in_FePO4,
+    FePO4_diff = Fe - Fe_in_FePO4,
+    FePO4_prop = Fe / Fe_in_FePO4,
+    
+    # MnCO3
+    Mn_in_MnCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "MnCO3",)] / species_CO3_molL,
+    Mn_found_greater_MnCO3 = Mn > Mn_in_MnCO3,
+    MnCO3_diff = Mn - Mn_in_MnCO3,
+    MnCO3_prop = Mn / Mn_in_MnCO3,
+    
+    # CuCO3
+#    Cu_in_CuCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "CuCO3",)] / species_CO3_molL,
+#    Cu_found_greater_CuCO3 = Cu > Cu_in_CuCO3,
+#    CuCO3_diff = Cu - Cu_in_CuCO3,
+#    CuCO3_prop = Cu / Cu_in_CuCO3,
+    
+    # Cu(OH)2
+#    Cu_in_CuOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Cu(OH)2",)] / species_OH_molL^2,
+#    Cu_found_greater_CuOH2 = Cu > Cu_in_CuOH2,
+#    CuOH2_diff = Cu - Cu_in_CuOH2,
+#    CuOH2_prop = Cu / Cu_in_CuOH2,
+    
+    # Cu3PO42
+    Cu_in_Cu3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Cu3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Cu_found_greater_Cu3PO42 = Cu > Cu_in_Cu3PO42,
+    Cu3PO42_diff = Cu - Cu_in_Cu3PO42,
+    Cu3PO42_prop = Cu / Cu_in_Cu3PO42,
+    
+    # ZnCO3
+    Zn_in_ZnCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "ZnCO3",)] / species_CO3_molL,
+    Zn_found_greater_ZnCO3 = Zn > Zn_in_ZnCO3,
+    ZnCO3_diff = Zn - Zn_in_ZnCO3,
+    ZnCO3_prop = Zn / Zn_in_ZnCO3,
+    
+    # Zn(OH)2
+    Zn_in_ZnOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Zn(OH)2",)] / species_OH_molL^2,
+    Zn_found_greater_ZnOH2 = Zn > Zn_in_ZnOH2,
+    ZnOH2_diff = Zn - Zn_in_ZnOH2,
+    ZnOH2_prop = Zn / Zn_in_ZnOH2,
+    
+    # Zn3PO42
+    Zn_in_Zn3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Zn3(PO4)2 x 4 H2O",)] / species_PO4_molL^2)^(1/3),
+    Zn_found_greater_Zn3PO42 = Zn > Zn_in_Zn3PO42,
+    Zn3PO42_diff = Zn - Zn_in_Zn3PO42,
+    Zn3PO42_prop = Zn / Zn_in_Zn3PO42  
+  ) %>% 
+  
+  print()
+```
+
+
+
+
+
+```{r Convert comparison data into longtable and add pH and pCO2 identifier}
+plotdata3 <- plotdata3 %>% 
+  
+  select(c(ends_with('_prop'), pH)) %>% 
+  
+  pivot_longer(
+    cols = ends_with('_prop'),
+    names_to = 'substance',
+    values_to = 'proportion'
+  ) %>% 
+  
+  mutate(
+    substance = sub('_prop', '', substance),
+    pCO2 = pCO2_atm2
+  ) %>% 
+  
+  filter(
+    proportion != Inf
+    ) %>% 
+  
+  print()
+```
+
+
+
+
+
+```{r Plot data for comparison}
+# Define labels for the facets
+my_labeller <- as_labeller(
+  c( # Create a 'lookup table' for ggplot2 with the labels that 
+     # are already present in the dataset on the lhs and the labels
+     # to be used on the rhs in plotmath syntax
+  Ca3PO42 = 'Ca[3]*(PO[4])*""[2]' # subscript needs to be initiated by a 'normal' character. In this case, this can be circumveined by the quotes
+  ,CaCO3 = 'CaCO[3]'
+  ,CaOH2 = 'Ca(OH)[2]'
+  ,CaSO4  = 'CaSO[4]'
+  ,Cu3PO42 = 'Cu[3]*(PO[4])*""[2]'
+  ,FePO4 = 'FePO[4]'
+  ,Mg3PO42 = 'Mg[3]*(PO[4])*""[2]'
+  ,MgCO3  = 'MgCO[3]'
+  ,MgOH2 = 'Mg(OH)[2]'
+  ,MnCO3 = 'MnCO[3]'
+  ,ZnCO3 = 'ZnCO[3]'
+  ,ZnOH2  = 'Zn(OH)[2]'
+  ,Zn3PO42 = 'Zn[3]*(PO[4])*""[2]'
+    )
+  ,default = label_parsed # Labels need to be parsed because of sub- and superscript characters
+  ) 
+
+
+scientific_10 <- function(x) {
+  parse(text=gsub("e", " %*% 10^", scales::scientific_format()(x)))
+}
+```
+
+
+
+In the following, an overall plot is created
+
+```{r}
+plotdata3 %>% 
+  
+  mutate(
+    substance = factor(
+      substance
+      , levels = c(
+        'Ca3PO42', 'Mg3PO42', 'FePO4',  'Zn3PO42',
+        'CaCO3',   'MgCO3',   'MnCO3', 'ZnCO3',
+        'CaOH2',   'MgOH2',   'Cu3PO42','ZnOH2', 
+        'CaSO4'
+        )
+      )
+    #,pCO2 = as.factor(pCO2)
+    #,treshold_label = if_else(proportion > 1, true = '2', false = '1')
+    ) %>% 
+  
+  print() %>% 
+  
+  ggplot(aes(
+    x = pH
+    ,y = proportion
+    )) + 
+  
+    geom_line(
+    ) + 
+  
+    facet_wrap(
+      facets = vars(substance)
+      ,labeller = my_labeller # use own labels for the facets
+      ) + 
+
+  # Ratio max. solubility:target concentration of cation
+    geom_hline(
+      yintercept = 1
+      ,linetype = 'dashed'
+      ,color = 'gray0'
+      ,alpha = 0.75
+      ) +
+  
+  # pH line
+    geom_vline(
+      xintercept = 6
+      ,linetype = 'dotdash'
+      ,color = 'red'
+      ,alpha = 0.7
+      ) + 
+  
+    # pH line
+    geom_vline(
+      xintercept = 6.8
+      ,linetype = 'dotdash'
+      ,color = 'green4'
+      ,alpha = 0.7
+      ) + 
+  
+    # pH line
+    geom_vline(
+      xintercept = 7.5
+      ,linetype = 'dotdash'
+      ,color = 'blue'
+      ,alpha = 0.7
+      ) + 
+  
+    scale_y_continuous(
+      limits = c(0, 20)
+      ) + 
+  
+    labs(
+      x = 'pH'
+      ,y = expression(c[target]*':'*c[sat])
+    ) + 
+  
+    theme_bw() + 
+  
+    theme(
+      text=element_text(size=20),
+      axis.text.x = element_text( # Rotate axis labels
+        angle = 45
+        ,vjust = 1
+        ,hjust = 1
+      )
+    )
+    
+    
+
+
+# Save plot
+ggsave(filename = 'plots/relation_solubility_ph.png', plot = last_plot(), width = 27, height = 16, units = "cm")
+
+```
+
+
+
+
+To Do: 
+- Create for-loop that is looping over the substance levels and creates a single plot for each substance
+
+
+
+
+
+# 5. Single Plots
+
+
+
+```{r Calculate resulting solubility data under secondary conditions for comparison}
+plotdata4 <- procdata3 %>% 
+
+mutate(
+    # CaCO3
+    Ca_in_CaCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "CaCO3",)] / species_CO3_molL,
+    Ca_found_greater_CaCO3 = Ca > Ca_in_CaCO3,
+    CaCO3_diff = Ca - Ca_in_CaCO3,
+    CaCO3_prop = Ca / Ca_in_CaCO3,
+    
+    # Ca(OH)2
+    Ca_in_CaOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Ca(OH)2",)] / species_OH_molL^2,
+    Ca_found_greater_CaOH2 = Ca > Ca_in_CaOH2,
+    CaOH2_diff = Ca - Ca_in_CaOH2,
+    CaOH2_prop = Ca / Ca_in_CaOH2,
+    
+    # Ca3PO42
+    Ca_in_Ca3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Ca3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Ca_found_greater_Ca3PO42 = Ca > Ca_in_Ca3PO42,
+    Ca3PO42_diff = Ca - Ca_in_Ca3PO42,
+    Ca3PO42_prop = Ca / Ca_in_Ca3PO42,
+
+    
+    # CaSO4
+    Ca_in_CaSO4 = solubility_data$Ks0[which(solubility_data$chemFormula == "CaSO4",)] / species_SO4_molL,
+    Ca_found_greater_CaSO4 = Ca > Ca_in_CaSO4,
+    CaSO4_diff = Ca - Ca_in_CaSO4,
+    CaSO4_prop = Ca / Ca_in_CaSO4,
+    
+    # MgCO3
+    Mg_in_MgCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "MgCO3",)] / species_CO3_molL,
+    Mg_found_greater_MgCO3 = Mg > Mg_in_MgCO3,
+    MgCO3_diff = Mg - Mg_in_MgCO3,
+    MgCO3_prop = Mg / Mg_in_MgCO3,
+    
+    # Mg(OH)2
+    Mg_in_MgOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Mg(OH)2",)] / species_OH_molL^2,
+    Mg_found_greater_MgOH2 = Mg > Mg_in_MgOH2,
+    MgOH2_diff = Mg - Mg_in_MgOH2,
+    MgOH2_prop = Mg / Mg_in_MgOH2,
+
+    
+    # Mg3PO42
+    Mg_in_Mg3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Mg3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Mg_found_greater_Mg3PO42 = Mg > Mg_in_Mg3PO42,
+    Mg3PO42_diff = Mg - Mg_in_Mg3PO42,
+    Mg3PO42_prop = Mg / Mg_in_Mg3PO42,
+
+    # FePO4
+    Fe_in_FePO4 = solubility_data$Ks0[which(solubility_data$chemFormula == "FePO4 x 2 H2O",)] / species_PO4_molL,
+    Fe_found_greater_FePO4 = Fe > Fe_in_FePO4,
+    FePO4_diff = Fe - Fe_in_FePO4,
+    FePO4_prop = Fe / Fe_in_FePO4,
+    
+    # MnCO3
+    Mn_in_MnCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "MnCO3",)] / species_CO3_molL,
+    Mn_found_greater_MnCO3 = Mn > Mn_in_MnCO3,
+    MnCO3_diff = Mn - Mn_in_MnCO3,
+    MnCO3_prop = Mn / Mn_in_MnCO3,
+    
+    # Cu3PO42
+    Cu_in_Cu3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Cu3(PO4)2",)] / species_PO4_molL^2)^(1/3),
+    Cu_found_greater_Cu3PO42 = Cu > Cu_in_Cu3PO42,
+    Cu3PO42_diff = Cu - Cu_in_Cu3PO42,
+    Cu3PO42_prop = Cu / Cu_in_Cu3PO42,
+    
+    # ZnCO3
+    Zn_in_ZnCO3 = solubility_data$Ks0[which(solubility_data$chemFormula == "ZnCO3",)] / species_CO3_molL,
+    Zn_found_greater_ZnCO3 = Zn > Zn_in_ZnCO3,
+    ZnCO3_diff = Zn - Zn_in_ZnCO3,
+    ZnCO3_prop = Zn / Zn_in_ZnCO3,
+    
+    # Zn(OH)2
+    Zn_in_ZnOH2 = solubility_data$Ks0[which(solubility_data$chemFormula == "Zn(OH)2",)] / species_OH_molL^2,
+    Zn_found_greater_ZnOH2 = Zn > Zn_in_ZnOH2,
+    ZnOH2_diff = Zn - Zn_in_ZnOH2,
+    ZnOH2_prop = Zn / Zn_in_ZnOH2,
+    
+    # Zn3PO42
+    Zn_in_Zn3PO42 = (solubility_data$Ks0[which(solubility_data$chemFormula == "Zn3(PO4)2 x 4 H2O",)] / species_PO4_molL^2)^(1/3),
+    Zn_found_greater_Zn3PO42 = Zn > Zn_in_Zn3PO42,
+    Zn3PO42_diff = Zn - Zn_in_Zn3PO42,
+    Zn3PO42_prop = Zn / Zn_in_Zn3PO42  
+  ) %>% 
+  
+  print()
+```
+
+
+
+
+
+```{r Convert comparison data into longtable and add pH and pCO2 identifier}
+plotdata4 <- plotdata4 %>% 
+  
+  select(c(ends_with('_prop'), pH)) %>% 
+  
+  pivot_longer(
+    cols = ends_with('_prop'),
+    names_to = 'substance',
+    values_to = 'proportion'
+  ) %>% 
+  
+  mutate(
+    substance = sub('_prop', '', substance),
+    pCO2 = pCO2_atm2
+  ) %>% 
+  
+  filter(
+    proportion != Inf
+    ) %>% 
+  
+  print()
+```
+
+
+
+
+In the following, an overall plot is created
+
+
+
+```{r}
+plotdata4 <- plotdata4 %>% 
+  
+  #bind_rows(plotdata2) %>% 
+  
+  mutate(
+    substance = factor(
+      substance
+      , levels = c(
+        'Ca3PO42', 'Mg3PO42', 'FePO4', 'Cu3PO42',
+        'CaCO3',   'MgCO3',   'MnCO3', 'ZnCO3',
+        'CaOH2',   'MgOH2',   'ZnOH2', 'Zn3PO42',
+        'CaSO4'
+        )
+      ),
+    pCO2 = as.factor(pCO2),
+    treshold_label = if_else(proportion > 1, true = '2', false = '1')
+    ) %>%   
+  
+#  filter(
+#    !grepl('OH', substance) &
+#    !grepl('SO4', substance)
+#  ) %>% 
+  
+  print()
+```
+
+
+
+
+```{r}
+substance_subset <- levels(plotdata4$substance)
+```
+
+
+
+
+
+```{r}
+
+for(plot_subset in substance_subset){
+  
+  print(plot_subset)
+  
+plotdata4  %>% 
+    
+  filter(
+    substance == plot_subset
+  ) %>% 
+  
+  ggplot(aes(
+    x = pH
+    ,y = proportion
+    )) + 
+  
+    geom_line(
+      #linetype = 'dotted'
+      color = 'gray0'
+      ,size = 2
+    ) + 
+
+  # Ratio max. solubility:target concentration of cation
+    geom_hline(
+      yintercept = 1
+      ,linetype = 'dashed'
+      ,color = 'gray0'
+      ,size = 1
+      ,alpha = 0.75
+      ) +
+  
+  # pH line
+    geom_vline(
+      xintercept = 6
+      ,linetype = 'dotdash'
+      ,color = 'red'
+      ,alpha = 0.7
+      ,size = 2
+      ) + 
+  
+    # pH line
+    geom_vline(
+      xintercept = 6.8
+      ,linetype = 'dotdash'
+      ,color = 'green4'
+      ,alpha = 0.7
+      , size = 2
+      ) + 
+  
+    # pH line
+    geom_vline(
+      xintercept = 7.5
+      ,linetype = 'dotdash'
+      ,color = 'blue'
+      ,alpha = 0.7
+      ,size = 2
+      ) + 
+  
+    #scale_y_log10() + 
+    scale_y_continuous(
+      limits = c(0, 20)
+        ) + 
+  
+    facet_wrap(
+      facets = vars(substance)
+      ,labeller = my_labeller # use own labels for the facets
+      ) + 
+  
+    labs(
+      x = 'pH',
+      y = expression(c[target]*':'*c[sat])
+    ) + 
+  
+    theme_bw() + 
+  
+    theme(
+      axis.text.x = element_text( # Rotate axis labels
+        angle = 45
+        ,vjust = 1
+        ,hjust = 1
+      )
+      ,text = element_text(
+        size = 40
+      )
+      ,strip.text.x = element_text(
+        size = 45
+        )
+    )
+    
+    
+
+
+# Save plot
+ggsave(filename = paste('plots/', plot_subset, '_relation_solubility_ph.png', sep = ""), plot = last_plot())
+}
+
+
 ```

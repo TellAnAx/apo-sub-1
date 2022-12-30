@@ -3,15 +3,10 @@ title: "Nutrient Solubility"
 subtitle: "Theoretical values corrected by pH"
 author: "Anıl A. Tellbüscher"
 date: '2022-07-06'
-output: 
-  html_document:
-    toc: true # table of content true
-    toc_depth: 3  # upto three depths of headings (specified by #, ## and ###)
-    number_sections: true  ## if you want number sections at each table header
-    theme: united  # many options for theme, this one is my favorite.
+output: html_document 
 ---
 
-```{r}
+```{r include=FALSE}
 library(XLConnect)
 library(tidyverse)
 ```
@@ -19,7 +14,7 @@ library(tidyverse)
 
 
 # General
-While comparing nutrient concentrations in aquaponic systems reported in literature with theoretical solubilities based on calculations using the solubility product constant $K_{s0}$, reported concentrations are approximately three orders of magnitude higher in case of Ca, Mg, Fe, Mn, Cu, Zn, and P. This could be due to the pH-dependence of the solubility of some salts.
+While comparing nutrient concentrations in aquaponic systems reported in literature with theoretical solubilities based on calculations using the solubility product constant $K_{sp}$, reported concentrations are approximately three orders of magnitude higher in case of Ca, Mg, Fe, Mn, Cu, Zn, and P. This could be due to the pH-dependence of the solubility of some salts.
 
 For instance, orthophosphates undergo a number of acid-base reactions when introduced into aquatic systems. The chemical equilibria are depending on the system pH. In hydroponic systems, the recommended pH ranges around 6.0, while it is recommended to maintain a pH above 7.0 in aquaculture systems, including the aquaculture unit of on-demand coupled aquaponic systems. Considering the pH when calculating solubilities might thus lead to better, more precise results, because the pH is calculated on a logarithmic scale, which means that a change in the pH by one unit results in a change of the hydronium ion concentration by one order of magnitude. 
 
@@ -30,7 +25,7 @@ For instance, orthophosphates undergo a number of acid-base reactions when intro
 
 Some functions were written to calculate the true concentration of the precipitation-causing species in dependence of their total concentration in the system and the system pH. The acidity constants $K_{a}$ were taken from literature.
 
-```{r Load functions}
+```{r Load functions, include=FALSE}
 # Phosphate speciation
 source('R/speciation - c_T-PO4.R')
 
@@ -50,14 +45,16 @@ source('R/speciation - c_T-SO4.R')
 
 ## 1.2 Load data
 
-```{r Load workbook}
+Rawdata is gathered by skimming relevant literature for data that can be used for a meta-analysis.
+
+```{r Load workbook, include=FALSE}
 # Load workbook
 masterfile_nutrients <- loadWorkbook(filename = "data/Aquaponics - Masterfile Nutrients.xlsx")
 ```
 
 
 
-```{r Read worksheets}
+```{r Read worksheets, include=FALSE}
 # Read worksheet - General information
 general_info <- readWorksheet(masterfile_nutrients, sheet = 'general')
 
@@ -74,7 +71,7 @@ solubility_data <- read.csv('data/solubilityData_for3-NutrientSolubilityCorrecte
 
 
 
-```{r Process solubility data}
+```{r Process solubility data, include=FALSE}
 solubility_data <- solubility_data %>% 
   select(-c(X, name, cation, anion, densH2O, massPercent)) %>% 
   filter(!is.na(Ks0) & chemAnion != "S" & chemAnion != "SO3") %>% 
@@ -96,7 +93,7 @@ For correction of the solubilities by pH, the total concentrations $c_{T}$ of an
 
 All concentrations are initially reported in mg/L.
 
-```{r Create procdata and recalculate species}
+```{r Create procdata and recalculate species, echo=FALSE}
 procdata <- empirical_data %>% 
   
   # Rename columns
@@ -391,7 +388,7 @@ The concentration of Ca, Fe and Cu is higher than theoretically possible if prec
 
 As mentioned, the concentration of CO2 will be reduced in this iteration by reducing the assumed partial pressure of CO2 from 0.054 to 0.0027 atm. This results in a decrease of the CO2 concentrtion in water by factor 20. All concentrations are initially reported in mg/L.
 
-```{r Create procdata and recalculate species}
+```{r Create procdata and recalculate species 2}
 procdata <- empirical_data %>% 
   
   # Rename columns
@@ -421,7 +418,7 @@ procdata <- empirical_data %>%
 
 
 
-```{r Convert procdata to mol}
+```{r Convert procdata to mol 2}
 # Read molar weight data
 molarWeight <- read.csv2(file = 'data/molarWeight.csv')
 
@@ -456,7 +453,7 @@ procdata <- procdata %>%
 
 
 
-```{r Recalculate solubilities}
+```{r Recalculate solubilities 2}
 procdata <- procdata %>% 
   mutate(
     # CaCO3

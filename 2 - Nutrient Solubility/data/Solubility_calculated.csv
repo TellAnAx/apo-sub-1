@@ -3,12 +3,12 @@ Iron(III) hydroxide,\ce{Fe(OH)3},Fe,OH,1.0e-10,1.0e-10,3.0e-10,1.1e-05,5.6e-06,5
 Copper sulfid,\ce{CuS},Cu,S,2.4e-08,2.4e-08,2.4e-08,2.4e-03,1.6e-03,7.8e-04
 Iron(III) phosphate dihydrate,\ce{FePO4 * 2 H2O},Fe,PO4,3.1e-08,3.1e-08,3.1e-08,5.9e-03,1.8e-03,3.0e-03
 Copper phosphate,\ce{Cu3(PO4)2},Cu,PO4,1.7e-08,5.0e-08,3.3e-08,6.4e-03,3.2e-03,3.2e-03
-Calcium phosphate,\ce{Ca3(PO4)2},Ca,PO4,1.1e-07,3.4e-07,2.3e-07,3.5e-02,1.4e-02,2.2e-02
 Zinc orthophosphate tetrahydrate,\ce{Zn3(PO4)2 * 4 H2O},Zn,PO4,1.5e-07,4.6e-07,3.1e-07,     NA,3.0e-02,2.9e-02
 Nickel phosphate,\ce{Ni3(PO4)2},Ni,PO4,2.1e-07,6.4e-07,4.3e-07,7.8e-02,3.8e-02,4.0e-02
 Zinc hydroxide,\ce{Zn(OH)2},Zn,OH,2.0e-06,2.0e-06,3.9e-06,1.9e-01,1.3e-01,6.7e-02
 Iron(II) hydroxide,\ce{Fe(OH)2},Fe,OH,2.3e-06,2.3e-06,4.6e-06,2.1e-01,1.3e-01,7.8e-02
 Manganese carbonate,\ce{MnCO3},Mn,CO3,4.7e-06,4.7e-06,4.7e-06,5.4e-01,2.6e-01,2.8e-01
+Calcium phosphate,\ce{Ca3(PO4)2},Ca,PO4,2.5e-06,7.4e-06,4.9e-06,7.7e-01,3.0e-01,4.7e-01
 Nickel hydroxide,\ce{Ni(OH)2},Ni,OH,5.2e-06,5.2e-06,1.0e-05,4.8e-01,3.0e-01,1.8e-01
 Iron(II) carbonate,\ce{FeCO3},Fe,CO3,5.6e-06,5.6e-06,5.6e-06,6.5e-01,3.1e-01,3.4e-01
 Magnesium orthophosphate,\ce{Mg3(PO4)2},Mg,PO4,6.3e-06,1.9e-05,1.3e-05,1.6e+00,4.6e-01,1.2e+00

@@ -28,7 +28,9 @@ options(digits = 2)
 
 ```{r}
 # Load Workbook
-water_chemistry <- loadWorkbook("/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Water Chemistry.xlsx")
+#water_chemistry <- loadWorkbook("/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Water Chemistry.xlsx")
+
+water_chemistry <- loadWorkbook("data/Aquaponics - Water Chemistry.xlsx")
 ```
 
 
@@ -217,7 +219,10 @@ plotdata %>%
 # Comparison with empirical data
 
 ```{r}
-data <- readWorksheetFromFile(file = "/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Masterfile Nutrients.xlsx"
+#data <- readWorksheetFromFile(file = "/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Masterfile Nutrients.xlsx", sheet = "waterTRANS")
+
+
+data <- readWorksheetFromFile(file = "data/Aquaponics - Masterfile Nutrients.xlsx"
                   ,sheet = "waterTRANS"
 )
 

@@ -86,7 +86,7 @@ lowSolubility <- cationSolubility %>%
 
 ## Load data
 ```{r}
-resh_hydroponic_plant_production <- loadWorkbook(filename = "/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Resh - Hydroponic Plant Production.xlsx")
+resh_hydroponic_plant_production <- loadWorkbook(filename = "data/Resh - Hydroponic Plant Production.xlsx")
 resh <- readWorksheet(resh_hydroponic_plant_production, sheet = "nutrient solutions", region = c('A', 'C2:Q50'))
 
 resh <- data.frame(resh[[2]], row.names = resh[[1]][2:49,1])
@@ -150,7 +150,7 @@ Only data from on-demand coupled aquaponic systems or supernatants from reminera
 ## Load data
 ```{r}
 # Load data
-masterfile_nutrients <- loadWorkbook(filename = "/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Masterfile Nutrients.xlsx")
+masterfile_nutrients <- loadWorkbook(filename = "data/Aquaponics - Masterfile Nutrients.xlsx")
 empirical_data <- readWorksheet(masterfile_nutrients, sheet = 'waterAVERAGE')
 ```
 
@@ -286,12 +286,19 @@ plotlevels <- unlist(unique(subset(plotdata, group3 == 'micronutrient', select =
 
 plotdata %>% 
   filter(group3 == 'micronutrient') %>% 
+  
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  
   geom_point() +
+  
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  
   scale_y_log10() + 
+  
   labs(
     x = 'Days',
     y = 'log(c) [mg/L]'
@@ -309,7 +316,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(
@@ -329,7 +336,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(
@@ -349,7 +356,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(
@@ -369,7 +376,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(
@@ -389,7 +396,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(
@@ -409,7 +416,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(
@@ -429,7 +436,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(
@@ -449,7 +456,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(
@@ -469,7 +476,7 @@ plotdata %>%
   ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
   geom_point() +
   geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
-  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = concentration), linetype = 'dashed', color = 'red') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
   facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
   scale_y_log10() + 
   labs(

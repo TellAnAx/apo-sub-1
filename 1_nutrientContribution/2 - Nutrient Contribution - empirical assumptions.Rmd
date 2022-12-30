@@ -1,0 +1,702 @@
+---
+title: "2 - Total Nutrient Contribution"
+subtitle: "Assessment of contributions based on assumptions derived from empirical data"
+author: "Anıl A. Tellbüscher"
+date: '2022-07-04'
+output: html_document
+---
+
+# To Do
+
+- 
+
+
+```{r include=FALSE}
+# Load packages
+library(XLConnect)
+library(tidyverse)
+library(NADA)
+```
+
+
+
+# General
+It was found that the statement, that the fish feed provides most of the plant nutrients, should be seen as a qualitative instead of a quantitative statement (Delaide et al. 2016). For the formulation of fish feeds tailored for aquaponic systems, it is important to find out which nutrients are generally variable in their input concentrations, with the variability being site-specific. Otherwise, it might be the case that a tailored aquafeed is oversupplying a nutrient in one scenario, while the same nutrient is not present in sufficient amounts in another scenario. This shall be avoided. Due to the fact that the stated paper only analysed water originating from one source, it does not account for variability among different locations. The composition of water is constrained by the EU Water Directive, but can vary within the accepted threshold value. The aim of the following section is thus to estimate the variability by using a range of waters from different sources. By doing this, a pre-selection of candidate nutrients for the development of a tailored aquafeed is made.
+
+The contribution of the different nutrient sources to the total nutrient input is based on daily inputs of feed, water and auxiliary chemicals. The latter are used for pH control. Assumptions have to be made based on average system parameters such as 
+
+- rearing volume of the system
+- total volume of the system
+- stocking density of the system
+- total biomass
+- daily feeding rate
+- daily water exchange rate
+- total daily feed input
+- total daily water input
+
+
+
+# 1. Generate assumptions
+
+## 1.1 Rearing parameters
+
+```{r}
+# Load Workbook
+#masterfile_nutrients <- loadWorkbook("/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Masterfile Nutrients.xlsx")
+```
+
+
+
+### 1.1.1 Load rearing data
+
+```{r}
+#assumption_data_general <- readWorksheet(masterfile_nutrients, sheet = 'general', header = TRUE, startRow = 1)
+assumption_data_general <- gdata::read.xls("../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx", sheet = 'general')
+
+summary(assumption_data_general)
+```
+
+
+
+```{r}
+#assumption_data_rearing <- readWorksheet(masterfile_nutrients, sheet = 'rearing', header = TRUE, startRow = 2)
+assumption_data_rearing <- gdata::read.xls("../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx", sheet = "rearing")
+
+assumption_data_rearing <- assumption_data_rearing %>% 
+  rename("species" = Species) %>% 
+  mutate(
+    species = as.factor(species),
+    site = as.factor(site),
+    city = as.factor(city),
+    country = as.factor(country)
+  )
+
+summary(assumption_data_rearing)
+```
+
+
+
+### 1.1.2 Load feeding data
+
+The feeding dataset contains information about the feeding rate and the feed composition.
+
+```{r}
+#assumption_data_feed <- readWorksheet(masterfile_nutrients, sheet = 'feedIN', header = TRUE, startRow = 2)
+
+assumption_data_feed <- gdata::read.xls('../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx', sheet = 'feedIN', skip = 1)
+
+summary(assumption_data_feed)
+```
+
+
+
+### 1.1.3 Derive assumptions
+- the mean volume of the rearing compartment (m3) which is determining the total biomass in the system due to the fact that the stocking density depends on the volume of the rearing tanks instead of the total system volume
+- the mean daily feed input (kg) based on the feeding rate given
+- the mean total volume of freshwater added (m3), based on the water exchange rate reported
+- the mean water exchange volume (L) per mass unit of feed (kg) added to the system as an indicator of the amount of freshwater that is used.
+```{r}
+assumptions_data <- assumption_data_rearing %>% 
+  
+  
+  left_join(assumption_data_feed, by = c("Reference_ID", "Treatment_ID")) %>% 
+  
+  left_join(assumption_data_general, by = c("Reference_ID", "Treatment_ID")) %>% 
+  
+# XLConnect  
+#  rename('tankV' = 'Vtank_.m3.', 'tankN' = 'Ntank', 'totalV' = 'Vtot_.m3.', 'density' = 'Density_.kgm3.', 'biomass' = 'totBiomass_.kgsystem.', 'exchRate' = 'exchRate_.percd.', 'FR' = 'FR_..BW.', 'days' = 'duration_.d.', 'IBW' = 'IBW_.g.') %>% 
+  
+# gdata
+  rename('tankV' = 'Vtank_m3', 'tankN' = 'Ntank', 'totalV' = 'Vtot_m3', 'density' = 'density_kgm3', 'biomass' = 'totBiomass_kg', 'days' = 'duration_d', 'IBW' = 'IBW_g') %>% 
+    
+    
+  filter(
+    experiment != 'remineralisation' #& 
+    #coupling != 'permanent' & 
+    #Reference_ID != 'Siqwepu2020'
+  ) %>% 
+  
+  
+  select('Reference_ID', 'Treatment_ID', 'tankV','tankN', 'totalV', 'density', 'biomass', 'exchRate', 'FR', 'CP') %>% 
+  
+  # gdata
+  mutate(
+    FR = as.numeric(sub("%","",FR)) / 100,
+    exchRate = as.numeric(sub("%","",exchRate)) / 100,
+    CP = as.numeric(sub("%","",CP)) / 100
+  ) %>% 
+  
+  # Calculate some assumptions
+  mutate(
+    rearingV = tankV * tankN, # m3
+    dailyFeed = biomass * (FR), # kg
+    # totalV = tankV * tankN + miscV,
+    dailyFreshwater = totalV * (exchRate), # m3
+    waterEx_perFeed = (dailyFreshwater * 1e3) / dailyFeed # L
+  ) %>% 
+  
+  #drop_na(biomass) %>% 
+  #drop_na(dailyFreshwater) %>% 
+  #filter(dailyFreshwater > 0) %>% 
+
+  print() %>% 
+  
+  write_csv('results/assumptions_data_raw.csv')
+
+
+
+# Count observations
+assumptions_data %>% 
+  summarise(
+    publications = length(unique(Reference_ID)),
+    observations = n()
+  ) %>% 
+  
+  print()
+
+
+
+# Generate summary values
+assumptions_data <- assumptions_data %>% 
+  
+  summarise(
+    RearingV = mean(rearingV, na.rm = TRUE),
+    #sdRearingV = sd(rearingV, na.rm = TRUE),
+    TotalV = mean(totalV, na.rm = TRUE),
+    #sdTotalV = sd(totalV, na.rm = T),
+    #IBW = mean(IBW, na.rm = TRUE),
+    StockingDensity = mean(density, na.rm = TRUE), # kg m^-3
+    #sdStockingDensity = sd(density, na.rm = TRUE),
+    Biomass_Density_derived = RearingV * StockingDensity,
+    Biomass = mean(biomass, na.rm = TRUE), # kg
+    #sdBiomass = sd(biomass, na.rm = TRUE),
+    meanFR = mean(FR, na.rm = TRUE),
+    DailyFeed = mean(dailyFeed, na.rm = TRUE), # kg d^-1
+    #sdDailyFeed = sd(dailyFeed, na.rm = TRUE),
+    meanCP = mean(CP, na.rm = TRUE),
+    WaterExchange = mean(exchRate, na.rm = TRUE) * 100, # %
+    #sdWaterExchange = sd(exchRate, na.rm = TRUE) * 100,
+    DailyFreshwater = mean(dailyFreshwater, na.rm = TRUE), # m3
+    #sdDailyFreshwater = sd(dailyFreshwater, na.rm = TRUE),
+    WaterEx_perFeed = mean(waterEx_perFeed, na.rm = TRUE), # L
+    #sdWaterEx_perFeed = sd(waterEx_perFeed, na.rm = TRUE),
+    #pH = mean(pH, na.rm = TRUE)
+  ) %>% 
+  
+  print() %>% 
+  
+  write_csv('results/assumptions_data_summarised.csv')
+
+rm(assumption_data_feed)
+```
+
+By limiting to publications that are not remineralisation systems and, in case of aquaponic systems, only representing the aquaculture unit of on-demand coupled systems, it is ensured that the data is representing the aquaculture conditions in the aquaponic studies.
+A total of 51 observations from 21 publications was used for generating the assumptions.
+
+
+
+
+
+### 1.1.4 Explore the dataset further
+
+```{r}
+species_plot <- assumption_data_rearing %>% 
+  distinct(species, Reference_ID, .keep_all = TRUE) %>% 
+  filter(species != "-" & species != "") %>% 
+  
+  ggplot(aes(y = species)) +
+  geom_bar() + 
+  labs(
+    x = "Number of publications",
+    y = ""
+  )
+
+species_plot 
+ggsave("../plots/species.png")
+rm(species_plot)
+```
+
+
+
+
+
+
+
+## 1.2 Water data
+
+### 1.2.1 Load water quality data
+```{r}
+# Load workbook
+#water_quality <- loadWorkbook(filename = "/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Water Quality.xlsx")
+```
+
+
+
+```{r include=FALSE}
+# Load tap water data
+#water_data <- readWorksheet(water_quality, 
+#                      sheet = 'municipalTap', 
+#                      startRow = 2,
+#                      endCol = 47)
+
+# gdata
+water_data <- gdata::read.xls("data/Aquaponics - Water Quality.xlsx", sheet = "municipalTap", skip = 1)
+
+water_data <- water_data[,1:grep("TOC_belowLimit", colnames(water_data))]
+
+summary(water_data)
+colnames(water_data)
+```
+
+
+
+```{r}
+# Convert belowLimit columns to logical
+water_data[,grep("belowLimit", colnames(water_data))] <- apply(water_data[,grep("belowLimit", colnames(water_data))], 2, as.logical)
+
+summary(water_data)
+```
+
+
+### 1.2.2 Exploration of water data
+
+```{r}
+# Absolute and relative frequencies of countries
+water_data %>% 
+  group_by(Country) %>% 
+  summarise(abs_num = n()) %>% 
+  mutate(rel_num = round(abs_num/sum(abs_num), digits = 3)) %>% 
+  print() %>% 
+  
+  summarise(
+    total_obs = sum(abs_num),
+    countries = length(unique(Country))
+  )
+```
+
+
+
+```{r}
+# Barplot - Country frequencies in dataset
+water_data %>% 
+  ggplot(aes(y = Country)) +
+  geom_bar()
+
+ggsave("plots/waterData_countryPlot.png")
+```
+
+
+
+
+```{r}
+# 
+water_data %>% 
+  select(contains("belowLimit")) %>% 
+  pivot_longer(cols = everything(), names_to = "analyte", values_to = "belowLimit") %>% 
+  mutate(
+    analyte = sub("_belowLimit", "", analyte),
+    na = if_else(is.na(belowLimit),1,0)
+    ) %>% 
+  group_by(analyte) %>% 
+  summarise(
+    n_anal = n(),
+    na = sum(na),
+    belowLimit = sum(belowLimit, na.rm = TRUE)
+    ) %>% 
+  mutate(rel_belowLimit = round(belowLimit / (n_anal - na), digits = 3)) %>% 
+  print() %>% 
+  
+  # Barplot
+  ggplot(aes(x = rel_belowLimit, y = analyte)) + 
+  geom_col() + 
+  labs(
+    x = "Proportion of observations below detection limit",
+    y = "Analyte"
+  )
+
+ggsave("plots/waterData_belowLimit.png")
+```
+
+
+
+## 1.3 pH management
+
+### 1.3.1 Calculate inputs required
+
+```{r}
+buffer_data <- read_csv("results/assumptions_data_summarised.csv") %>% 
+  
+  mutate(
+    dailyCP_kg = DailyFeed * meanCP, #kg
+    dailyN_kg = dailyCP_kg / 6.25, #divide by Kjeldahl factor
+    dailyH_kg = dailyN_kg / 3.5,
+    dailyH_mol = dailyH_kg * 1000,
+    dailyKOH_mol = dailyH_mol,
+    dailyK_g = dailyKOH_mol * 39.098,
+    dailyCaOH2_mol = dailyH_mol / 2,
+    dailyCa_g = dailyCaOH2_mol * 40.078
+  ) %>% 
+  
+  print() %>% 
+  
+  #select(dailyK_g) %>% 
+  #select(dailyCa_g) %>%
+  select(c(dailyK_g, dailyCa_g)) %>% 
+  rename(K = dailyK_g) %>% 
+  rename(Ca = dailyCa_g) %>% 
+  pivot_longer(everything(), names_to = "compound", values_to = "contribution_g") %>% 
+
+
+  print()
+```
+
+
+
+
+
+# 2. Recalculation of censored data
+To estimate the mass contribution of source water and feed to the total amount of nutrients that are entering the system, it is assumed that the RAS operator is using tap water as freshwater source. This is in line with aquaponics being suggested as alternative means of food production in urban areas or in regions suffering from water scarcity. Analysis results from different water treatment plants all over the world, but with focus on Europe, are taken as data input.
+Due to the fact that certain nutrients in tap water are below detection limits, the 90% confidence interval was estimated using the Maximum Likelihood Estimation (MLE) method (Statistics for Censored Environmental Data, Helsel 2012). 
+Here, data points for the values below detection limit are estimated statistically, based on the distribution of the available values and the detection limits. This approach yields much better estimates of location and distribution statistics than the substitution of values below detection limits by a fixed number.
+
+
+
+## 2.1 Convert data
+```{r}
+# Conversion of data into long format
+water_data <- water_data %>% 
+  select(-c(Reference_ID:`EC_uS_cm_25degC`)) %>% 
+  pivot_longer(
+    everything(),
+  names_to = c("nutrient", ".value"),
+  names_pattern = "(.+)_(.+)*"
+    ) %>% 
+  mutate(nutrient = as.factor(nutrient)) %>% 
+  drop_na() %>% 
+  print()
+
+summary(water_data)
+
+write.csv2(water_data, file = 'data/water_data.csv')
+```
+
+
+
+## 2.2 MLE replacement values for censored data
+```{r include=FALSE}
+# Calculation of Maximum Likelihood estimates and 95% confidence interval for censored tap water quality data
+#
+# Extract nutrients for looping
+object <- levels(water_data$nutrient)
+# Create results data frame
+results <- data.frame(
+  nutrient = vector(mode = "character"), 
+  lconf = vector(mode = "numeric"),
+  mconf = vector(mode = "numeric"),
+  hconf = vector(mode = "numeric")
+  )
+
+for (number in 1:length(object)) {
+  
+  # Create subset for each nutrient
+  temp <- filter(water_data, nutrient == object[number]) %>%
+    drop_na()
+  
+  # Create results dataframe with 95% confInts
+  results[number,1] <- object[number]
+  results[number,2] <- mean(cenmle(temp$mgL, temp$belowLimit, dist = 'gaussian'))[c(3)]
+  results[number,3] <- mean(cenmle(temp$mgL, temp$belowLimit, dist = 'gaussian'))[c(1)]
+  results[number,4] <- mean(cenmle(temp$mgL, temp$belowLimit, dist = 'gaussian'))[c(4)]
+}
+```
+
+
+
+Next, the concentration values are converted from molecular into elemental concentrations by multiplication of the concentration value with their corresponding conversion factor that is based on the molar mass ratio between the element (e.g. N) and the molecule (e.g. NO3). 
+
+
+
+```{r include=FALSE}
+# Conversion of molecular into elemental concentrations
+
+object <- c("PO4", "NO2", "NO3", "NH4", "SO4")
+convFactor <- c(31/95, 7/23, 7/31, 7/9, 1/3)
+
+for( i in 1:nrow(results)){
+  for(number in 1:length(object)){
+   if(results$nutrient[i] == object[number]){
+     results$lconf[i] <- results$lconf[i] * convFactor[number]
+     results$mconf[i] <- results$mconf[i] * convFactor[number]
+     results$hconf[i] <- results$hconf[i] * convFactor[number]
+   } 
+  }
+}
+```
+
+
+
+Finally, all nitrogenous compounds are summed up as total inorganic nitrogen (TIN).
+
+
+
+```{r include=FALSE}
+# Calculation of N from remaining data
+temp <- data.frame()
+
+temp[1,1] <- 'TIN'
+
+temp[1,2] <- sum(results$lconf[which(results$nutrient %in% c('NH4', 'NO2', 'NO3'))])
+temp[1,3] <- sum(results$mconf[which(results$nutrient %in% c('NH4', 'NO2', 'NO3'))])
+temp[1,4] <- sum(results$hconf[which(results$nutrient %in% c('NH4', 'NO2', 'NO3'))])
+
+colnames(temp) <- colnames(results)
+
+results <- rbind(results, temp)
+
+results <- results %>% 
+  print() %>% 
+  write_csv("results/nutrientContrib_water.csv") %>% 
+  select(-mconf)
+```
+
+
+
+Now, data about average nutrient inclusion rates of fish feeds is used to calculate the 'contribution ratio' for each plant nutrient that is entering the system.
+
+
+
+## 2.3 Load digestibility data
+The digestibility data is based on the book "Fish Nutrition" (Lall, 2002).
+
+```{r include=FALSE}
+# Load digestibility data
+feed_data <- read_csv2("data/nutrient_contribution.csv") %>% 
+  
+  select(-c("concWater_g/m3", "concWaterMax_g/m3")) %>% 
+  
+  mutate(
+    compound = factor(compound, levels = c('N', 'P', 'K', 'Ca', 'Mg', 'S', 'B', 'Fe', 'Mn', 'Zn', 'Cu', 'Mo', 'Ni', 'Na')),
+    `feedComp_g/kg` = as.numeric(`feedComp_g/kg`),
+    digestibility = as.numeric(digestibility)
+  ) %>% 
+  
+  print()
+```
+
+
+
+
+
+# 3. Plot total contribution data
+
+## 3.1 Create plot dataset
+```{r}
+plotdata <- results %>% 
+  
+  filter(nutrient != "Al" & nutrient != "Cl" & nutrient != "TOC") %>% 
+  
+  # Rename factor levels
+  mutate(nutrient = factor(nutrient,
+                           levels = c('TIN', 'PO4', 'K', 'Ca', 'Mg', 'SO4', 'B', 'Fe', 'Mn', 'Zn', 'Cu', 'Mo', 'Ni', 'Na', 'NH4', 'NO2', 'NO3'),
+                           labels = c('N', 'P', 'K', 'Ca', 'Mg', 'S', 'B', 'Fe', 'Mn', 'Zn', 'Cu', 'Mo', 'Ni', 'Na','NH4', 'NO2', 'NO3'))) %>% 
+  
+  left_join(feed_data, by = c('nutrient' = 'compound')) %>% 
+  left_join(buffer_data, by = c('nutrient' = 'compound')) %>% 
+  drop_na(`feedComp_g/kg`) %>% 
+  
+  # Calculate nutrient contributions (water data already in g)
+  mutate(
+    `Water 5% Contribution` = assumptions_data$DailyFreshwater * lconf,
+    `Water 95% Contribution` = assumptions_data$DailyFreshwater * hconf,
+    FeedContribution = assumptions_data$DailyFeed * `feedComp_g/kg`,
+  ) %>% 
+  
+  rename(BufferContribution = "contribution_g") %>% 
+  
+  select(c(nutrient, `Water 5% Contribution`, `Water 95% Contribution`, FeedContribution, BufferContribution)) %>% 
+  
+  pivot_longer(cols = c(`Water 5% Contribution`, `Water 95% Contribution`, FeedContribution, BufferContribution),
+               names_to = 'Contribution',
+               names_pattern = '(.*)Contribution',
+               values_to = 'Total') %>% 
+  mutate(nutrient = as.factor(nutrient))
+
+plotdata <- plotdata %>% mutate(Total = if_else(Total > 0,Total, 0, missing = 0))
+
+print(plotdata)
+```
+
+
+
+## 3.2 Create plots
+
+### 3.2.1 Total nutrient contribution
+Given the data about average plant nutrient loadings per unit of water and feed and the initial assumptions about the daily exchanged volume of water and feed fed, it is possible to calculate the total mass of nutrients that are introduced into the system every day.
+
+```{r}
+
+plotdata$nutrient <- fct_relevel(plotdata$nutrient, "N", "P", "K", "Ca", "Mg", "S", "B", "Fe", "Mn", "Cu", "Zn", "Mo", "Ni", "Na")
+  
+plotdata %>% 
+ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
+  geom_col(position = 'fill') + 
+  geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dashed", alpha = 0.75) + 
+  labs(
+    title = "The source of plant nutrients in Aquaponics"
+    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility not considered", sep = "")
+    ,x = ""
+    ,y = "Relative nutrient contribution"
+    ,fill = "Source"
+  ) +
+  theme_minimal() + 
+  scale_fill_manual(values=c("grey",
+                             "brown",
+                             "lightblue",
+                             "darkblue"))
+```
+
+A visual presentation of the data based on the percentage contribution of both sources to the total introduced nutrients gives a picture that differs from the consensus that the majority of nutrients is introduced into the system via feed. 
+Even though the most important plant nutrients (N, P, K) and all micronutrients, excluding boron, are mostly originating from the feed, source water would provide 25 to 50% of calcium, sulfur and boron in 90% of the cases.
+
+
+
+
+
+### 3.2.2 Indigestible nutrient contribution
+An important aspect that should not be forgotten is that the livestock in the RAS has to be considered a nutrient sink. When thinking about the total nutrient contribution to the system, it is, as showed, scenario-dependently true that feed is introducing the highest share of nutrients to the system. However, it must be taken into account that animal feed is only partly excreted, while the other part is retained in the animal in form of biomass. If we want to fertilize the plants, it is thus of importance to consider only the nutrients that are leaving the RAS unit. To do so, the nutrient retention by the livestock is taken into account in the next step.
+
+```{r include=FALSE}
+plotdata <- plotdata %>% 
+  pivot_wider(
+    names_from = Contribution,
+    values_from = Total
+  ) %>% 
+  left_join(feed_data, by = c('nutrient' = 'compound')) %>% 
+  select(c(nutrient, `Water 5% `, `Water 95% `, Buffer, Feed, digestibility)) %>% 
+  mutate(
+    Feed = Feed * digestibility
+  ) %>% 
+  select(-digestibility) %>% 
+  pivot_longer(
+    `Water 5% `:Feed,
+    names_to = 'Contribution',
+    values_to = 'Total'
+  )
+
+plotdata$nutrient <- fct_relevel(plotdata$nutrient, "N", "P", "K", "Ca", "Mg", "S", "B", "Fe", "Mn", "Cu", "Zn", "Mo", "Ni", "Na")
+```  
+
+
+
+
+
+
+```{r echo=FALSE}
+plotdata %>% 
+  filter(Contribution != "Water 95% " & Contribution != "Buffer") %>% 
+  
+  write_csv("results/nutrientContrib_water5.csv") %>% 
+  
+ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
+  geom_col(position = 'fill') + 
+  labs(
+    title = "The source of plant nutrients in Aquaponics"
+    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility considered", sep = "")
+    ,x = ""
+    ,y = "Nutrient contribution (%)"
+    ,fill = "Source"
+  ) + 
+  theme_minimal() + 
+  scale_fill_manual(values=c("brown",
+                             "lightblue"
+                             ))
+
+#ggsave('plots/nutrientContrib_water5.png')
+```
+
+
+
+```{r echo=FALSE}
+plotdata %>% 
+  filter(Contribution != "Water 5% " & Contribution != "Buffer") %>% 
+  
+  write_csv("results/nutrientContrib_water95.csv") %>% 
+  
+ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
+  geom_col(position = 'fill') + 
+  labs(
+    title = "The source of plant nutrients in Aquaponics"
+    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility considered", sep = "")
+    ,x = ""
+    ,y = "Nutrient contribution (%)"
+    ,fill = "Source"
+  ) + 
+  theme_minimal() + 
+  scale_fill_manual(values=c("brown",
+                             #"lightblue"
+                             "darkblue"
+                             ))
+
+#ggsave('plots/nutrientContrib_water95.png')
+```
+
+
+
+```{r echo=FALSE}
+plotdata %>% 
+  filter(Contribution != "Water 95% "
+         ) %>% 
+  
+  write_csv("results/nutrientContrib_water5plusCa.csv") %>% 
+  
+ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
+  geom_col(position = 'fill') + 
+  labs(
+    title = "The source of plant nutrients in Aquaponics"
+    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility considered", sep = "")
+    ,x = ""
+    ,y = "Nutrient contribution (%)"
+    ,fill = "Source"
+  ) + 
+  theme_minimal() + 
+  scale_fill_manual(values=c("grey", 
+                             "brown",
+                             "lightblue"
+                             ))
+
+#ggsave('plots/nutrientContrib_water5plusCa.png')
+```
+
+```{r echo=FALSE}
+plotdata %>% 
+  filter(Contribution != "Water 5% ") %>% 
+  
+  write_csv("plots/nutrientContrib_water95plusCa.csv") %>% 
+  
+ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
+  geom_col(position = 'fill') + 
+  labs(
+    title = "The source of plant nutrients in Aquaponics"
+    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility considered", sep = "")
+    ,x = ""
+    ,y = "Nutrient contribution (%)"
+    ,fill = "Source"
+  ) + 
+  theme_minimal() + 
+  scale_fill_manual(values=c("grey", 
+                             "brown",
+                             "darkblue"
+                             ))
+
+#ggsave('plots/nutrientContrib_water95plusCa.png')
+```
+
+
+
+
+
+
+
+
+As shown, taking the retention into consideration increases the share that source water has of the total amount of nutrients present in the system. However, the absolute amount of nutrients within the system decreases as it is now part of the fish in form of biomass and not available for plant growth any longer.
+

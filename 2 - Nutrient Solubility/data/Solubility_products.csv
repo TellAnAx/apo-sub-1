@@ -1,8 +1,14 @@
-Compound,Solubility product
-\ce{Ca3(PO4)2},2.07e-33
-\ce{Cu3(PO4)2},1.40e-37
-\ce{FePO4*2H2O},9.91e-16
-\ce{Mg3(PO4)2},1.04e-24
-\ce{MnCO3},2.24e-11
-\ce{Ni3(PO4)2},4.74e-32
-\ce{Zn(OH)2},3.00e-17
+Compound,Solubility product,Reference 
+\ce{CaCO3},3.36e-9,\cite{DeRijck1998c} 
+\ce{Ca(OH)2},5.02e-6,\cite{Lide2007} 
+\ce{Ca3(PO4)2},1.00e-26,\cite{Lide2007} 
+\ce{Cu3(PO4)2},1.40e-37,\cite{Lide2007} 
+\ce{FePO4*2H2O},9.91e-16,\cite{Lide2007} 
+\ce{MgCO3},6.82e-6,\cite{Lide2007} 
+\ce{Mg(OH)2},5.61e-12,\cite{Lide2007} 
+\ce{Mg3(PO4)2},1.04e-24,\cite{Lide2007} 
+\ce{MnCO3},2.24e-11,\cite{Lide2007} 
+\ce{Ni3(PO4)2},4.74e-32,\cite{Lide2007} 
+\ce{ZnCO3},1.46e-10,\cite{Lide2007} 
+\ce{Zn(OH)2},3.00e-17,\cite{Lide2007} 
+\ce{Zn3(PO4)2},9e-33,\cite{Lide2007} 

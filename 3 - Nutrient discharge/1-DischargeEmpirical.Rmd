@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # General
 A constraint that is limiting the amount of a substance in an aquaculture system beside its solubility is the water exchange rate. After approximately three times the hydraulic retention time (HRT), the substance inflow concentration in the tank equals the outflow concentratino according to the CFSTR model. Even though this is an idealised model, it has to be considered that the outflow concentration can not be greater as the inflow concentration, because no generation of the substances of interest is taking place. Instead, the real outflow concentration is expected to be lower than the ideal concentration due to microbial uptake and assimilation by fish.
+
 The required data to calculate theoretical asymptotic concentrations of a substance are
 - all mass inputs of the substance, that are
   - feed
