@@ -235,7 +235,7 @@ It is common practice to report the value of the detection limit in case that th
 ## Fate and behavior of nutrients
 
 ### Assumptions and data selection
-It was assumed that aerobic conditions are predominant in all systems due to aeration of the RAS tanks and the oxygen requirements of nitrifyers. This would lead to the presence of metals in their reduced forms, e.g. [Fe$^{3+}$] >> [Fe$^{2+}$]. Furthermore, a concentration [CO$_{2}$]$_{total} = 0.018$ mol L$^{-1}$ was assumed.
+It was assumed that aerobic conditions are predominant in all systems due to aeration of the RAS tanks and the oxygen requirements of the livestock and nitrifyers. This would lead to the presence of metals in their reduced forms, e.g. [Fe$^{3+}$] >> [Fe$^{2+}$]. Furthermore, a concentration [CO$_{2}$]$_{total} = 0.018$ mol L$^{-1}$ was assumed.
 
 ```{r}
 data_long_empirical %>%
@@ -251,7 +251,8 @@ data_long_empirical %>%
 Data from the aquaponics dataset was used. Due to the stated assumptions, observations originating from aquaponic studies were limited to those making use of on-demand coupled system design to make sure that measured analyte concentrations were not impacted by plant uptake. Furthermore, anaerobic treatments were excluded from data originating from sludge remineralisation studies. The number of observations in the initial dataset was further reduced by excluding those that did not report pH, leading to a final dataset of 25 observations originating from 16 publications. 
 
 
-### Determination of mineral saturation
+
+### Determination of mineral saturation and precipitation
 To assess whether the waters in the selected literature were saturated with regards to specific minerals, mineral saturation indices $\log(\frac{Q}{K})$ were calculated. The saturation index of a mineral is the ratio between its ion product $Q$ and its solubility product $K_{sp}$. $Q$ can be generally expressed as follows 
 
 $$
@@ -261,6 +262,8 @@ $$
 where the expressions in square brackets denote for the empirically found concentrations of the cationic and anionic components of a mineral taken to the power of their stoichiometric coefficients $m$ and $n$. For instance, a concentration of [Fe$^{3+}$] = [PO$_{4}^{3-}$] = 0.1 mol $\text{L}^{-1}$ would result in $Q = [\text{Fe}^{3+}]^1 \cdot [\text{PO}_{4}^{3-}]^1 = 0.01 \text{ mol}^2 \text{ L}^2$. $K_{sp}$ is calculated analogously to the ion product but with concentrations denoting for the saturation concentration that is reached when a solid mineral equilibrates with its dissolved ions. If $\log(\frac{Q}{K}) > 0$, the concentration of ions is higher than their solubility under equilibrium conditions. The solution is thus not thermodynamically stable and it is likely that the mineral will precipitate from the oversaturated solution. On the other hand, if $\log(\frac{Q}{K}) < 0$, more of the solid mineral can dissolve until the equilibrium concentration is reached.
 
 
+
+### Determination of complexation by dissolved organic matter
 
 
 
@@ -396,10 +399,13 @@ The results indicate that maximum solubility of Ca, Fe and Cu was reached in sev
 
 
 
-![Boxplot of mineral saturation indices of cations in relation to different anions calculated from aquaponic studies. Dashed red line describes 100% saturation. Observations above the line indicate over-, those below the line undersaturation. Observations below but close to zero indicate solubility control by formation of a precipitate by the corresponding cation-anion combination.](plots/boxplot_empirical_saturation.png)
+![Boxplot of mineral saturation indices of cations in relation to different anions calculated from aquaponic studies. Dashed red line describes 100% saturation. Observations above the line indicate over-, those below the line undersaturation. Observations below but close to zero indicate solubility control by formation of a precipitate by the corresponding cation-anion combination.](plots/boxplot_empirical_saturation_vm.png)
+
+![](plots/boxplot_precipitated_vm.png)
 
 
 
+![](plots/boxplot_species_dom_vm.png)
 
 
 In comparison with results for the saturation index calculation of Hoagland's nutrient solution under different pH conditions, as shown in **FIGURE XXX**, it is evident that target concentrations for Ca at pH = 7.5 and for Fe and Mn both at pH = 6.0 and pH = 7.5 exceed the maximum solubility are above the maximum solubility. In 
@@ -437,7 +443,7 @@ The total nutrient input calculations are therefore only valid if there is no nu
 Saturation indices of nutrient composition data extracted from literature were calculated to find out whether nutrient imbalances in aquaponics occur due to lacking supply of certain nutrients or physico-chemical constraints such as precipitation reactions that are controlling the maximum reachable concentration of plant nutrients in solution.
 The limitation of Ca, Fe and Cu is in line with other studies that could not find an increase in the concentration of these compounds in solution if the feed inclusion rate was increased (Shaw, Seawright). Nutrient imbalances appear thus to be a result of chemical constraints. It can be further hypothetised that reported nutrient losses (see e.g. Delaide et al., 2017) are due to the formation of precipitates in the system. If precipitation occurs in inaccessible places such as the inside of pipes or other surfaces, these nutrients will not be taken into account when analysing, for instace, sludge samples. The nutrients would, however, not be lost but instead they are deposited out of reach.
 On the other hand, considering the positive saturation index values that were found for Fe and Mn, it is likely that other factors are controlling their solubility. Both ions might be kept in solution due to organic matter that is a natural ligand, forming chelates. However, this would lead to an increase in dissolved phosphate that might eventually form precipitates with other compounds or could be taken up by plants. 
-The current model did not account for organic matter. This would improve the accuracy of the results significantly.
+
 
 
 
