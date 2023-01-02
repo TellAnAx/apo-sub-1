@@ -27,3 +27,5 @@ for(file in 1:length(list_of_files)) {
   }
   
 }
+
+rm(temp_mass, temp_saturation, temp_species)
