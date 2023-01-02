@@ -8,6 +8,7 @@ output: "word_document"
 
 - Add overview of cultivated species to Results plot
 - Add the daily inputs to the table in the Results - Nutrient sources section on which the graphical representation of inputs is based
+- Check assumptions part (Henrys law) in the methodology part
 
 
 
@@ -185,7 +186,7 @@ Given these inputs, recommendations with regards to the formulation of tailored 
 # Methodology
 
 ## Software
-All calculations were conducted using Visual MINTEQ (v3.1) without modifications of the default database and R (v4.2.2) with RStudio ("Spotted Wakerobin" Release) as graphical user interface.
+All calculations were conducted using Visual MINTEQ (v3.1) and its default database and R (v4.2.2) with RStudio ("Spotted Wakerobin" Release) as graphical user interface.
 
 
 
@@ -193,9 +194,9 @@ All calculations were conducted using Visual MINTEQ (v3.1) without modifications
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 source('R/data_import.R') # Currently using gdata
-source('R/data_wrangling_empirical.R') # Data wrangling
-source("R/data_wrangling_hoagland.R")
-source('R/plot.R') # Plotting
+source("R/wrangling_dom.R")
+source("R/wrangling_precipitation.R")
+source("R/wrangling_logQK.R")
 ```
 
 Three datasets were created to approach the stated research questions: An aquaponic dataset, a source water dataset, and a feed dataset.
@@ -235,20 +236,19 @@ It is common practice to report the value of the detection limit in case that th
 ## Fate and behavior of nutrients
 
 ### Assumptions and data selection
-It was assumed that aerobic conditions are predominant in all systems due to aeration of the RAS tanks and the oxygen requirements of the livestock and nitrifyers. This would lead to the presence of metals in their reduced forms, e.g. [Fe$^{3+}$] >> [Fe$^{2+}$]. Furthermore, a concentration [CO$_{2}$]$_{total} = 0.018$ mol L$^{-1}$ was assumed.
+Due to aeration of the RAS tanks and the oxygen requirements of the livestock and nitrifyers, it was assumed that aerobic conditions are predominant in all systems. This would lead to the presence of metals in their reduced forms, e.g. [Fe$^{3+}$] >> [Fe$^{2+}$]. Furthermore, it was assumed that CO$_{2}$ in solution is in equilibrium with CO$_{2}$ in the atmosphere. According to **Henry's Law (in Aquatische Chemie nachgucken!)**, this would result in a concentration of $c_{\text{CO}_{2}, aq} = K_{H} \cdot p_{\text{CO}_{2}}$ [CO$_{2}$]$_{total} = 0.018$ mol L$^{-1}$.
 
 ```{r}
-data_long_empirical %>%
-  print() %>% 
-  separate(reference, into = c('reference', 'treatment'), sep = '_') %>%
-  print() %>% 
+references <- data.frame(refs = list.files("data"))
+
+references %>% 
+  separate(refs, into = c("author", "treatment"), sep = "(?<=[[:digit:]]{4})") %>% 
   summarise(
-    references = length(unique(reference)),
-    observations = length(unique(treatment))
-    )
+    unique(author)
+  )
 ```
 
-Data from the aquaponics dataset was used. Due to the stated assumptions, observations originating from aquaponic studies were limited to those making use of on-demand coupled system design to make sure that measured analyte concentrations were not impacted by plant uptake. Furthermore, anaerobic treatments were excluded from data originating from sludge remineralisation studies. The number of observations in the initial dataset was further reduced by excluding those that did not report pH, leading to a final dataset of 25 observations originating from 16 publications. 
+Data from the aquaponics dataset was used. Observations originating from aquaponic studies were limited to those making use of an on-demand coupled system design to ensure that measured analyte concentrations were not impacted by plant uptake. Furthermore, anaerobic treatments were excluded from data originating from sludge remineralisation studies. The number of observations in the initial dataset was further reduced by excluding those that did not report pH, leading to a final dataset of 25 observations originating from 16 publications. 
 
 
 
@@ -264,7 +264,7 @@ where the expressions in square brackets denote for the empirically found concen
 
 
 ### Determination of complexation by dissolved organic matter
-
+The complexation of plant nutrients by dissolved organic matter (DOM) was simulated using a Gaussian DOM model **(Grim)**. It was assumed that DOM is present in the systems at a concentration of 20 mg L$^{-1}$. 
 
 
 
