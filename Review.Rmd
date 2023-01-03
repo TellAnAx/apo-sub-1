@@ -8,7 +8,6 @@ output: "word_document"
 
 - Add overview of cultivated species to Results plot
 - Add the daily inputs to the table in the Results - Nutrient sources section on which the graphical representation of inputs is based
-- Check assumptions part (Henrys law) in the methodology part
 
 
 
@@ -236,7 +235,7 @@ It is common practice to report the value of the detection limit in case that th
 ## Fate and behavior of nutrients
 
 ### Assumptions and data selection
-Due to aeration of the RAS tanks and the oxygen requirements of the livestock and nitrifyers, it was assumed that aerobic conditions are predominant in all systems. This would lead to the presence of metals in their reduced forms, e.g. [Fe$^{3+}$] >> [Fe$^{2+}$]. Furthermore, it was assumed that CO$_{2}$ in solution is in equilibrium with CO$_{2}$ in the atmosphere. According to **Henry's Law (in Aquatische Chemie nachgucken!)**, this would result in a concentration of $c_{\text{CO}_{2}, aq} = K_{H} \cdot p_{\text{CO}_{2}}$ [CO$_{2}$]$_{total} = 0.018$ mol L$^{-1}$.
+Due to aeration of the RAS tanks and the oxygen requirements of the livestock and nitrifyers, it was assumed that aerobic conditions are predominant in all systems. This would lead to the presence of metals in their reduced forms, e.g. [Fe$^{3+}$] >> [Fe$^{2+}$]. Furthermore, it was assumed that CO$_{2}$ in solution is in equilibrium with CO$_{2}$ in the atmosphere. According to Henry's Law, this would result in a concentration of [CO$_{2}$(aq)]$_{total} = K_{H} \cdot p_{\text{CO}_{2}} = 0.018$ mol L$^{-1}$, assuming a partial pressure $p_{\text{CO}_{2}} = 0.054$ atm and the corresponding Henry constant of $K_{H} = 3.4 \cdot 10^{-2}$ mol L$^{-1}$ atm$^{-1}$.
 
 ```{r}
 references <- data.frame(refs = list.files("data"))
@@ -252,6 +251,11 @@ Data from the aquaponics dataset was used. Observations originating from aquapon
 
 
 
+### Determination of complexation by dissolved organic matter
+The complexation of plant nutrients by dissolved organic matter (DOM) was simulated using the Gaussian DOM model (Grimm et al., 1991). It was assumed that DOM is present in the systems at a concentration of 20 mg L$^{-1}$. The charge of the DOM species was calculated according to database values.
+
+
+
 ### Determination of mineral saturation and precipitation
 To assess whether the waters in the selected literature were saturated with regards to specific minerals, mineral saturation indices $\log(\frac{Q}{K})$ were calculated. The saturation index of a mineral is the ratio between its ion product $Q$ and its solubility product $K_{sp}$. $Q$ can be generally expressed as follows 
 
@@ -263,8 +267,7 @@ where the expressions in square brackets denote for the empirically found concen
 
 
 
-### Determination of complexation by dissolved organic matter
-The complexation of plant nutrients by dissolved organic matter (DOM) was simulated using a Gaussian DOM model **(Grim)**. It was assumed that DOM is present in the systems at a concentration of 20 mg L$^{-1}$. 
+
 
 
 
@@ -286,31 +289,37 @@ Using the assumptions derived from literature, an average biomass of 100 kg and 
 ```{r}
 # Mean and upper and lower limits of 95% confInt.
 # Data in mg/L
-read_csv("1_nutrientContribution/results/nutrientContrib_water.csv")
+read_csv("1_nutrientContribution/results/nutrientContrib_water.csv") %>% 
+  mutate(
+    lowInput_g_day = lconf * 4400 / 1000,
+    meanInput_g_day = mconf * 4400 / 1000,
+    highInput_g_day = hconf * 4400 / 1000
+  )
 ```
 
 
 The average nutrient composition of both aquafeeds and source water and the lower and upper limits of the 95% confidence interval for source water are shown in **TABLE XXX**. 
 
 
-**Compositions of nutrient sources. Shown are the averages for both aquafeeds and source water and the lower and upper limits of the 95% confidence interval for the source water.**
+**Compositions of nutrient sources and daily inputs. Shown are the averages for both aquafeeds and source water and the lower and upper limits of the 95% confidence interval for the source water.**
 Source water: n = 64;Aquafeeds: n = 54
 
-|Nutrient|Aquafeeds|Source water|pH management|Aquafeeds|Source water|pH management|
+|Nutrient|Aquafeeds|Source water|pH management|Aquafeeds daily|Source water daily|pH management daily|
 |---|---|---|---|---|---|---|
-|N|66.3 g kg$^{-1}$|1.2 mg L$^{-1}$ [0.8, 1.7]|||||
-|P|8.8 g kg$^{-1}$|95.2 µg L$^{-1}$ [34.4, 156.0]|||||
-|K|7.1 g kg$^{-1}$|2.6 mg L$^{-1}$ [1.8, 3.4]|||||
-|Ca|15.9 g kg$^{-1}$|64.4 mg L$^{-1}$ [55.6, 73.2]|||||
-|Mg|2.0 g kg$^{-1}$|11.5 mg L$^{-1}$ [9.4, 13.6]|||||
-|S|3.9 g kg$^{-1}$|14.2 mg L$^{-1}$ [10.7, 17.8]|||||
-|B|17.1 mg kg$^{-1}$|48.9 µg L$^{-1}$ [34.6, 63.3]|||||
-|Fe|291.3 mg kg$^{-1}$|18.7 µg L$^{-1}$ [12.3, 25.1]|||||
-|Mn|71.9 mg kg$^{-1}$|5.8 µg L$^{-1}$ [2.9, 8.7]|||||
-|Cu|14.3 mg kg$^{-1}$|22.4 µg L$^{-1}$ [0, 45.7]|||||
-|Zn|169.7 mg kg$^{-1}$|13.9 µg L$^{-1}$ [0, 28.2]|||||
-|Mo|1.7 mg kg$^{-1}$|0.7 µg L$^{-1}$ [0.5, 1.0]|||||
-|Ni|0.9 mg kg$^{-1}$|1.6 µg L$^{-1}$ [1.0, 2.2]|||||
+|N|66.3 g kg$^{-1}$|1.2 mg L$^{-1}$ [0.8, 1.7]|-||5.680 g d$^{-1}$|-|
+|P|8.8 g kg$^{-1}$|95.2 µg L$^{-1}$ [34.4, 156.0]|-||0.419 g d$^{-1}$|-|
+|K|7.1 g kg$^{-1}$|2.6 mg L$^{-1}$ [1.8, 3.4]|||11.685 g d$^{-1}$||
+|Ca|15.9 g kg$^{-1}$|64.4 mg L$^{-1}$ [55.6, 73.2]|||283.477 g d$^{-1}$||
+|Mg|2.0 g kg$^{-1}$|11.5 mg L$^{-1}$ [9.4, 13.6]|-||50.644 g d$^{-1}$|-|
+|S|3.9 g kg$^{-1}$|14.2 mg L$^{-1}$ [10.7, 17.8]|-||62.763 g d$^{-1}$|-|
+|B|17.1 mg kg$^{-1}$|48.9 µg L$^{-1}$ [34.6, 63.3]|-||215.5 mg d$^{-1}$|-|
+|Fe|291.3 mg kg$^{-1}$|18.7 µg L$^{-1}$ [12.3, 25.1]|-||82.5 mg d$^{-1}$|-|
+|Mn|71.9 mg kg$^{-1}$|5.8 µg L$^{-1}$ [2.9, 8.7]|-||25.6 mg d$^{-1}$|-|
+|Cu|14.3 mg kg$^{-1}$|22.4 µg L$^{-1}$ [0, 45.7]|-||98.7 mg d$^{-1}$|-|
+|Zn|169.7 mg kg$^{-1}$|13.9 µg L$^{-1}$ [0, 28.2]|-||61.5 mg d$^{-1}$|-|
+|Mo|1.7 mg kg$^{-1}$|0.7 µg L$^{-1}$ [0.5, 1.0]|-||0.3 mg d$^{-1}$|-|
+|Ni|0.9 mg kg$^{-1}$|1.6 µg L$^{-1}$ [1.0, 2.2]|-||7.4 mg d$^{-1}$|-|
+|Na||25.5 mg d$^{-1}$|-||112.343 g d$^{-1}$|-|
 
 
 
@@ -372,6 +381,18 @@ It can be clearly seen from the plots that the pH adjusting substances become th
 
 
 ## Fate and behavior of nutrients
+The proportion of cation complexation by DOM was calculated to assess the impact of DOM on the solubility of plant nutrients. The results are shown in **FIGURE XXX**.
+
+
+
+![Complexation of cationic plant nutrients by DOM. Shown is the complexated proportion relative to the total concentration of the cation in solution.](plots/boxplot_species_dom_vm.png)
+
+
+
+he percentage of the total input of plant nutrients that 
+
+![Boxplots of ](plots/boxplot_precipitated_vm.png)
+
 
 
 
@@ -401,11 +422,6 @@ The results indicate that maximum solubility of Ca, Fe and Cu was reached in sev
 
 ![Boxplot of mineral saturation indices of cations in relation to different anions calculated from aquaponic studies. Dashed red line describes 100% saturation. Observations above the line indicate over-, those below the line undersaturation. Observations below but close to zero indicate solubility control by formation of a precipitate by the corresponding cation-anion combination.](plots/boxplot_empirical_saturation_vm.png)
 
-![](plots/boxplot_precipitated_vm.png)
-
-
-
-![](plots/boxplot_species_dom_vm.png)
 
 
 In comparison with results for the saturation index calculation of Hoagland's nutrient solution under different pH conditions, as shown in **FIGURE XXX**, it is evident that target concentrations for Ca at pH = 7.5 and for Fe and Mn both at pH = 6.0 and pH = 7.5 exceed the maximum solubility are above the maximum solubility. In 
