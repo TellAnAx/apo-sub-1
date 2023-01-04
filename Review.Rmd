@@ -5,9 +5,19 @@ output: "word_document"
 ---
 
 # TO DO
+## Introduction
+- Finish Feed section
 
+## Material and Methods
+- Correct number of publications and observations in Fate assumptions
+- Check amount of feed (250 g feed input is based on stocking density, not on biomass. Does this affect all calculations?)
+
+## Results
 - Add overview of cultivated species to Results plot
 - Add the daily inputs to the table in the Results - Nutrient sources section on which the graphical representation of inputs is based
+
+## Discussion
+
 
 
 
@@ -35,7 +45,7 @@ source('R/init.R') # Load packages and functions
 Aquaponic systems require a high initial investment and come with comparably high labor costs due to the complexicity of the system (Turnsek et al., Quagrainie, 2017). One aspect that is contributing to high operating costs in aquaponics is the lack of “off-the-shelf” solutions for the management of plant nutrients. 
 As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B). The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion (Mengel and Kirkby, 2001). 
 The main source of nutrients in aquaponics is claimed to be the feed for the aquatic livestock, hereinafter denoted as aquafeed. Before becoming available for plant uptake, aquafeeds are ingested by the cultivated animals and the digestible mass fraction is utilized for the basal metabolism or somatic growth (Fish Nutrition). The indigestible mass fraction is excreted in form of both solid and dissolved matter, with the latter eventually being available for plant uptake. However, comparing the nutrient profile of plant-available fish excreta with nutrient solutions commonly used in hydroponics, deviations from the optimum were reported (Shaw et al., 2022; Lunda et al., 2019; Robaina et al., 2019). To counteract these imbalances, it was suggested to complement aquaponic nutrient solutions with the missing nutrients. Studies showed that this practice leads to plant growth equal or even better than observed in hydroponics (Delaide, 2016; Monsees, 2019; Rodgers, 2022). Though, the supplementation of individual nutrients requires their continuous monitoring to ensure that optimum levels are met and maintained. This adds additional expenses to the budget.
-In hydroponics, on the other hand, plant nutrients are supplied in form of commercially available and chemically fine-tuned plant fertilizers with dosage recommendations. It is usually sufficient to monitor the nutrient depletion via plant uptake by determining the electric conductivity (EC) of the nutrient solution as sum parameter (Resh, 2013). Taking into account that labour costs can be accounted for 40-50% of the total operational costs of aquaponic facilities (Baganz; Engle; Quagrainie, 2017), an entrepreneur who is carefully weighing whether to invest in aquaponics or hydroponics might opt for the latter.
+In hydroponics, on the other hand, plant nutrients are supplied in form of commercially available and chemically fine-tuned plant fertilizers with dosage recommendations. It is usually sufficient to monitor the nutrient depletion via plant uptake by determining the electric conductivity (EC) of the nutrient solution as sum parameter (Resh, 2013). Taking into account that labour costs can be accounted for 40-50% of the total operational costs of aquaponic facilities (Baganz 2020; Engle; Quagrainie, 2017), an entrepreneur who is carefully weighing whether to invest in aquaponics or hydroponics might opt for the latter.
 To circumvent the stated obstacles with respect to nutrient management in aquaponics, several suggestions were made such as the development of tailored aquafeeds, and usage of substances that are an alternative for the sodium hydrogen carbonate (soda, NaHCO$_{3}$) that is used in conventional aquaculture for pH control (Seawright, 1998; Goddek et al., 2019). However, it needs to be emphasised that the development of an “off-the-shelf” solution for a problem implies that its application yields comparable results over a broad range of conditions. Therefore, three considerations are of striking importance within the context of an improved nutrient supply in aquaponics:
 
 1. It is necessary to identify the nutrients that can be supplied without facing over- or undersupply due to variability in other nutrient sources that were not considered. Thus, the **source of nutrients** and their variability must be examined closely.
@@ -103,7 +113,7 @@ When discussing feed as input route, it is furthermore important to consider its
 
 
 
-### Substances for pH management
+### Substances for pH management (Recirculation aquaculture for citation)
 The biofilter in the aquaculture unit plays an important role as it is accomodating nitrifying bacteria that are converting ammonia (NH$_{3}$) released by fish via nitrite (NO$_{2}^{-}$) into nitrate (NO$_{3}^{-}$) which can serve as plant nutrient. The oxidation of one mole of NH$_{3}$ by nitrifyers results in the release of three moles of protons (H$^{+}$), as shown in the following.
 
 2 NH$_{3}$ + 4 O$_{2}$ -> 2 NO$_{3}^{-}$ + 2 H$_{2}$O + 3 H$^{+}$
@@ -116,7 +126,7 @@ The activity of nitrifyers is pH-dependent (Ward et al., 2011). Thus, the releas
 
 
 ## Nutrient fate and behavior
-Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successfull nutrient management (see e.g. Sambo et al,. 2019). The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrained. The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature (see e.g. Jensen, Sig and Stumm, Stumm and Morgan).
+Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successfull nutrient management (see e.g. Sambo et al., 2019). The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrained. The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature (see e.g. Jensen, Sig and Stumm, Stumm and Morgan).
 Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. The saturation concentration of a salt can be described using solubility product constants $K_{sp}$, which are the product of the concentration of the cation(s) and the anion(s) at saturation concentration, as shown in **equation XXX**, with square brackets denoting for molar concentrations.
 
 $$
@@ -251,12 +261,12 @@ Data from the aquaponics dataset was used. Observations originating from aquapon
 
 
 
-### Determination of complexation by dissolved organic matter
+### Complexation by dissolved organic matter
 The complexation of plant nutrients by dissolved organic matter (DOM) was simulated using the Gaussian DOM model (Grimm et al., 1991). It was assumed that DOM is present in the systems at a concentration of 20 mg L$^{-1}$. The charge of the DOM species was calculated according to database values.
 
 
 
-### Determination of mineral saturation and precipitation
+### Mineral saturation and precipitation
 To assess whether the waters in the selected literature were saturated with regards to specific minerals, mineral saturation indices $\log(\frac{Q}{K})$ were calculated. The saturation index of a mineral is the ratio between its ion product $Q$ and its solubility product $K_{sp}$. $Q$ can be generally expressed as follows 
 
 $$
@@ -275,14 +285,24 @@ where the expressions in square brackets denote for the empirically found concen
 # Results
 
 ## Derived assumptions
-Analysis of the data presented in aquaponic studies revealed that the average total water volume of the aquaculture systems was 34 m$^{3}$ with an average volume of the rearing compartment of 8 m$^3$. An average stocking density of 12.4 kg m$^{-3}$, feeding rate of 2.2%, and water exchange rate of 4.2% were used. 
+
+```{r}
+read_csv('1_nutrientContribution/results/assumptions_data_summarised.csv') %>% 
+  mutate(
+    biomass_kg = RearingV * StockingDensity,
+    feed_kg_d = biomass_kg * meanFR,
+    water_per_feed_m3_kg = feed_kg_d / WaterExchange
+  )
+```
+
+Analysis of the data presented in aquaponic studies revealed that the average total water volume of the aquaculture systems was 34 m$^{3}$ with an average volume of the rearing compartment of 8 m$^3$. An average initial stocking density of 12.4 kg m$^{-3}$, feeding rate of 2.2%, and water exchange rate of 4.2% were used. 
 As shown in **FIGURE XXX**, literature data comprised a total of nine different cultivated fish species, of which four were cyprinids, two cichlids, one percid, one silurid and salmonid species, respectively.
 
 ![Species used in aquaponic studies.](plots/species.png)
 
 
 ## Nutrient sources
-Using the assumptions derived from literature, an average biomass of 100 kg and daily inputs of 261 g of feed with an average crude protein content of 40.7% on dry matter basis and 4.4 m$^3$ of freshwater were calculated. The daily feed input and crude protein content resulted in an N input of 17.1 g d$^{-1}$, requiring 4.87 mol d$^{-1}$ of H$^{+}$ to be neutralized. For this purpose, the input of the same amount of KOH or half of Ca(OH)$_{2}$ would be required, resulting in an input of 190.5 g d$^{-1}$ K or 97.6 g d$^{-1}$ of Ca.
+Using the assumptions derived from literature, an average biomass of 100.6 kg and daily inputs of $100.6 \text{kg} \cdot 2.2\% = 2.2 \text{kg}$ of feed with an average crude protein content of 40.7% on dry matter basis and 4.4 m$^3$ of freshwater were calculated. The daily feed input and crude protein content resulted in an N input of $\frac{2.2 \text{ kg d}^{-1} \cdot 40.7\%}{6.25} \cdot 1000 \frac{\text{g}}{\text{mg}} = 143$ g d$^{-1}$, requiring $\frac{143\text{ g}}{14\text{ g mol}^{-1}} = 14.23$ mol d$^{-1}$ of H$^{+}$ to be neutralized. For this purpose, the input of the same amount of KOH or half of Ca(OH)$_{2}$ would be required, resulting in an input of 190.5 g d$^{-1}$ K or 97.6 g d$^{-1}$ of Ca.
 
 
 
@@ -467,7 +487,7 @@ On the other hand, considering the positive saturation index values that were fo
 ## Implications for the formulation of tailored aquaponics feeds
 The formulation of a dedicated aquaponics feed is seen as potentially user-friendly and rapid way of adding nutrients to the system, resulting in close-to optimum concentrations for the plants.
 
-It is reasonable to focus on well-soluble nutrients that were not found to be constrained by precipitation reactions. Potential candidates that are fulfilling these requirements are alkaline metals such as K. The solubility of salts containing K is usually within the range of several grams per liter. Losses of K due to the formation of precipitates is thus unlikely. Other studies confirmed that the concentration of K in solution can be altered by different inclusion rates of K (Seawright, 1998; Shaw, 2022). The same was also suggested by the nutrient diffusion coefficient concept that was recently suggested (Cerozi, 2022).
+It is reasonable to focus on well-soluble nutrients that were not found to be constrained by precipitation reactions. Potential candidates that are fulfilling these requirements are alkaline metals such as K. The solubility of salts containing K is usually within the range of several grams per liter. Losses of K due to the formation of precipitates is thus unlikely. Other studies confirmed that the concentration of K in solution can be altered by different inclusion rates of K (Seawright, 1998; Shaw, 2022). The same was also suggested by the nutrient release coefficient concept that was recently suggested (Cerozi, 2022).
 However, considering the contribution of feed in comparison to the contribution of KOH, if used for pH management, it is questionable what makes more sense
 
 Another alkaline metal that is of interest with respect to aquapfeeds tailored for aquaponics is Na. 
