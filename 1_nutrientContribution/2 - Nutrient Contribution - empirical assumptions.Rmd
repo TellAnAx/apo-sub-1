@@ -130,16 +130,16 @@ assumptions_data_intermediate <- assumption_data_rearing %>%
   
   # Calculate some assumptions
   mutate(
-    rearingV = tankV_m3 * tankN, # m3
+    rearingV_m3 = tankV_m3 * tankN, # m3
     dailyFeed_kg_d = biomass_kg * (FR), # kg
     # totalV_m3 = tankV_m3 * tankN + miscV,
-    dailyFreshwater_m3 = totalV_m3 * (exchRate), # m3
-    waterEx_perFeed = (dailyFreshwater_m3 * 1e3) / dailyFeed_kg_d # L
+    freshwater_m3_d = totalV_m3 * (exchRate), # m3
+    waterExPerFeed_L_kg = (freshwater_m3_d * 1e3) / dailyFeed_kg_d # L
   ) %>% 
   
   #drop_na(biomass_kg) %>% 
-  #drop_na(dailyFreshwater_m3) %>% 
-  #filter(dailyFreshwater_m3 > 0) %>% 
+  #drop_na(freshwater_m3_d) %>% 
+  #filter(freshwater_m3_d > 0) %>% 
 
   print() %>% 
   
@@ -166,29 +166,34 @@ assumptions_data_intermediate %>%
 assumptions_data <- assumptions_data_intermediate %>% 
   
   summarise(
-    RearingV = mean(rearingV, na.rm = TRUE),
-    #sdRearingV = sd(rearingV, na.rm = TRUE),
+    meanRearingV_m3 = mean(rearingV_m3, na.rm = TRUE),
+    sdRearingV = sd(rearingV_m3, na.rm = TRUE),
     TotalV = mean(totalV_m3, na.rm = TRUE),
-    #sdTotalV = sd(totalV_m3, na.rm = T),
+    sdTotalV = sd(totalV_m3, na.rm = TRUE),
     #IBW = mean(IBW, na.rm = TRUE),
     StockingDensity = mean(density_kg_m3, na.rm = TRUE), # kg m^-3
-    #sdStockingDensity = sd(density_kg_m3, na.rm = TRUE),
-    Biomass_Density_derived = RearingV * StockingDensity,
-    Biomass = mean(biomass_kg, na.rm = TRUE), # kg
-    #sdBiomass = sd(biomass_kg, na.rm = TRUE),
+    sdStockingDensity = sd(density_kg_m3, na.rm = TRUE),
+    meanBiomass_kg = mean(biomass_kg, na.rm = TRUE), # kg
+    meanBiomass_kg_Density_derived = meanRearingV_m3 * StockingDensity,
+    sdBiomass = sd(biomass_kg, na.rm = TRUE),
     meanFR = mean(FR, na.rm = TRUE),
-    DailyFeed = mean(dailyFeed_kg_d_d, na.rm = TRUE), # kg d^-1
-    #sdDailyFeed = sd(dailyFeed_kg_d_d, na.rm = TRUE),
+    meanFeed_kg_d = mean(dailyFeed_kg_d, na.rm = TRUE), # kg d^-1
+    sdFeed_kg_d = sd(dailyFeed_kg_d, na.rm = TRUE),
     meanCP = mean(CP, na.rm = TRUE),
-    WaterExchange = mean(exchRate, na.rm = TRUE) * 100, # %
-    #sdWaterExchange = sd(exchRate, na.rm = TRUE) * 100,
-    DailyFreshwater = mean(dailyFreshwater_m3, na.rm = TRUE), # m3
-    #sdDailyFreshwater = sd(dailyFreshwater_m3, na.rm = TRUE),
-    WaterEx_perFeed = mean(waterEx_perFeed, na.rm = TRUE), # L
-    #sdWaterEx_perFeed = sd(waterEx_perFeed, na.rm = TRUE),
+    meanExchRate = mean(exchRate, na.rm = TRUE) * 100, # %
+    sdExchRate = sd(exchRate, na.rm = TRUE) * 100,
+    meanFreshwater_m3_d = mean(freshwater_m3_d, na.rm = TRUE), # m3
+    sdFreshwater_m3_d = sd(freshwater_m3_d, na.rm = TRUE),
+    meanWaterExPerFeed_L_kg = mean(waterExPerFeed_L_kg, na.rm = TRUE), # L
+    sdWaterExPerFeed_L_kg = sd(waterExPerFeed_L_kg, na.rm = TRUE)
     #pH = mean(pH, na.rm = TRUE)
-  ) %>% 
-  
+  )
+```  
+
+```{r}
+assumptions_data %>% 
+  pivot_longer(everything()) %>% 
+  mutate(value = round(value, digits = 2)) %>% 
   print() %>% 
   
   write_csv('results/assumptions_data_summarised.csv')
@@ -332,7 +337,7 @@ ggsave("plots/waterData_belowLimit.png")
 buffer_data <- read_csv("results/assumptions_data_summarised.csv") %>% 
   
   mutate(
-    dailyCP_kg = DailyFeed * meanCP, #kg
+    dailyCP_kg = meanFeed_kg_d * meanCP, #kg
     dailyN_kg = dailyCP_kg / 6.25, #divide by Kjeldahl factor
     dailyH_kg = dailyN_kg / 3.5,
     dailyH_mol = dailyH_kg * 1000,
@@ -511,9 +516,9 @@ plotdata <- results %>%
   
   # Calculate nutrient contributions (water data already in g)
   mutate(
-    `Water 5% Contribution` = assumptions_data$DailyFreshwater * lconf,
-    `Water 95% Contribution` = assumptions_data$DailyFreshwater * hconf,
-    FeedContribution = assumptions_data$DailyFeed * `feedComp_g/kg`,
+    `Water 5% Contribution` = assumptions_data$meanFreshwater_m3_d * lconf,
+    `Water 95% Contribution` = assumptions_data$meanFreshwater_m3_d * hconf,
+    FeedContribution = assumptions_data$meanFeed_kg_d * `feedComp_g/kg`,
   ) %>% 
   
   rename(BufferContribution = "contribution_g") %>% 
@@ -548,7 +553,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
   geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dashed", alpha = 0.75) + 
   labs(
     title = "The source of plant nutrients in Aquaponics"
-    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility not considered", sep = "")
+    ,subtitle = paste(round(assumptions_data$meanExchRate), "% water exchange, digestibility not considered", sep = "")
     ,x = ""
     ,y = "Relative nutrient contribution"
     ,fill = "Source"
@@ -606,7 +611,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
   geom_col(position = 'fill') + 
   labs(
     title = "The source of plant nutrients in Aquaponics"
-    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility considered", sep = "")
+    ,subtitle = paste(round(assumptions_data$meanExchRate), "% water exchange, digestibility considered", sep = "")
     ,x = ""
     ,y = "Nutrient contribution (%)"
     ,fill = "Source"
@@ -631,7 +636,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
   geom_col(position = 'fill') + 
   labs(
     title = "The source of plant nutrients in Aquaponics"
-    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility considered", sep = "")
+    ,subtitle = paste(round(assumptions_data$meanExchRate), "% water exchange, digestibility considered", sep = "")
     ,x = ""
     ,y = "Nutrient contribution (%)"
     ,fill = "Source"
@@ -658,7 +663,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
   geom_col(position = 'fill') + 
   labs(
     title = "The source of plant nutrients in Aquaponics"
-    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility considered", sep = "")
+    ,subtitle = paste(round(assumptions_data$meanExchRate), "% water exchange, digestibility considered", sep = "")
     ,x = ""
     ,y = "Nutrient contribution (%)"
     ,fill = "Source"
@@ -682,7 +687,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
   geom_col(position = 'fill') + 
   labs(
     title = "The source of plant nutrients in Aquaponics"
-    ,subtitle = paste(round(assumptions_data$WaterExchange), "% water exchange, digestibility considered", sep = "")
+    ,subtitle = paste(round(assumptions_data$meanExchRate), "% water exchange, digestibility considered", sep = "")
     ,x = ""
     ,y = "Nutrient contribution (%)"
     ,fill = "Source"

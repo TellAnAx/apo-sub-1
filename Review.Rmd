@@ -4,41 +4,6 @@ author: "Anıl Axel Tellbüscher"
 output: "word_document"
 ---
 
-# TO DO
-## Introduction
-- Finish Feed section
-
-## Material and Methods
-- Correct number of publications and observations in Fate assumptions
-- Check amount of feed (250 g feed input is based on stocking density, not on biomass. Does this affect all calculations?)
-
-## Results
-- Add overview of cultivated species to Results plot
-- Add the daily inputs to the table in the Results - Nutrient sources section on which the graphical representation of inputs is based
-
-## Discussion
-
-
-
-
-# Text collection
-
-Aquaponics can be defined as the combination of an aquaculture unit and a plant production unit with the objective to convert aquaculture wastes into edible yield. Against this background, the term “edible” implies several requirements with regards to the quality of the harvest such as appearance and uniformity as defined for instance by the International Standards for Fruit and Vegetables (OECD, 1962). Furthermore, it has to be emphasized that the final product needs to be competitive in price to be marketable and thus interesting for potential adopters of the technology. Though, it was found that the operating costs of an aquaponic system are higher than those of a hydroponic facility (Quagrainie, 2017). This might explain why most of the existing aquaponic systems operated are operated by hobbyists, scientists or serve demonstration purposes (Pattillo, 2022).
-
-However, an early attempt to formulate a "designer diet" for aquaponics was made already three decades ago, with the result that the dissolved concentration of certain nutrients did not increase with an increase of its inclusion rate in the fish feed (Seawright, 1998). Though, the underlying constraints were not further investigated. 
-
-
-
-
-```{r Setup, message=FALSE, warning=FALSE, include=FALSE}
-#knitr::opts_chunk$set(echo = TRUE, include = FALSE)
-knitr::opts_chunk$set(eval = FALSE)
-
-source('R/init.R') # Load packages and functions
-```
-
-
-
 
 
 # Introduction
@@ -60,7 +25,8 @@ The three main sources of nutrients in any system related to aquaculture are 1) 
 ### Water
 The source water of aquaponic systems is commonly referred to as of minor importance with respect to its contribution to the total nutrient input (Schmautz, 2016, Robaina et al., 2019). However, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water (Delaide, 2016). 
 Aquaponics is generally seen as food production system suitable for urban areas or arid regions due to its low water demand (Kloas, 2015; Joyce et al., 2019 Aquaponics Food Production). Establishing an aquaponic system in these regions comes with limited access to certain water sources such as well water or other sources of freshwater such as rivers and lakes. Rain water, on the other hand, would require a large storage capacity which is not cost-efficient in arid regions and not realisable in urban areas due to very high land prices. Tap water can thus be assumed to be the most important water source.
-Potable water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive (EU XXX) is defining maximum allowable concentrations (MAC) for this purpose, setting treshold concentrations for several substances that could affect the consumers' health or pollute the environment. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive.
+Potable water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive (EU XXX) is defining maximum allowable concentrations (MAC) for this purpose, setting treshold concentrations for several substances that could affect the consumers' health or pollute the environment. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. 
+
 
 
 **Maximum allowable concentrations (MAC) of substances considered as plant nutrients defined by the Drinking Water Directive.**
@@ -78,7 +44,12 @@ Potable water is usually rigidly regulated by the authorities. In Europe, the Dr
 
 
 
-Within the legal requirements, the composition of tap water is generally variable and changes between locations according to the extraction point of the water by the local water company (see e.g. Water Quality in Principal Aquifers of the United States). These variabilities were not considered when investigating input sources of nutrients in aquaponics.
+Within the legal requirements, the composition of tap water generally varies between locations and extraction point of the water. Processes such as wheathering of rock, ion exchange, redox processes and the buildup of biomass are  The extent of the variability is shown in **FIGURE XXX**.  These variabilities were not considered when investigating input sources of nutrients in aquaponics. 
+
+
+
+![Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds in µg/L. Y-axis: Percentage of sampling points. Figure from Stumm and Morgan - Aquatic Chemistry (1996)](images/Stumm_Morgan_Aquatic_Chemistry_p873.png)
+
 
 
 
@@ -194,20 +165,26 @@ Given these inputs, recommendations with regards to the formulation of tailored 
 
 # Methodology
 
-## Software
-All calculations were conducted using Visual MINTEQ (v3.1) and its default database and R (v4.2.2) with RStudio ("Spotted Wakerobin" Release) as graphical user interface.
+```{r Setup, message=FALSE, warning=FALSE, include=FALSE}
+#knitr::opts_chunk$set(echo = TRUE, include = FALSE)
+knitr::opts_chunk$set(eval = FALSE)
 
+source('R/init.R') # Load packages and functions
 
-
-## Raw data acquisition
-
-```{r message=FALSE, warning=FALSE, include=FALSE}
 source('R/data_import.R') # Currently using gdata
 source("R/wrangling_dom.R")
 source("R/wrangling_precipitation.R")
 source("R/wrangling_logQK.R")
 ```
 
+
+
+## Software
+All calculations were conducted using Visual MINTEQ (v3.1) and its default database and R (v4.2.2) with RStudio ("Spotted Wakerobin" Release) as graphical user interface.
+
+
+
+## Raw data acquisition
 Three datasets were created to approach the stated research questions: An aquaponic dataset, a source water dataset, and a feed dataset.
 
 For the creation of the aquaponics dataset, literature was screened for studies that focussed on nutrient dynamics in aquaponic systems, resulting in 117 individual observations originating from 39 publications. Selected literature comprised studies about permanently and on-demand coupled freshwater aquaponics, sludge remineralisation studies and hydroponic growth trials with water originating from aquaculture systems. The pH, total water volume of the system, daily water exchange rate, initial bodyweight, stocking density, daily feeding rate, and the concentrations of all essential plant nutrients in the system water were gathered.

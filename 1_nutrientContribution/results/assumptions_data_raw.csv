@@ -1,4 +1,4 @@
-Reference_ID,Treatment_ID,tankV,tankN,totalV,density,biomass,exchRate,FR,CP,rearingV,dailyFeed,dailyFreshwater,waterEx_perFeed
+Reference_ID,Treatment_ID,tankV_m3,tankN,totalV_m3,density_kg_m3,biomass_kg,exchRate,FR,CP,rearingV_m3,dailyFeed_kg_d,freshwater_m3_d,waterExPerFeed_L_kg
 Seawright1998,1,NA,NA,0.325,0.464615384615385,0.151,0,0.05,0.41600000000000004,NA,0.00755,0,0
 Seawright1998,2,NA,NA,0.325,1.16,0.377,0,0.05,0.41600000000000004,NA,0.018850000000000002,0,0
 Seawright1998,3,NA,NA,0.325,2.77538461538462,0.902,0,0.05,0.41600000000000004,NA,0.0451,0,0
