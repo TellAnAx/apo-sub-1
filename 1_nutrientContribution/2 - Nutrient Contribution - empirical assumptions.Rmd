@@ -53,7 +53,7 @@ The contribution of the different nutrient sources to the total nutrient input i
 #assumption_data_general <- readWorksheet(masterfile_nutrients, sheet = 'general', header = TRUE, startRow = 1)
 assumption_data_general <- gdata::read.xls("../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx", sheet = 'general')
 
-summary(assumption_data_general)
+head(assumption_data_general)
 ```
 
 
@@ -71,7 +71,7 @@ assumption_data_rearing <- assumption_data_rearing %>%
     country = as.factor(country)
   )
 
-summary(assumption_data_rearing)
+head(assumptions_data_rearing)
 ```
 
 
@@ -85,18 +85,20 @@ The feeding dataset contains information about the feeding rate and the feed com
 
 assumption_data_feed <- gdata::read.xls('../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx', sheet = 'feedIN', skip = 1)
 
-summary(assumption_data_feed)
+head(assumption_data_feed)
 ```
 
 
 
 ### 1.1.3 Derive assumptions
+
 - the mean volume of the rearing compartment (m3) which is determining the total biomass in the system due to the fact that the stocking density depends on the volume of the rearing tanks instead of the total system volume
 - the mean daily feed input (kg) based on the feeding rate given
 - the mean total volume of freshwater added (m3), based on the water exchange rate reported
 - the mean water exchange volume (L) per mass unit of feed (kg) added to the system as an indicator of the amount of freshwater that is used.
+
 ```{r}
-assumptions_data <- assumption_data_rearing %>% 
+assumptions_data_intermediate <- assumption_data_rearing %>% 
   
   
   left_join(assumption_data_feed, by = c("Reference_ID", "Treatment_ID")) %>% 
@@ -142,22 +144,26 @@ assumptions_data <- assumption_data_rearing %>%
   print() %>% 
   
   write_csv('results/assumptions_data_raw.csv')
+```
 
 
 
+```{r}
 # Count observations
-assumptions_data %>% 
+assumptions_data_intermediate %>% 
   summarise(
     publications = length(unique(Reference_ID)),
     observations = n()
   ) %>% 
   
   print()
+```
 
 
 
-# Generate summary values
-assumptions_data <- assumptions_data %>% 
+```{r}
+# Generate assumptions summary
+assumptions_data <- assumptions_data_intermediate %>% 
   
   summarise(
     RearingV = mean(rearingV, na.rm = TRUE),
@@ -187,7 +193,6 @@ assumptions_data <- assumptions_data %>%
   
   write_csv('results/assumptions_data_summarised.csv')
 
-rm(assumption_data_feed)
 ```
 
 By limiting to publications that are not remineralisation systems and, in case of aquaponic systems, only representing the aquaculture unit of on-demand coupled systems, it is ensured that the data is representing the aquaculture conditions in the aquaponic studies.
