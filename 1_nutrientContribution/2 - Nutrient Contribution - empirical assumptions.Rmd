@@ -71,7 +71,7 @@ assumption_data_rearing <- assumption_data_rearing %>%
     country = as.factor(country)
   )
 
-head(assumptions_data_rearing)
+head(assumption_data_rearing)
 ```
 
 
@@ -106,10 +106,10 @@ assumptions_data_intermediate <- assumption_data_rearing %>%
   left_join(assumption_data_general, by = c("Reference_ID", "Treatment_ID")) %>% 
   
 # XLConnect  
-#  rename('tankV' = 'Vtank_.m3.', 'tankN' = 'Ntank', 'totalV' = 'Vtot_.m3.', 'density' = 'Density_.kgm3.', 'biomass' = 'totBiomass_.kgsystem.', 'exchRate' = 'exchRate_.percd.', 'FR' = 'FR_..BW.', 'days' = 'duration_.d.', 'IBW' = 'IBW_.g.') %>% 
+#  rename('tankV_m3' = 'Vtank_.m3.', 'tankN' = 'Ntank', 'totalV_m3' = 'Vtot_.m3.', 'density_kg_m3' = 'Density_.kgm3.', 'biomass_kg' = 'totBiomass_.kgsystem.', 'exchRate' = 'exchRate_.percd.', 'FR' = 'FR_..BW.', 'days' = 'duration_.d.', 'IBW' = 'IBW_.g.') %>% 
   
 # gdata
-  rename('tankV' = 'Vtank_m3', 'tankN' = 'Ntank', 'totalV' = 'Vtot_m3', 'density' = 'density_kgm3', 'biomass' = 'totBiomass_kg', 'days' = 'duration_d', 'IBW' = 'IBW_g') %>% 
+  rename('tankV_m3' = 'Vtank_m3', 'tankN' = 'Ntank', 'totalV_m3' = 'Vtot_m3', 'density_kg_m3' = 'density_kgm3', 'biomass_kg' = 'totBiomass_kg', 'days' = 'duration_d', 'IBW' = 'IBW_g') %>% 
     
     
   filter(
@@ -119,7 +119,7 @@ assumptions_data_intermediate <- assumption_data_rearing %>%
   ) %>% 
   
   
-  select('Reference_ID', 'Treatment_ID', 'tankV','tankN', 'totalV', 'density', 'biomass', 'exchRate', 'FR', 'CP') %>% 
+  select('Reference_ID', 'Treatment_ID', 'tankV_m3','tankN', 'totalV_m3', 'density_kg_m3', 'biomass_kg', 'exchRate', 'FR', 'CP') %>% 
   
   # gdata
   mutate(
@@ -130,16 +130,16 @@ assumptions_data_intermediate <- assumption_data_rearing %>%
   
   # Calculate some assumptions
   mutate(
-    rearingV = tankV * tankN, # m3
-    dailyFeed = biomass * (FR), # kg
-    # totalV = tankV * tankN + miscV,
-    dailyFreshwater = totalV * (exchRate), # m3
-    waterEx_perFeed = (dailyFreshwater * 1e3) / dailyFeed # L
+    rearingV = tankV_m3 * tankN, # m3
+    dailyFeed_kg_d = biomass_kg * (FR), # kg
+    # totalV_m3 = tankV_m3 * tankN + miscV,
+    dailyFreshwater_m3 = totalV_m3 * (exchRate), # m3
+    waterEx_perFeed = (dailyFreshwater_m3 * 1e3) / dailyFeed_kg_d # L
   ) %>% 
   
-  #drop_na(biomass) %>% 
-  #drop_na(dailyFreshwater) %>% 
-  #filter(dailyFreshwater > 0) %>% 
+  #drop_na(biomass_kg) %>% 
+  #drop_na(dailyFreshwater_m3) %>% 
+  #filter(dailyFreshwater_m3 > 0) %>% 
 
   print() %>% 
   
@@ -168,22 +168,22 @@ assumptions_data <- assumptions_data_intermediate %>%
   summarise(
     RearingV = mean(rearingV, na.rm = TRUE),
     #sdRearingV = sd(rearingV, na.rm = TRUE),
-    TotalV = mean(totalV, na.rm = TRUE),
-    #sdTotalV = sd(totalV, na.rm = T),
+    TotalV = mean(totalV_m3, na.rm = TRUE),
+    #sdTotalV = sd(totalV_m3, na.rm = T),
     #IBW = mean(IBW, na.rm = TRUE),
-    StockingDensity = mean(density, na.rm = TRUE), # kg m^-3
-    #sdStockingDensity = sd(density, na.rm = TRUE),
+    StockingDensity = mean(density_kg_m3, na.rm = TRUE), # kg m^-3
+    #sdStockingDensity = sd(density_kg_m3, na.rm = TRUE),
     Biomass_Density_derived = RearingV * StockingDensity,
-    Biomass = mean(biomass, na.rm = TRUE), # kg
-    #sdBiomass = sd(biomass, na.rm = TRUE),
+    Biomass = mean(biomass_kg, na.rm = TRUE), # kg
+    #sdBiomass = sd(biomass_kg, na.rm = TRUE),
     meanFR = mean(FR, na.rm = TRUE),
-    DailyFeed = mean(dailyFeed, na.rm = TRUE), # kg d^-1
-    #sdDailyFeed = sd(dailyFeed, na.rm = TRUE),
+    DailyFeed = mean(dailyFeed_kg_d_d, na.rm = TRUE), # kg d^-1
+    #sdDailyFeed = sd(dailyFeed_kg_d_d, na.rm = TRUE),
     meanCP = mean(CP, na.rm = TRUE),
     WaterExchange = mean(exchRate, na.rm = TRUE) * 100, # %
     #sdWaterExchange = sd(exchRate, na.rm = TRUE) * 100,
-    DailyFreshwater = mean(dailyFreshwater, na.rm = TRUE), # m3
-    #sdDailyFreshwater = sd(dailyFreshwater, na.rm = TRUE),
+    DailyFreshwater = mean(dailyFreshwater_m3, na.rm = TRUE), # m3
+    #sdDailyFreshwater = sd(dailyFreshwater_m3, na.rm = TRUE),
     WaterEx_perFeed = mean(waterEx_perFeed, na.rm = TRUE), # L
     #sdWaterEx_perFeed = sd(waterEx_perFeed, na.rm = TRUE),
     #pH = mean(pH, na.rm = TRUE)
