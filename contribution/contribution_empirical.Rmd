@@ -36,56 +36,234 @@ The contribution of the different nutrient sources to the total nutrient input i
 
 
 
-# 1. Generate assumptions
-
-## 1.1 Rearing parameters
+# 1. Assumptions
 
 ```{r}
-# Load Workbook
-#masterfile_nutrients <- loadWorkbook("/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Masterfile Nutrients.xlsx")
-```
-
-
-
-### 1.1.1 Load rearing data
-
-```{r}
-#assumption_data_general <- readWorksheet(masterfile_nutrients, sheet = 'general', header = TRUE, startRow = 1)
-assumption_data_general <- gdata::read.xls("../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx", sheet = 'general')
+assumption_data_general <- gdata::read.xls("../data/solubility/Aquaponics - Masterfile Nutrients.xlsx", sheet = 'general')
 
 head(assumption_data_general)
 ```
 
 
 
-```{r}
-#assumption_data_rearing <- readWorksheet(masterfile_nutrients, sheet = 'rearing', header = TRUE, startRow = 2)
-assumption_data_rearing <- gdata::read.xls("../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx", sheet = "rearing")
 
-assumption_data_rearing <- assumption_data_rearing %>% 
-  rename("species" = Species) %>% 
+
+
+```{r}
+assumption_data_general %>% 
+  
+  drop_na(fish_species) %>% 
+  
+  filter(fish_species != 0) %>% 
+  
   mutate(
-    species = as.factor(species),
-    site = as.factor(site),
-    city = as.factor(city),
-    country = as.factor(country)
+    group = if_else(grepl("[Cc]arp", fish_species) == TRUE,"Cyprinids", fish_species),
+    group = if_else(grepl("[Tt]ilapia", group) == TRUE,"Percids", group),
+    group = if_else(grepl("perch", group) == TRUE,"Percids", group),
+    group = if_else(grepl("[Cc]at", group) == TRUE,"Silurids", group),
+    group = if_else(grepl("trout", group) == TRUE,"Salmonids", group),
+    ) %>% 
+  
+  ggplot(aes(x = group, fill = fish_species)) + 
+  geom_bar(position = "stack")
+```
+
+
+
+```{r}
+assumption_data_general <- assumption_data_general %>% 
+  filter(
+    experiment == 'remineralisation' #& 
   )
+```
+
+
+
+## 1.1 Rearing
+
+### 1.1.1 Load data
+
+```{r}
+assumption_data_rearing <- gdata::read.xls("../data/solubility/Aquaponics - Masterfile Nutrients.xlsx", sheet = "rearing")
 
 head(assumption_data_rearing)
 ```
 
 
 
-### 1.1.2 Load feeding data
+```{r}
+assumption_data_rearing %>% 
+  
+  group_by(Reference_ID) %>% 
+  summarise(country = unique(country)) %>% 
+  
+  ggplot(aes(x = country)) + 
+  geom_bar()
+```
 
-The feeding dataset contains information about the feeding rate and the feed composition.
+
+
+### 1.1.2 Data wrangling
 
 ```{r}
-#assumption_data_feed <- readWorksheet(masterfile_nutrients, sheet = 'feedIN', header = TRUE, startRow = 2)
+assumption_data_rearing <- assumption_data_rearing %>% 
+  
+  rename("species" = Species, 'tankV_m3' = 'Vtank_m3', 'tankN' = 'Ntank', 'totalV_m3' = 'Vtot_m3', 'density_kg_m3' = 'density_kgm3', 'biomass_kg' = 'totBiomass_kg', 'days' = 'duration_d') %>% 
+  
+  mutate(
+    species = as.factor(species),
+    site = as.factor(site),
+    city = as.factor(city),
+    country = as.factor(country),
+    exchRate = as.numeric(sub("%","",exchRate)) / 100
+  ) %>% 
+  
+  filter(
+    !is.na(totalV_m3) & 
+      !is.na(biomass_kg) & 
+      !is.na(exchRate)
+  ) %>% 
+  
+  print()
+```
 
-assumption_data_feed <- gdata::read.xls('../2 - Nutrient Solubility/data/Aquaponics - Masterfile Nutrients.xlsx', sheet = 'feedIN', skip = 1)
+
+
+### 1.1.3 Calculations
+
+```{r}
+assumption_data_rearing <- assumption_data_rearing %>% 
+  
+  mutate(
+    rearingV_m3 = tankV_m3 * tankN, # m3
+    rearing_total_ratio = rearingV_m3 / totalV_m3,
+    freshwater_m3_d = totalV_m3 * exchRate # m3
+    ) %>% 
+  
+  print() %>% 
+  
+  write_csv("../results/contribution_rearing_data.csv")
+```
+
+
+
+### 1.1.4 Summary and assumptions
+
+
+
+```{r}
+assumption_summary_rearing <- assumption_data_rearing %>% 
+  
+  group_by(density_kg_m3) %>% 
+  
+  summarise(
+    meanIBW_g = mean(IBW_g),
+    meanDuration_d = mean(days),
+    meanRearingV_m3 = mean(rearingV_m3),
+    #sdRearingV = sd(rearingV_m3),
+    meanTotalV = mean(totalV_m3),
+    #sdTotalV = sd(totalV_m3),
+    meanRearingTotal_ratio = mean(rearing_total_ratio),
+    meanDensity_kg_m3 = mean(density_kg_m3), # kg m^-3
+    #sdDensity_kg_m3 = sd(density_kg_m3),
+    meanBiomass_kg = mean(biomass_kg), # kg
+    #sdBiomass_kg = sd(biomass_kg),
+    meanExchRate = mean(exchRate) * 100, # %
+    #sdExchRate = sd(exchRate) * 100,
+    meanFreshwater_m3_d = mean(freshwater_m3_d), # m3
+    #sdFreshwater_m3_d = sd(freshwater_m3_d),
+    pH = mean(pH)
+  ) %>% 
+  
+    print() %>% 
+
+  
+#assumption_summary_rearing %>% 
+  
+  summarise(
+    meanIBW_g = mean(meanIBW_g, na.rm = TRUE),
+    meanDuration_d = mean(meanDuration_d, na.rm = TRUE),
+    meanRearingV_m3 = mean(meanRearingV_m3, na.rm = TRUE),
+    #sdRearingV = sd(sdRearingV, na.rm = TRUE),
+    meanTotalV = mean(meanTotalV, na.rm = TRUE),
+    #sdTotalV = sd(sdTotalV, na.rm = TRUE),
+    meanRearingVTotalV_ratio = mean(meanRearingTotal_ratio, na.rm = TRUE),
+    meanDensity_kg_m3 = mean(density_kg_m3, na.rm = TRUE), # kg m^-3
+    #sdDensity_kg_m3 = sd(sdDensity_kg_m3, na.rm = TRUE),
+    meanBiomass_kg = mean(meanBiomass_kg, na.rm = TRUE), # kg
+    meanBiomass_kg_Density_derived = meanBiomass_kg * meanDensity_kg_m3,
+    #sdBiomass_kg = sd(sdBiomass_kg, na.rm = TRUE),
+    meanExchRate = mean(meanExchRate, na.rm = TRUE) * 100, # %
+    #sdExchRate = sd(sdExchRate, na.rm = TRUE) * 100,
+    meanFreshwater_m3_d = mean(meanFreshwater_m3_d, na.rm = TRUE), # m3
+    #sdFreshwater_m3_d = sd(sdFreshwater_m3_d, na.rm = TRUE),
+    pH = mean(pH, na.rm = TRUE)
+  ) %>% 
+  
+  print() %>% 
+  
+  write_csv("../results/contribution_assumptions_summary_rearing.csv")
+```
+
+
+
+
+## 1.2 Feed
+
+### 1.2.1 Load data
+
+The feed dataset contains information about the feeding rate and the feed composition.
+
+```{r}
+assumption_data_feed <- gdata::read.xls('../data/solubility/Aquaponics - Masterfile Nutrients.xlsx', sheet = 'feedIN', skip = 1)
 
 head(assumption_data_feed)
+```
+
+
+
+### 1.2.2 Data wrangling
+
+```{r}
+assumption_data_feed <- assumption_data_feed %>% 
+  
+  mutate(
+    FR = as.numeric(sub("%","",FR)) / 100,
+    CP = as.numeric(sub("%","",CP)) / 100
+  ) %>% 
+  
+  group_by(feed_name) %>% 
+  
+  summarise(
+    FR = mean(FR),
+    CP = mean(CP)
+  ) %>% 
+  
+  filter(
+    !is.na(CP) & 
+      !is.na(FR)
+  )
+```
+
+
+
+### 1.2.3 Calculations
+
+```{r}
+assumption_data_feed <- assumption_data_feed %>% 
+  
+  mutate(
+    CP_factor_d = FR * CP,
+    N_factor_d = CP_factor_d * 6.25
+  ) %>% 
+  
+  print() %>% 
+  
+  summarise(
+    
+  )
+  
+  write_csv("../results/contribution_assumptions_feed.csv")
 ```
 
 
@@ -98,15 +276,11 @@ head(assumption_data_feed)
 - the mean water exchange volume (L) per mass unit of feed (kg) added to the system as an indicator of the amount of freshwater that is used.
 
 ```{r}
-assumptions_data_intermediate <- assumption_data_rearing %>% 
-  
+assumption_data_rearing %>% 
   
   left_join(assumption_data_feed, by = c("Reference_ID", "Treatment_ID")) %>% 
-  
   left_join(assumption_data_general, by = c("Reference_ID", "Treatment_ID")) %>% 
-  
-# XLConnect  
-#  rename('tankV_m3' = 'Vtank_.m3.', 'tankN' = 'Ntank', 'totalV_m3' = 'Vtot_.m3.', 'density_kg_m3' = 'Density_.kgm3.', 'biomass_kg' = 'totBiomass_.kgsystem.', 'exchRate' = 'exchRate_.percd.', 'FR' = 'FR_..BW.', 'days' = 'duration_.d.', 'IBW' = 'IBW_.g.') %>% 
+
   
 # gdata
   rename('tankV_m3' = 'Vtank_m3', 'tankN' = 'Ntank', 'totalV_m3' = 'Vtot_m3', 'density_kg_m3' = 'density_kgm3', 'biomass_kg' = 'totBiomass_kg', 'days' = 'duration_d', 'IBW' = 'IBW_g') %>% 
@@ -114,6 +288,7 @@ assumptions_data_intermediate <- assumption_data_rearing %>%
     
   filter(
     experiment != 'remineralisation' #& 
+    
     #coupling != 'permanent' & 
     #Reference_ID != 'Siqwepu2020'
   ) %>% 
@@ -143,27 +318,14 @@ assumptions_data_intermediate <- assumption_data_rearing %>%
 
   print() %>% 
   
-  write_csv('results/assumptions_data_raw.csv')
-```
-
-
-
-```{r}
-# Count observations
-assumptions_data_intermediate %>% 
-  summarise(
-    publications = length(unique(Reference_ID)),
-    observations = n()
-  ) %>% 
-  
-  print()
+  write_csv('../interm/contribution_assumptions_raw.csv')
 ```
 
 
 
 ```{r}
 # Generate assumptions summary
-assumptions_data <- assumptions_data_intermediate %>% 
+assumptions_data <- read_csv("../interm/contribution_assumptions_raw.csv") %>% 
   
   summarise(
     meanRearingV_m3 = mean(rearingV_m3, na.rm = TRUE),
@@ -196,7 +358,7 @@ assumptions_data %>%
   mutate(value = round(value, digits = 2)) %>% 
   print() %>% 
   
-  write_csv('results/assumptions_data_summarised.csv')
+  write_csv('../results/assumptions_data_summarised.csv')
 
 ```
 
@@ -250,7 +412,7 @@ rm(species_plot)
 #                      endCol = 47)
 
 # gdata
-water_data <- gdata::read.xls("data/Aquaponics - Water Quality.xlsx", sheet = "municipalTap", skip = 1)
+water_data <- gdata::read.xls("../data/contribution/Aquaponics - Water Quality.xlsx", sheet = "municipalTap", skip = 1)
 
 water_data <- water_data[,1:grep("TOC_belowLimit", colnames(water_data))]
 
@@ -292,7 +454,7 @@ water_data %>%
   ggplot(aes(y = Country)) +
   geom_bar()
 
-ggsave("plots/waterData_countryPlot.png")
+ggsave("../plots/contribution_waterData_countryPlot.png")
 ```
 
 
@@ -324,7 +486,7 @@ water_data %>%
     y = "Analyte"
   )
 
-ggsave("plots/waterData_belowLimit.png")
+ggsave("../plots/contribution_waterData_belowLimit.png")
 ```
 
 
@@ -334,7 +496,7 @@ ggsave("plots/waterData_belowLimit.png")
 ### 1.3.1 Calculate inputs required
 
 ```{r}
-buffer_data <- read_csv("results/assumptions_data_summarised.csv") %>% 
+buffer_data <- read_csv("../results/assumptions_data_summarised.csv") %>% 
   
   mutate(
     dailyCP_kg = meanFeed_kg_d * meanCP, #kg
@@ -387,7 +549,7 @@ water_data <- water_data %>%
 
 summary(water_data)
 
-write.csv2(water_data, file = 'data/water_data.csv')
+write.csv2(water_data, file = '../interm/water_data.csv')
 ```
 
 
@@ -465,7 +627,7 @@ results <- rbind(results, temp)
 
 results <- results %>% 
   print() %>% 
-  write_csv("results/nutrientContrib_water.csv") %>% 
+  write_csv("../interm/nutrientContrib_water.csv") %>% 
   select(-mconf)
 ```
 
@@ -480,7 +642,7 @@ The digestibility data is based on the book "Fish Nutrition" (Lall, 2002).
 
 ```{r include=FALSE}
 # Load digestibility data
-feed_data <- read_csv2("data/nutrient_contribution.csv") %>% 
+feed_data <- read_csv2("../interm/nutrient_contribution.csv") %>% 
   
   select(-c("concWater_g/m3", "concWaterMax_g/m3")) %>% 
   
@@ -621,7 +783,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
                              "lightblue"
                              ))
 
-#ggsave('plots/nutrientContrib_water5.png')
+#ggsave('../plots/nutrientContrib_water5.png')
 ```
 
 
@@ -647,7 +809,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
                              "darkblue"
                              ))
 
-#ggsave('plots/nutrientContrib_water95.png')
+#ggsave('../plots/nutrientContrib_water95.png')
 ```
 
 
@@ -674,7 +836,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
                              "lightblue"
                              ))
 
-#ggsave('plots/nutrientContrib_water5plusCa.png')
+#ggsave('../plots/nutrientContrib_water5plusCa.png')
 ```
 
 ```{r echo=FALSE}
@@ -698,7 +860,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
                              "darkblue"
                              ))
 
-#ggsave('plots/nutrientContrib_water95plusCa.png')
+#ggsave('../plots/nutrientContrib_water95plusCa.png')
 ```
 
 

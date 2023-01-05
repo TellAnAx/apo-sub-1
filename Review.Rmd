@@ -191,7 +191,7 @@ For the creation of the aquaponics dataset, literature was screened for studies 
 
 The source water dataset was compiled by merging 64 water analysis reports from 12 countries which are shown in **FIGURE XXX** together with number of observations per country. Even though it was intended to randomize the selection of water analysis reports, the authors had to consider the accessibility of the analysis reports due to lacking English versions.
 
-![Number of water analysis reports per country included in the source water dataset.](1_nutrientContribution/plots/waterData_countryPlot.png){#fig:country}
+![Number of water analysis reports per country included in the source water dataset.](1_nutrientContribution/plots/contribution_waterData_countryPlot.png){#fig:country}
 
 The feed dataset comprised nutrient analyses of aquafeeds used during aquaponic studies. If commercial aquafeeds were used and only trade names reported, supplier datasheets were used and amended by literature data, if available. Incomplete observations with respect to experimental feeds were handled the same, merging data from multiple publications if the same feed was used.
 
@@ -201,8 +201,26 @@ The feed dataset comprised nutrient analyses of aquafeeds used during aquaponic 
 
 ## Origin of nutrients
 
-### Assumptions and data preparation
-To create initial assumptions for the calculation of the relative contributions of feed and buffer substances to the daily nutrient input, empirical data from the aquaponics and feed datasets were used. Arithmetic means of the pH, total volume of the aquaponic system, volume of daily exchanged water, daily mass of fed feed on dry matter basis, and nutrient mass fractions in the feed were calculated. To account for the digestibility of plant nutrients in aquafeeds by fish, apparent digestibility coefficients (ADC) of 90% were assumed for N whereas the ADC of all other plant nutrients was assumed to be 50% (Lall Fish Nutrition The Minerals, 2002).
+### Assumptions, data selection and preparation
+To create initial assumptions for the calculation of the relative contributions of feed and buffer substances to the daily nutrient input, empirical data from the aquaponics and feed datasets were used. 
+
+```{r}
+# Count observations
+read_csv("interm/contribution_assumptions_raw.csv") %>%
+  
+  print() %>% 
+  
+  summarise(
+    publications = length(unique(Reference_ID)),
+    observations = n()
+  ) %>% 
+  
+  print()
+```
+
+
+
+Arithmetic means of the pH, total volume of the aquaponic system, volume of daily exchanged water, daily mass of fed feed on dry matter basis, and nutrient mass fractions in the feed were calculated. To account for the digestibility of plant nutrients in aquafeeds by fish, apparent digestibility coefficients (ADC) of 90% were assumed for N whereas the ADC of all other plant nutrients was assumed to be 50% (Lall Fish Nutrition The Minerals, 2002).
 
 The input of pH-increasing substances was assumed to be correlated with the daily feed input. It was furthermore assumed that the entire indigestible fraction of N is excreted in form of NH$_{4}^{+}$. The necessary amounts of KOH and Ca(OH)$_{2}$ to neutralise the released protons were calculated.
 
@@ -211,7 +229,7 @@ All observations from the source water dataset were used to calculate two-sided 
 It is common practice to report the value of the detection limit in case that the analyte concentration found was below it. Removing these values or retaining the detection limits in the dataset leads to estimates that are too large. FIGURE XXX shows the proportion of water analysis reports where individual analytes were below detection limits. Consequently, concentration data was recalculated using the *cenmle()* function from the R package *NADA* according to recommended procedures in the handling of censored data (Helsel, 2012). This ensured that the estimates for nutrient concentrations in tap water were not too high.
 
 
-![Proportion of water analysis observations per analyte reported to be below detection limit.](1_nutrientContribution/plots/waterData_belowLimit.png){#fig:belowLimit}
+![Proportion of water analysis observations per analyte reported to be below detection limit.](1_nutrientContribution/plots/contribution_waterData_belowLimit.png){#fig:belowLimit}
 
 
 
@@ -264,7 +282,7 @@ where the expressions in square brackets denote for the empirically found concen
 ## Derived assumptions
 
 ```{r}
-read_csv('1_nutrientContribution/results/assumptions_data_summarised.csv') %>% 
+read_csv("results/assumptions_data_summarised.csv") %>% 
   mutate(
     biomass_kg = RearingV * StockingDensity,
     feed_kg_d = biomass_kg * meanFR,
