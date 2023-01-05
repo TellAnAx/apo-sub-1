@@ -18,5 +18,7 @@ The branch **gwb2022** holds the results of the calculations using The Geochemis
 |Folder|Description|
 |---|---|
 |contribution|Nutrient contribution of different sources|
+|contribution_shiny|Shiny app for the visualisation of the contribution of different nutrient sources to the total nutrient budget in aquaponic systems|
 |solubility|Calculation of nutrient solubilities based on empirical data|
 |discharge|Nutrient discharge modeling|
+|
