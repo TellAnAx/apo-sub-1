@@ -44,24 +44,36 @@ boxplot_precipitated <- read_csv("results/precipitation.csv") %>%
         "DOC (Gaussian DOM)",
         "H+1"
       )
+    ),
+    cation_anion = factor(
+      cation_anion,
+      levels = c("cation", "anion"),
+      labels = c("Cation", "Anion")
     )
   ) %>% 
   
-  drop_na(component) %>% 
+  drop_na(component) %>%
+  
+  #print()
   
   ggplot(aes(x = percentage, y = reorder(component, desc(component)), fill = cation_anion)) + 
   geom_boxplot() + 
-  geom_hline(yintercept = 7.5, linetype = "dashed", color = "red") + 
+  
   scale_y_discrete(labels = rlang::parse_exprs) +
+  scale_fill_brewer(palette = "Set1", direction = -1) +
+  #scale_fill_manual(values = c("lightblue", "lightred")) + 
+  facet_wrap(facets = vars(cation_anion), scales = "free") +
+  
   labs(
     y = "",
     x = "% precipitation of total conc.",
     fill = ""
   ) + 
   
+  theme_bw() + 
   theme(
-    legend.position = "bottom",
-    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+    legend.position = "none"
+    #axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
   )
 
 

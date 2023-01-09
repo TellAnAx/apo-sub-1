@@ -613,18 +613,18 @@ buffer_data <- read_csv(here("interm", "contribution_assumptions_summary.csv")) 
     dailyKOH_mol = dailyH_mol,
     dailyK_g = dailyKOH_mol * 39.098,
     dailyCaOH2_mol = dailyH_mol / 2,
-    dailyCa_g = dailyCaOH2_mol * 40.078
+    dailyCa_g = dailyCaOH2_mol * 40.078,
+    dailyNaHCO3_mol = dailyH_mol,
+    dailyNa_g = dailyNaHCO3_mol * 22.989
   ) %>% 
   
   print() %>% 
   
-  #select(dailyK_g) %>% 
-  #select(dailyCa_g) %>%
-  select(c(dailyK_g, dailyCa_g)) %>% 
-  rename(K = dailyK_g) %>% 
-  rename(Ca = dailyCa_g) %>% 
-  pivot_longer(everything(), names_to = "compound", values_to = "contribution_g") %>% 
+  select(c(dailyK_g, dailyCa_g, dailyNa_g)) %>% 
+  
+  rename(Ca = dailyCa_g, K = dailyK_g, Na = dailyNa_g) %>% 
 
+  pivot_longer(everything(), names_to = "compound", values_to = "contribution_g") %>% 
 
   print()
 ```
@@ -663,7 +663,9 @@ plotdata <- results %>%
   
   rename(BufferContribution = "contribution_g") %>% 
   
-  select(c(nutrient, `Water 5% Contribution`, `Water 95% Contribution`, FeedContribution, BufferContribution)) 
+  select(c(nutrient, `Water 5% Contribution`, `Water 95% Contribution`, FeedContribution, BufferContribution)) %>% 
+  
+  print()
   
 ```
 
@@ -680,7 +682,7 @@ water5 <- plotdata %>%
     names_pattern = '(.*)Contribution',
     values_to = "Total") %>% 
   
-  mutate(water = "5")
+  mutate(water = "Water: 5% confidence band")
 
 
 water95 <- plotdata %>% 
@@ -693,7 +695,7 @@ water95 <- plotdata %>%
       names_pattern = '(.*)Contribution',
       values_to = "Total") %>% 
   
-  mutate(water = "95")
+  mutate(water = "Water: 95% confidence band")
 ```
 
 
@@ -703,23 +705,28 @@ plotdata <- water5 %>%
   
   bind_rows(water95) %>% 
   
-  mutate(Total = if_else(Total > 0,Total, 0, missing = 0)) %>% 
+  mutate(
+    Total = if_else(Total > 0,Total, 0, missing = 0),
+    Contribution = if_else(grepl("Water", Contribution) == TRUE, "Water", Contribution)
+    ) %>% 
   
   mutate(
-    buffer0 = if_else(Contribution == "Buffer", 0, Total),
-    bufferK = if_else(Contribution == "Buffer" & nutrient == "Ca", 0, Total),
-    bufferCa = if_else(Contribution == "Buffer" & nutrient == "K", 0, Total),
+    bufferNa = if_else(Contribution == "Buffer" & nutrient %in% c("Ca", "K"), 0, Total),
+    bufferK = if_else(Contribution == "Buffer" & nutrient %in% c("Ca", "Na"), 0, Total),
+    bufferCa = if_else(Contribution == "Buffer" & nutrient %in% c("K", "Na"), 0, Total),
     ) %>% 
   
   select(-Total) %>% 
   
   pivot_longer(
-    cols = c(buffer0, bufferK, bufferCa),
+    cols = c(bufferNa, bufferK, bufferCa),
     names_to = "buffer",
     values_to = "Total"
-  )
+  ) %>% 
+  
+  print()
 
-rm(water5, water95)
+#rm(water5, water95)
 ```
 
 
@@ -730,26 +737,44 @@ rm(water5, water95)
 Given the data about average plant nutrient loadings per unit of water and feed and the initial assumptions about the daily exchanged volume of water and feed fed, it is possible to calculate the total mass of nutrients that are introduced into the system every day.
 
 ```{r}
-
+#
 plotdata$nutrient <- fct_relevel(plotdata$nutrient, "N", "P", "K", "Ca", "Mg", "S", "B", "Fe", "Mn", "Cu", "Zn", "Mo", "Ni", "Na")
   
+#
+plotdata$buffer <- factor(
+  plotdata$buffer,
+  levels = c("bufferK", "bufferCa", "bufferNa"),
+  labels = c(expression(KOH), expression(Ca(OH)[2]), expression(NaHCO[3]))
+)
+
+plotdata$water <- factor(
+  plotdata$water,
+  levels = c("Water: 5% confidence band", "Water: 95% confidence band"),
+  labels = c(expression(paste("Water: 5% confidence limit")), expression(paste("Water: 95% confidence limit")))
+)
+```
+
+
+
+```{r}
+
 plotdata %>% 
 ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
   geom_col(position = 'fill') + 
-  facet_grid(rows = vars(buffer), cols = vars(water)) + 
-  geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dashed", alpha = 0.5) + 
+  geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dashed", alpha = 0.5) +
+  
+  facet_grid(rows = vars(buffer), cols = vars(water), labeller = label_parsed) + 
+   
   labs(
-    title = "The source of plant nutrients in Aquaponics"
-    #,subtitle = paste(round(assumption_summary$meanExchRate), "% water exchange, digestibility not considered", sep = "")
-    ,x = ""
+    x = ""
     ,y = "Relative nutrient contribution"
     ,fill = "Source"
   ) +
   theme_minimal() + 
   scale_fill_manual(values=c("grey",
                              "brown",
-                             "lightblue",
-                             "darkblue"))
+                             "lightblue"))
+                             
 ```
 
 A visual presentation of the data based on the percentage contribution of both sources to the total introduced nutrients gives a picture that differs from the consensus that the majority of nutrients is introduced into the system via feed. 
@@ -764,21 +789,26 @@ An important aspect that should not be forgotten is that the livestock in the RA
 
 ```{r include=FALSE}
 plotdata <- plotdata %>% 
+  
   pivot_wider(
     names_from = Contribution,
     values_from = Total
   ) %>% 
+  
   left_join(feed_data, by = c('nutrient' = 'compound')) %>% 
-  #select(c(nutrient, `Water 5% `, `Water 95% `, Buffer, Feed, digestibility)) %>% 
+
   mutate(
     Feed = Feed * digestibility
   ) %>% 
+  
   select(-c(digestibility, `feedComp_g/kg`)) %>% 
+  
   pivot_longer(
-    cols = c(`Water 5% `, Feed, Buffer, `Water 95% `),
+    cols = c(`Water`, Feed, Buffer),
     names_to = 'Contribution',
     values_to = 'Total'
   ) %>% 
+  
   drop_na()
 
 ```  
@@ -790,23 +820,34 @@ plotdata <- plotdata %>%
 
 plotdata$nutrient <- fct_relevel(plotdata$nutrient, "N", "P", "K", "Ca", "Mg", "S", "B", "Fe", "Mn", "Cu", "Zn", "Mo", "Ni", "Na")
   
-plotdata %>% 
+contribution_plot <- plotdata %>% 
 ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
   geom_col(position = 'fill') + 
-  facet_grid(rows = vars(buffer), cols = vars(water)) + 
   geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dashed", alpha = 0.5) + 
+  #scale_fill_brewer(palette = "Set1", direction = 1) +
+  
+  scale_fill_manual(values=c("grey","brown","lightblue"))+
+                             
+  facet_grid(rows = vars(buffer), cols = vars(water), labeller = label_parsed) + 
+  
   labs(
-    title = "The source of plant nutrients in Aquaponics"
-    #,subtitle = paste(round(assumption_summary$meanExchRate), "% water exchange, digestibility not considered", sep = "")
-    ,x = ""
-    ,y = "Relative nutrient contribution"
-    ,fill = "Source"
+    x = "",
+    y = "Relative nutrient contribution",
+    fill = "Source"
   ) +
-  theme_minimal() + 
-  scale_fill_manual(values=c("grey",
-                             "brown",
-                             "lightblue",
-                             "darkblue"))
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1
+    )
+  )
+
+                             
+contribution_plot
+
+ggsave(here("plots", "contribution_sources_digestincl.png"))
 ```
 
 
