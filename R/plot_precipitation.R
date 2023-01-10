@@ -54,14 +54,11 @@ boxplot_precipitated <- read_csv("results/precipitation.csv") %>%
   
   drop_na(component) %>%
   
-  #print()
-  
   ggplot(aes(x = percentage, y = reorder(component, desc(component)), fill = cation_anion)) + 
   geom_boxplot() + 
   
   scale_y_discrete(labels = rlang::parse_exprs) +
   scale_fill_brewer(palette = "Set1", direction = -1) +
-  #scale_fill_manual(values = c("lightblue", "lightred")) + 
   facet_wrap(facets = vars(cation_anion), scales = "free") +
   
   labs(
@@ -73,7 +70,6 @@ boxplot_precipitated <- read_csv("results/precipitation.csv") %>%
   theme_bw() + 
   theme(
     legend.position = "none"
-    #axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
   )
 
 
