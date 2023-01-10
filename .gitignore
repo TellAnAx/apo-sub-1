@@ -55,3 +55,6 @@ Thumbs.db
 Review.docx
 Review.pdf
 Review.html
+
+# Image files
+*.png
