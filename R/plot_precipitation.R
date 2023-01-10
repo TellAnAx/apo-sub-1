@@ -80,4 +80,4 @@ boxplot_precipitated <- read_csv("results/precipitation.csv") %>%
 boxplot_precipitated
 
 
-ggsave('plots/boxplot_precipitated_vm.png')
+ggsave(here::here("plots", "boxplot_precipitated_vm.png"))
