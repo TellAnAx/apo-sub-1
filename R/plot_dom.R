@@ -26,16 +26,17 @@ boxplot_dom <- read_csv("results/dom.csv") %>%
   
   drop_na(species_name) %>% 
   
-  ggplot(aes(x = percentage_of_total_conc, y = species_name, fill = species_name)) + 
+  ggplot(aes(x = percentage_of_total_conc, y = reorder(species_name, desc(species_name)), fill = species_name)) + 
   geom_boxplot() + 
+  
   scale_y_discrete(labels = rlang::parse_exprs) + 
-  lims(
-    x = c(1,99)
-  ) +
+  scale_fill_brewer(palette = "Set1", direction = -1) +
+  
   labs(
     x = "Percentage of total conc.",
     y = "Complexed cation"
   ) + 
+  
   theme_bw() + 
   theme(
     legend.position = "none"
@@ -45,4 +46,4 @@ boxplot_dom <- read_csv("results/dom.csv") %>%
 
 boxplot_dom
 
-ggsave('plots/boxplot_species_dom_vm.png')
+ggsave(here::here("plots", "boxplot_species_dom_vm.png"))
