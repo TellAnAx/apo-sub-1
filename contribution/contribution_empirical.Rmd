@@ -6,10 +6,6 @@ date: '2022-07-04'
 output: html_document
 ---
 
-# To Do
-
-- 
-
 
 ```{r Setup, message=FALSE, warning=FALSE, include=FALSE}
 #knitr::opts_chunk$set(echo = TRUE, include = FALSE)
@@ -19,6 +15,7 @@ library(here)
 library(XLConnect)
 library(tidyverse)
 library(NADA)
+library(rlang)
 ```
 
 
@@ -415,10 +412,17 @@ water_data %>%
 ```{r}
 # Barplot - Country frequencies in dataset
 water_data %>% 
-  ggplot(aes(y = Country)) +
-  geom_bar()
+  ggplot(aes(y = Country, fill = Country)) +
+  geom_bar(fill = "blue") + 
 
-ggsave(here("plots", "contribution_waterData_countryPlot.png"))
+  labs(
+    x = "Number of included reports",
+    y = ""
+  ) +
+  
+  theme_bw()
+
+ggsave(here::here("plots", "contribution_waterData_countryPlot.png"))
 ```
 
 
@@ -427,30 +431,79 @@ ggsave(here("plots", "contribution_waterData_countryPlot.png"))
 ```{r}
 # Barplot
 water_data %>% 
+  
   select(contains("belowLimit")) %>% 
+  
   pivot_longer(cols = everything(), names_to = "analyte", values_to = "belowLimit") %>% 
+  
   mutate(
     analyte = sub("_belowLimit", "", analyte),
     na = if_else(is.na(belowLimit),1,0)
     ) %>% 
+  
   group_by(analyte) %>% 
   summarise(
     n_anal = n(),
     na = sum(na),
     belowLimit = sum(belowLimit, na.rm = TRUE)
     ) %>% 
-  mutate(rel_belowLimit = round(belowLimit / (n_anal - na), digits = 3)) %>% 
-  print() %>% 
+  
+  mutate(
+    rel_belowLimit = round(belowLimit / (n_anal - na), digits = 3),
+    analyte = factor(
+      analyte,
+      levels = c(
+        "NH4",
+        "NO2",
+        "NO3",
+        "PO4",
+        "K",
+        "Ca",
+        "Mg",
+        "SO4",
+        "Fe",
+        "B",
+        "Mn",
+        "Cu",
+        "Zn"
+      ),
+      labels = c(
+        expression(NH[4]^{"+"}),
+        expression(NO[2]^{"-"}),
+        expression(NO[3]^{"-"}),
+        expression(PO[4]^{3*"-"}),
+        expression(K^{"+"}),
+        expression(Ca^{2*"+"}), 
+        expression(Mg^{2*"+"}), 
+        expression(SO[4]^{2*"-"}),
+        expression(Fe^{3*"+"}), 
+        expression(B(OH)[4]^{"-"}), 
+        expression(Mn^{2*"+"}), 
+        expression(Cu^{2*"+"}), 
+        expression(Zn^{2*"+"})
+      ),
+      exclude = c(
+        "TOC","Ni", "Na", "Mo", "Al", "Cl"
+      )
+    )
+    ) %>% 
+  
+  drop_na() %>% 
   
   # Barplot
-  ggplot(aes(x = rel_belowLimit, y = analyte)) + 
-  geom_col() + 
+  ggplot(aes(x = rel_belowLimit, y = reorder(analyte, desc(analyte)))) + 
+  geom_col(fill = "blue") + 
+    
+  scale_y_discrete(labels = rlang::parse_exprs) + 
+  
   labs(
-    x = "Proportion of observations below detection limit",
+    x = "Rel. proportion of observations below detection limit",
     y = "Analyte"
-  )
+  ) + 
+  
+  theme_bw()
 
-ggsave(here("plots", "contribution_waterData_belowLimit.png"))
+ggsave(here::here("plots", "contribution_waterData_belowLimit.png"))
 ```
 
 
