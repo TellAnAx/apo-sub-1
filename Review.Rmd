@@ -75,22 +75,17 @@ Aquafeeds are usually considered as main nutrient input in aquaponic systems [@S
 
 
 
-When discussing feed as nutrient input, it is important to consider the digestibility of the nutrients and the route of their excretion. Aquatic animals excrete nutrients both in dissolved form via their gills and the urinary system [@Evans2003] and as solid feces. Consequently, excreted nutrients differ in their plant availability according to the major pathway of excretion.
+When discussing aquafeeds as nutrient input, it is important to consider the digestibility of the nutrients, their retention and route of their excretion. As shown in **Figure XXX**, while a fraction of the digestible nutrients provided as feed is retained to sustain physiological functions and somatic growth, excretion of nutrients takes place both in dissolved form via the gills and the urinary system [@Evans2003] and as solid feces. Consequently, excreted nutrients differ in their plant availability at excretion time, depending on the major pathway of excretion.
 
-The excretion of N as endproduct of the protein and amino acid catabolism takes place in form of ammonia and urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski; @Mommsen1992] **Fish Nutrition**. 
+![From Bureau and Hua (2010)](images/2010_Bureau.png)
 
-Approximately 30% of P supplied by the feed is excreted [@Lall1989]. Of this, 90% are excreted via the urine [@Tomiyama1956]. However, excretion can be much higher if plant ingredients rich in phytic acid are used. Phytic acid is poorly digestible and can furthermore reduce the digestibility of minerals in the feed. Consequently, a shift in the excretion pattern is observable with an increasing share of excretion as particulate P.
+N is usually well-digestible, with the apparent digestibility coefficient (ADC) of feed ingredients usually being above 70% and on average approximately 90% [@IAFFD2021]. The excretion of N as end product of the protein and amino acid catabolism takes place in form of ammonia and, to a small extent, urea. The predominant excretory site are the gills, followed by renal excretion [@FishNutritionC6; @Mommsen1992]. 
 
+A less digestible nutrient is P with ADC estimates ranging from 70% to 40% and a resulting excretion of 30% to 60% of the supply [@FishNutritionC5; @Sugiura2018]. Especially plant ingredients in aquafeeds can cause low ADC if they are rich in phytic acid. Phytic acid is poorly digestible and can furthermore reduce the digestibility of minerals in the feed. This might also explain contradictory information in literature with reported renal excretion rates of 90% of the total excreta [@Tomiyama1956] in contrast to  estimates of 28% of excretion taking place in dissolved form and 30% to 64% excreted as particulate P [@Lall2002].
 
-- P 90% excretion via urine (Lall 1989; tomiyama et al. 1956); 30-64% of P excreted as particulate P; 28% P supplied via feed is wasted in dissolved form (Lall)
+In terms of digestibility, information about the remaining plant nutrients is scarce. Variability of ADC among different feed ingredients was shown in Atlantic salmon (\emph{Salmo salar}) for Ca, Mg, Fe, Mn and Zn, with an ADC ranging between 30% to 50% [@Sugiura1998].
 
-The earth alkaline metals Ca and Mg are primarily excreted in dissolved form via the gills and urine [@Lall1989; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while the renal excretion was found to be negligible [@Lall1989]
-
-
-[@Andreasson1995] Cu, Ni, Zn biliary excretion limited
-
-- Cu toxicity 13 mg/kg feed (Tacon 1990), 655 mg/kg feed (Knox et al., 1982, Lanno et al., 1985), 1 mg/L (Fiedman and Shibko, 1972); excess dietary Cu is not taken up but excreted as feces (Lall), thus Cu is reduced in feeds to minimise excretino into environment
-- Zn excreted by kidneys and gill chloride cells and feces 
+Excretion of the earth alkaline metals Ca and Mg takes primarily place in dissolved form via the gills and urine [@FishNutritionC5; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while the renal excretion was found to be negligible [@FishNutritionC5]. Cu is predominantly excreted via the bile [@Bury2003]. Excess dietary Cu is not taken up but excreted as feces. Thus the Cu inclusion rate in aquafeeds is reduced to minimize its release into the environment [@FishNutritionC5]. Zn is mostly excreted renally and via the gills [@FishNutritionC5].
 
 
 
@@ -99,7 +94,9 @@ The biofilter in the aquaculture unit plays an important role as it is accomodat
 
 2 NH$_{3}$ + 4 O$_{2}$ -> 2 NO$_{3}^{-}$ + 2 H$_{2}$O + 3 H$^{+}$
 
-The activity of nitrifyers is pH-dependent [@Ward2011]. Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, NaHCO$_{3}$ is commonly used in aquaculture. However, its use in aquaponics would lead to a high daily input of Na which should be avoided due to its phytotoxicity at high concentrations (Wang). Therefore, the usage of other substances such as potassium hydroxide (KOH), calcium hydroxide (Ca(OH)$_{2}$), calcium carbonate (limestone, Ca(CO$_{3}$)) or calcium oxide (quicklime, CaO) is common in aquaponics. The term "pH buffer" will be avoided within this context as the hydroxides are strong bases that are fully dissociating in water and thus not having buffering capacity. 
+The activity of nitrifyers is pH-dependent [@Ward2011]. Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) is commonly used in aquaculture due to its cheap price ($\approx 200 \text{ EUR t}^{-1}$). However, its use in aquaponics would lead to a high daily input of Na which should be avoided due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, the usage of potassium hydroxide (KOH; $\approx 250 \text{ EUR t}^{-1}$), calcium hydroxide (Ca(OH)$_{2}$; $\approx 100 \text{ EUR t}^{-1}$), calcium carbonate (limestone, Ca(CO$_{3}$); $\approx 50 \text{ EUR t}^{-1}$) or calcium oxide (quicklime, CaO, $\approx 70 \text{ EUR t}^{-1}$) is a common alternative in aquaponics. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
+
+The term "pH buffer" will be avoided within this context as the hydroxides are strong bases that are fully dissociating in water and thus not having buffering capacity. 
 
 
 
@@ -107,7 +104,7 @@ The activity of nitrifyers is pH-dependent [@Ward2011]. Thus, the released H$^{+
 
 
 ## Nutrient fate and behavior
-Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successfull nutrient management [@Sambo2019]. The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrained. The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature (see e.g. Jensen, Sig and Stumm, Stumm and Morgan).
+Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successfull nutrient management [@Sambo2019]. The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrained. The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature [@Jensen2003; @Stumm1981].
 Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. The saturation concentration of a salt can be described using solubility product constants $K_{sp}$, which are the product of the concentration of the cation(s) and the anion(s) at saturation concentration, as shown in **equation XXX**, with square brackets denoting for molar concentrations.
 
 $$
@@ -150,12 +147,12 @@ H$_{2}$PO$_{4}^{-}$ + H$_{2}$O <-> HPO$_{4}^{2-}$ + H$_{3}$O$^{+}$ $K_{a2} = 10^
 
 HPO$_{4}^{2-}$ + H$_{2}$O <-> PO$_{4}^{3-}$ + H$_{3}$O$^{+}$ $K_{a3} = 10^{12.0}$
 
-The reactions show that phosphate in aqueous solution is present in four different forms, the so-called species, which there are H$_{3}$PO$_{4}$, H$_{2}$PO$_{4}^{-}$, HPO$_{4}^{2-}$ and PO$_{4}^{3-}$. The extent to which the described dissociation reactions (the removal of H$^{+}$) occurs depends on the pH of the system and can be mathematically described by a characteristic equilibrium constant $K$ for each reaction step. 
+The reactions show that phosphate in aqueous solution is present in four different forms, the so-called species, which there are H$_{3}$PO$_{4}$, H$_{2}$PO$_{4}^{-}$, HPO$_{4}^{2-}$ and PO$_{4}^{3-}$. The extent to which the described dissociation reactions (the removal of H$^{+}$) occurs depends on the pH of the system and can be mathematically described by a characteristic equilibrium constant $K$ for each reaction step [@Jensen2003]. 
 The species differ in their chemical behavior.
 
 
 If, for instance, both PO$_{4}^{3-}$ and Fe$^{3+}$ ions are present in solution and $Q > K_{sp}$ , they will eventually form precipitates. This could be avoided by complex formation reactions where a chelating agent, hereinafter denoted as ligands, forms a complex molecule which is "hidden" and thus excluded from precipitation. Complex molecules are formed especially with cations of transition metal and they can lead to concentrations of these metals that are exceeding their saturation concentrations by three to four orders of magnitude (see e.g. Jensen, 2003).
-The effects and constraints that are resulting from the described reactions under conditions that are typical for hydroponics were exhaustively described (De Rijck and Shrevens papers). However, no such work has been conducted for aquaponics.
+The effects and constraints that are resulting from the described reactions under conditions that are typical for hydroponics were exhaustively described [@DeRijck1997; @DeRijck1998; @DeRijck1998a; @DeRijck1999b]. However, no such work has been conducted for aquaponics.
 
 
 
