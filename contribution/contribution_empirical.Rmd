@@ -376,7 +376,7 @@ A total of 51 observations from 21 publications was used for generating the assu
 
 ```{r include=FALSE}
 water_data <- gdata::read.xls(
-  here("data", "contribution", "Aquaponics - Water Quality.xlsx"), 
+  here::here("data", "contribution", "Aquaponics - Water Quality.xlsx"), 
   sheet = "municipalTap", skip = 1
   )
 
@@ -481,9 +481,13 @@ water_data <- water_data %>%
   
   drop_na() %>% 
   
-  print() %>% 
+  print()
+  
 
-write.csv2(here("interm", "water_data.csv"))
+water_data %>% 
+  
+  write.csv(here("interm", "water_data.csv"))
+
 ```
 
 
