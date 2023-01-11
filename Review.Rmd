@@ -10,7 +10,7 @@ output: "word_document"
 # Introduction
 Aquaponic systems require a high initial investment and come with comparably high labor costs due to the complexicity of the system [@Turnsek2019; @Quagrainie2017]. One aspect that is contributing to high operating costs in aquaponics is the lack of “off-the-shelf” solutions for the management of plant nutrients. 
 As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B). The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion [@Mengel2001]. 
-The main source of nutrients in aquaponics is claimed to be the feed for the aquatic livestock, hereinafter denoted as aquafeed. Before becoming available for plant uptake, aquafeeds are ingested by the cultivated animals and the digestible mass fraction is utilized for the basal metabolism or somatic growth (Fish Nutrition). The indigestible mass fraction is excreted in form of both solid and dissolved matter, with the latter eventually being available for plant uptake. However, comparing the nutrient profile of plant-available fish excreta with nutrient solutions commonly used in hydroponics, deviations from the optimum were reported [@Shaw2022; @Lunda2019; @Robaina2019]. To counteract these imbalances, it was suggested to complement aquaponic nutrient solutions with the missing nutrients. Studies showed that this practice leads to plant growth equal or even better than observed in hydroponics [@Delaide2016; @Monsees2019; @Rodgers2022]. Though, the supplementation of individual nutrients requires their continuous monitoring to ensure that optimum levels are met and maintained. This adds additional expenses to the budget.
+The main source of nutrients in aquaponics is claimed to be the feed for the aquatic livestock, hereinafter denoted as aquafeed [@Schmautz2016; @Robaina2019]. Before becoming available for plant uptake, aquafeeds are ingested by the cultivated animals and the digestible mass fraction is utilized for the basal metabolism or somatic growth [@Hardy2002]. The indigestible mass fraction is excreted in form of both solid and dissolved matter, with the latter eventually being available for plant uptake. However, comparing the nutrient profile of plant-available fish excreta with nutrient solutions commonly used in hydroponics, deviations from the optimum were reported [@Shaw2022; @Lunda2019; @Robaina2019]. To counteract these imbalances, it was suggested to complement aquaponic nutrient solutions with the missing nutrients. Studies showed that this practice leads to plant growth equal or even better than observed in hydroponics [@Delaide2016; @Monsees2019; @Rodgers2022]. Though, the supplementation of individual nutrients requires their continuous monitoring to ensure that optimum levels are met and maintained. This adds additional expenses to the budget.
 In hydroponics, on the other hand, plant nutrients are supplied in form of commercially available and chemically fine-tuned plant fertilizers with dosage recommendations. It is usually sufficient to monitor the nutrient depletion via plant uptake by determining the electric conductivity (EC) of the nutrient solution as sum parameter [@Resh2013]. Taking into account that labour costs can be accounted for 40-50% of the total operational costs of aquaponic facilities [@Baganz2020; @Quagrainie2017] (**Engle**), an entrepreneur who is carefully weighing whether to invest in aquaponics or hydroponics might opt for the latter.
 To circumvent the stated obstacles with respect to nutrient management in aquaponics, several suggestions were made such as the development of tailored aquafeeds, and usage of substances that are an alternative for the sodium hydrogen carbonate (soda, NaHCO$_{3}$) that is used in conventional aquaculture for pH control [@Seawright1998; @Goddek2019]. However, it needs to be emphasised that the development of an “off-the-shelf” solution for a problem implies that its application yields comparable results over a broad range of conditions. Therefore, three considerations are of striking importance within the context of an improved nutrient supply in aquaponics:
 
@@ -30,7 +30,7 @@ Potable water is usually rigidly regulated by the authorities. In Europe, the Dr
 
 
 
-**Maximum allowable concentrations (MAC) of substances considered as plant nutrients defined by the Drinking Water Directive.**
+**Maximum allowable concentrations (MAC) of substances considered as plant nutrients defined by the EU Drinking Water Directive [@EU2020].**
 
 |Nutrient|Limit|
 |---|---|
@@ -45,7 +45,8 @@ Potable water is usually rigidly regulated by the authorities. In Europe, the Dr
 
 
 
-Within the legal requirements, the composition of tap water generally varies between locations and extraction point of the water. Processes such as wheathering of rock, ion exchange, redox processes and the buildup of biomass are  The extent of the variability is shown in **FIGURE XXX**.  These variabilities were not considered when investigating input sources of nutrients in aquaponics. 
+The extent of the variability of terrestrial waters in their plant nutrient composition is shown in **FIGURE XXX**. Wheathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. This variability can consequently be observed in tap water within legal boundaries and depending on the location of the extraction point of the raw water.
+
 
 
 
@@ -56,9 +57,9 @@ Within the legal requirements, the composition of tap water generally varies bet
 
 
 ### Feed
-Aquafeeds are usually considered as main nutrient input in aquaponic systems [@Robaina2019]. **TABLE XXX** is summarizing some data with respect to average plant nutrient inclusion rates in fish feeds that was collected from commercial trout and salmon grower feeds [@Tacon1983]. However, aquafeeds can vary in the composition of certain nutrients due to the fact that the feed ingredient composition of a specific feed might be altered due to availability and fluctuations in market prices of feed ingredients. This comes with the need to replace feed ingredients by others. While the feed composition is usually only affected marginally, maintaining the levels of crude protein, lipids, ash and carbohydrates relatively constant, there is no information regarding micronutrients. Thus, the quality and composition of aquafeeds might even differ among batches produced at the same factory. Though, there is no available data about the ranges of microminerals in aquafeeds.
+Aquafeeds are usually considered as main nutrient input in aquaponic systems [@Schmautz2016; @Robaina2019]. Though, studies analyzing plant nutrient inclusion rates in aquafeeds are scarce. **TABLE XXX** is summarizing some data with respect to average plant nutrient inclusion rates in fish feeds that was collected from commercial trout and salmon grower feeds [@Tacon1983]. Aquafeeds can vary in the composition of certain nutrients due to the fact that the feed ingredient composition of a specific feed might be altered due to availability and fluctuations in market prices of feed ingredients. This comes with the need to replace feed ingredients by others. While the feed composition is usually only affected marginally, maintaining the levels of crude protein, lipids, ash and carbohydrates relatively constant, there is no information regarding micronutrients. Thus, the quality and composition of aquafeeds might even differ among batches produced at the same factory. Though, there is no available data about the ranges of microminerals in aquafeeds.
 
-**Average plant nutrient composition found in trout, salmon, and eel grower feeds**
+**Average plant nutrient composition found in trout, salmon, and eel grower feeds. Data from [@Tacon1983].**
 
 |Nutrient|Mass fraction|
 |---|---|
@@ -74,14 +75,22 @@ Aquafeeds are usually considered as main nutrient input in aquaponic systems [@R
 
 
 
-When discussing feed as nutrient input, it is furthermore important to consider the digestibility of the nutrients and the route of their excretion. Aquatic animals excrete nutrients both in ionic form via their gills and as solid feces. Consequently, excreted nutrients differ in their plant availability according to the major pathway of excretion.
+When discussing feed as nutrient input, it is important to consider the digestibility of the nutrients and the route of their excretion. Aquatic animals excrete nutrients both in dissolved form via their gills and the urinary system [@Evans2003] and as solid feces. Consequently, excreted nutrients differ in their plant availability according to the major pathway of excretion.
 
-- Ca excreted primarily via gills and kidney (Lall 1989)
-- Cu toxicity 13 mg/kg feed (Tacon 1990), 655 mg/kg feed (Knox et al., 1982, Lanno et al., 1985), 1 mg/L (Fiedman and Shibko, 1972); excess dietary Cu is not taken up but excreted as feces (Lall), thus Cu is reduced in feeds to minimise excretino into environment
-- Mg renal excretion (Oikari and Rankin 1985)
+The excretion of N as endproduct of the protein and amino acid catabolism takes place in form of ammonia and urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski; @Mommsen1992] **Fish Nutrition**. 
+
+Approximately 30% of P supplied by the feed is excreted [@Lall1989]. Of this, 90% are excreted via the urine [@Tomiyama1956]. However, excretion can be much higher if plant ingredients rich in phytic acid are used. Phytic acid is poorly digestible and can furthermore reduce the digestibility of minerals in the feed. Consequently, a shift in the excretion pattern is observable with an increasing share of excretion as particulate P.
+
+
 - P 90% excretion via urine (Lall 1989; tomiyama et al. 1956); 30-64% of P excreted as particulate P; 28% P supplied via feed is wasted in dissolved form (Lall)
+
+The earth alkaline metals Ca and Mg are primarily excreted in dissolved form via the gills and urine [@Lall1989; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while the renal excretion was found to be negligible [@Lall1989]
+
+
+[@Andreasson1995] Cu, Ni, Zn biliary excretion limited
+
+- Cu toxicity 13 mg/kg feed (Tacon 1990), 655 mg/kg feed (Knox et al., 1982, Lanno et al., 1985), 1 mg/L (Fiedman and Shibko, 1972); excess dietary Cu is not taken up but excreted as feces (Lall), thus Cu is reduced in feeds to minimise excretino into environment
 - Zn excreted by kidneys and gill chloride cells and feces 
-- Mn renal excretion is negligible (Lall), instead feces
 
 
 
@@ -133,7 +142,7 @@ H$_{3}$PO$_{4}$ + NaOH <-> NaH$_{2}$PO$_{4}$ + H$_{2}$O
 
 
 
-When its ions dissolve, or its strong acids or bases are introduced into the system, they are undergoing acid-base reactions with water. As an example, the reactions of phosphoric acid (H$_{3}$PO$_{4}$) with water are 
+When its ions dissolve, or its strong acids or bases are introduced into the system, they are undergoing acid-base reactions with water. As an example, the reactions of trihydrogen phosphate  (H$_{3}$PO$_{4}$), commonly termed  phosphoric acid, with water are 
 
 H$_{3}$PO$_{4}$ + H$_{2}$O <-> H$_{2}$PO$_{4}^{-}$ + H$_{3}$O$^{+}$ $K_{a1} = 10^{2.1}$
 
@@ -141,7 +150,8 @@ H$_{2}$PO$_{4}^{-}$ + H$_{2}$O <-> HPO$_{4}^{2-}$ + H$_{3}$O$^{+}$ $K_{a2} = 10^
 
 HPO$_{4}^{2-}$ + H$_{2}$O <-> PO$_{4}^{3-}$ + H$_{3}$O$^{+}$ $K_{a3} = 10^{12.0}$
 
-The reactions show that H$_{3}$PO$_{4}$ is present in four different forms, the so-called species, which there are H$_{3}$PO$_{4}$, H$_{2}$PO$_{4}^{-}$, HPO$_{4}^{2-}$ and PO$_{4}^{3-}$. These species differ in their chemical behavior. The extent to which the described dissociation reactions (the removal of H$^{+}$) occurs depends on the pH of the system and can be mathematically described by a characteristic equilibrium constant $K$ for each reaction step. 
+The reactions show that phosphate in aqueous solution is present in four different forms, the so-called species, which there are H$_{3}$PO$_{4}$, H$_{2}$PO$_{4}^{-}$, HPO$_{4}^{2-}$ and PO$_{4}^{3-}$. The extent to which the described dissociation reactions (the removal of H$^{+}$) occurs depends on the pH of the system and can be mathematically described by a characteristic equilibrium constant $K$ for each reaction step. 
+The species differ in their chemical behavior.
 
 
 If, for instance, both PO$_{4}^{3-}$ and Fe$^{3+}$ ions are present in solution and $Q > K_{sp}$ , they will eventually form precipitates. This could be avoided by complex formation reactions where a chelating agent, hereinafter denoted as ligands, forms a complex molecule which is "hidden" and thus excluded from precipitation. Complex molecules are formed especially with cations of transition metal and they can lead to concentrations of these metals that are exceeding their saturation concentrations by three to four orders of magnitude (see e.g. Jensen, 2003).
@@ -283,29 +293,35 @@ where the expressions in square brackets denote for the empirically found concen
 ## Derived assumptions
 
 ```{r}
-read_csv("results/assumptions_data_summarised.csv") %>% 
+assumptions <- read_csv(here::here("results", "contribution_assumptions_summary2.csv")) %>% 
+  print()
+  
+read_csv(here::here("results", "contribution_assumptions_summary2.csv")) %>% 
+pivot_wider(names_from = "name", values_from = "value") %>% 
   mutate(
-    biomass_kg = RearingV * StockingDensity,
-    feed_kg_d = biomass_kg * meanFR,
-    water_per_feed_m3_kg = feed_kg_d / WaterExchange
-  )
+    water_per_feed_m3_kg = meanFeed_kg_d / meanFreshwater_m3_d
+  ) %>% 
+  pivot_longer(everything(),
+               names_to = "name",
+               values_to = "value") %>% 
+  print()
 ```
 
-Analysis of the data presented in aquaponic studies revealed that the average total water volume of the aquaculture systems was 34 m$^{3}$ with an average volume of the rearing compartment of 8 m$^3$. An average initial stocking density of 12.4 kg m$^{-3}$, feeding rate of 2.2%, and water exchange rate of 4.2% were used. 
+Analysis of the data presented in aquaponic studies revealed that the average total water volume of the aquaculture systems was 4.53 m$^{3}$ with an average volume of the rearing compartment of 2.81 m$^3$. An average stocking density, calculated as the average of the initial and final density, of 7.69 kg m$^{-3}$, feeding rate of 2%, and water exchange rate of 3% were found. 
 As shown in **FIGURE XXX**, literature data comprised a total of nine different cultivated fish species, of which four were cyprinids, two cichlids, one percid, one silurid and salmonid species, respectively.
 
 ![Species used in aquaponic studies.](plots/species.png)
 
 
 ## Nutrient sources
-Using the assumptions derived from literature, an average biomass of 100.6 kg and daily inputs of $100.6 \text{kg} \cdot 2.2\% = 2.2 \text{kg}$ of feed with an average crude protein content of 40.7% on dry matter basis and 4.4 m$^3$ of freshwater were calculated. The daily feed input and crude protein content resulted in an N input of $\frac{2.2 \text{ kg d}^{-1} \cdot 40.7\%}{6.25} \cdot 1000 \frac{\text{g}}{\text{mg}} = 143$ g d$^{-1}$, requiring $\frac{143\text{ g}}{14\text{ g mol}^{-1}} = 14.23$ mol d$^{-1}$ of H$^{+}$ to be neutralized. For this purpose, the input of the same amount of KOH or half of Ca(OH)$_{2}$ would be required, resulting in an input of 190.5 g d$^{-1}$ K or 97.6 g d$^{-1}$ of Ca.
+Using the assumptions derived from literature, an average biomass of 40.98 kg and daily inputs of $40.98 \text{ kg} \cdot 2\% = 0.8$ kg of feed with an average crude protein content of 41% on dry matter basis and $4.53 \text{ m}^{3} \cdot 3\% = 0.14 \text{ m}^{3}$ of freshwater were calculated. The daily feed input and crude protein content resulted in a daily N input of $\frac{0.8 \text{ kg d}^{-1} \cdot 41\%}{6.25} \cdot 1000 \frac{\text{g}}{\text{mg}} = 52.4 \text{ g d}^{-1}$, requiring $\frac{52.4 \text{ g}}{14 \text{ g mol}^{-1}} = 3.7$ mol d$^{-1}$ of H$^{+}$ to be neutralized. For this purpose, the input of the same amount of $\text{NaHCO}_{3}$, KOH or half of Ca(OH)$_{2}$ would be required, resulting in an input of 190.5 g d$^{-1}$ K or 97.6 g d$^{-1}$ of Ca.
 
 
 
 ```{r}
 # Mean and upper and lower limits of 95% confInt.
 # Data in mg/L
-read_csv("1_nutrientContribution/results/nutrientContrib_water.csv") %>% 
+read_csv(here::here("interm", "contribution_water.csv")) %>% 
   mutate(
     lowInput_g_day = lconf * 4400 / 1000,
     meanInput_g_day = mconf * 4400 / 1000,
@@ -341,7 +357,7 @@ Source water: n = 64;Aquafeeds: n = 54
 
 
 
-**Figures XXX** are visualising the proportion of the daily total nutrient inputs from each nutrient source.
+**Figure XXX** visualises the proportion of the daily total nutrient inputs from each nutrient source.
 The results confirm that aquafeeds were the main nutrient source in the reviewed studies. Considering the range of the possible nutrient contribution by source water that is given by the upper and lower limits of the 95% confidence interval, it was found that aquafeeds provided between 99.8% and 99.9% of N, 99.7% and 99.9% of P, 94.4% and 94.4% and 96.8% of K. They were thus contributing almost nearly the total amount of the most important macronutrients. In addition, aquafeeds were the main contributors to the daily total input of Fe (98.9% to 99.4%), Mn (98.5% to 99.5%), Mo (93.0% to 96.4%), and Zn (98.0% to 100%). The variability for these plant nutrients was comparably low as well. 
 The most variable plant nutrient with respect to its source concentration was found to be Cu with a contribution of aquafeeds between 71.9% and 100% to the total daily inputs. The variability of the following plant nutrients decreased in descending order: B (68.8% to 80.1%), Ni (75.5% to 86.6%), S (64.1% to 74.8%), Mg (54.0% to 62.9%), and Ca (64.1% to 70.1%).
 Interestingly, aquafeeds were found not to be the predominant input route of Na (38.4% to 55.7%) on average. 
@@ -349,7 +365,7 @@ Interestingly, aquafeeds were found not to be the predominant input route of Na 
 
 ![Relative contribution of source water, feed and substances for pH management to the total daily nutrient input in aquaculture and aquaponic systems. Shown are scenarios reflecting the lower and upper limit of the 95% confidence interval of concentration data for source water. Data derived from water analysis (n = 69) and feed analysis reports (n = 9), taking digestibility into account, assuming x% dgestibility of X, y% digestibility of Y and  no contribution of pH management substances to other nutrient inputs.](plots/contribution_sources_digestincl.png)
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 # 5% confInt
 read_csv("1_nutrientContribution/results/nutrientContrib_water5.csv") %>%
   group_by(nutrient) %>% 
@@ -384,17 +400,20 @@ It can be clearly seen from the plots that the pH adjusting substances become th
 
 
 ## Fate and behavior of nutrients
-The proportion of cation complexation by DOM was calculated to assess the impact of DOM on the solubility of plant nutrients. The results are shown in **FIGURE XXX**.
+The proportion of potential cation complexation by DOM was calculated to assess the possible impact of DOM on the solubility of plant nutrients in the reviewed studies. The results are shown in **FIGURE XXX**.
+Under the given assumption of a DOM concentration of $20 \text{ mg L}^{-1}$ and a Gaussian DOM model, five cationic nutrients, namely Ca, Mg, Fe, Cu and Zn, were found to be possibly affected by formation of complex molecules with DOM. The proportion of the total 
+
+
+![Complexation of cationic plant nutrients by DOM. Shown is the complexated proportion relative to the total concentration of the affected cationic plant nutrients in solution. Cation concentrations are derived from selected aquaponic studies (n = XXX). Calculations were made using Visual MINTEQ (Gaussian DOM) under the assumption that  $20 \text{ mg L}^{-1}$ of DOM are present in each system.](plots/boxplot_species_dom_vm.png)
 
 
 
-![Complexation of cationic plant nutrients by DOM. Shown is the complexated proportion relative to the total concentration of the cation in solution.](plots/boxplot_species_dom_vm.png)
+The percentage of the total input of plant nutrients potentially affected by precipitation after consideration of complex formation reactions is shown in **FIGURE XXX**. 
+Results indicate that no precipitation of solids containing nitrogenous compounds took place. This is also true for carbonates, sulfates, Mg and K. Furthermore, B and Zn did also not exceed their saturation concentration in the reviewed studies.
+Plant nutrients that were likely affected by precipitation were Ca, Fe, Mn and PO4.
 
 
-
-he percentage of the total input of plant nutrients that 
-
-![Boxplots of ](plots/boxplot_precipitated_vm.png)
+![Percentage of total amounts of plant nutrients present in solution that is prone to precipitation.](plots/boxplot_precipitated_vm.png)
 
 
 
@@ -403,7 +422,7 @@ he percentage of the total input of plant nutrients that
 
 Mineral saturation indices were calculated for literature data to assess whether the solubility of a plant nutrient is controlled by the formation of precipitates, thus not enabling further dissolution, or not. 
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 data_long_empirical %>%
   drop_na() %>% 
   mutate(
@@ -443,13 +462,17 @@ In comparison with results for the saturation index calculation of Hoagland's nu
 
 ## Sources of nutrients
 The contribution of different nutrient sources to the total daily nutrient inputs into an aquaponic system were compared based on assumptions derived from literature.
-Overall, the current input scenario confirms that fish feed is the major nutrient input route. Though, the results reveal that the source water is contributing an average of 50% of the total Na input, 30% of the Ca, 40% of Mg and 30% of S. Considering that salinity stress, ergo high Na concentrations, are toxic for most plants (Wu, 2018), it is desirable to limit the influx into the system.
+Overall, the current input scenario confirms that fish feed is the major nutrient input route. Though, the results reveal that the source water is contributing an average of 50% of the total Na input, 30% of the Ca, 40% of Mg and 30% of S. Considering that salinity stress, ergo high Na concentrations, are toxic for most plants [@Wu2018], it is desirable to limit the influx into the system.
 In the following, the assumptions are discussed. The average stocking density of  12.4 kg m$^{-3}$ that was used for the nutrient contribution calculations can be considered representative for the intensive cultivation of *Oreochromis* spp. (El-Sayed, 2019). 
-This is different for *Clarias gariepinnus*. The latter can be cultivated at stocking densities that are approximately ten times higher (~120 kg m$^{-3}$) without any adverse effects on fish health (van de Nieuwegiessen et al., 2009).
-*Sander lucioperca* is a species for which low stocking densities (~5 kg m$^{-3}$) are recommended (Kestemont et al., 2015 Biology and Culture of percid fish).
-Even though salmonids such as *Onchorhynchus mykiss* are seldom reared in aquaponic systems, they can tolerate stocking densities up to 137 kg m$^{-3}$. Though, normal stocking densities  range between 10 and 20 kg m$^{-3}$. The assumptions are rather on the lower end for salmonids (Pennel and Barton, 1996, Principles of salmonid culture).
-*Cyprinus carpio* is an irrelevant species for aquaponic systems due to its low market price. Though, it was found that fish welfare can be guaranteed at a stocking density of around 28 kg m$^{-3}$, which is 2.3 times higher than the assumed density (Ruane et al., 2002). 
+This is different for *Clarias gariepinnus*. The latter can be cultivated at stocking densities that are approximately ten times higher (~120 kg m$^{-3}$) without any adverse effects on fish health [@Nieuwegiessen2009].
+*Sander lucioperca* is a species for which low stocking densities (~5 kg m$^{-3}$) are recommended [@Kestemont2015].
+Even though salmonids such as *Onchorhynchus mykiss* are seldom reared in aquaponic systems, they can tolerate stocking densities up to 137 kg m$^{-3}$. Though, normal stocking densities  range between 10 and 20 kg m$^{-3}$. The assumptions are rather on the lower end for salmonids [@Pennell1996].
+*Cyprinus carpio* is an irrelevant species for aquaponic systems due to its low market price. Though, it was found that fish welfare can be guaranteed at a stocking density of around 28 kg m$^{-3}$, which is 2.3 times higher than the assumed density [@Ruane2002]. 
 It can thus be expected that the contribution of feed to the total daily nutrient input in case of  *C. gariepinnus*  and *C. carpio* is higher than assumed due to rearing conditions in the reviewed studies that are not representative for production  at commercial scale. For *S. lucioperca*, the assumptions might lead to an overestimation of the contribution of the feed. Another aspect is 
+
+
+
+The current input scenarios are 
 
 
 
@@ -470,7 +493,7 @@ On the other hand, considering the positive saturation index values that were fo
 ## Implications for the formulation of tailored aquaponics feeds
 The formulation of a dedicated aquaponics feed is seen as potentially user-friendly and rapid way of adding nutrients to the system, resulting in close-to optimum concentrations for the plants.
 
-It is reasonable to focus on well-soluble nutrients that were not found to be constrained by precipitation reactions. Potential candidates that are fulfilling these requirements are alkaline metals such as K. The solubility of salts containing K is usually within the range of several grams per liter. Losses of K due to the formation of precipitates is thus unlikely. Other studies confirmed that the concentration of K in solution can be altered by different inclusion rates of K (Seawright, 1998; Shaw, 2022). The same was also suggested by the nutrient release coefficient concept that was recently suggested (Cerozi, 2022).
+It is reasonable to focus on well-soluble nutrients that were not found to be constrained by precipitation reactions. Potential candidates that are fulfilling these requirements are alkaline metals such as K. The solubility of salts containing K is usually within the range of several grams per liter. Losses of K due to the formation of precipitates is thus unlikely. Other studies confirmed that the concentration of K in solution can be altered by different inclusion rates of K (Seawright, 1998; Shaw, 2022). The same was also suggested by the nutrient release coefficient concept that was recently suggested [@Cerozi2022].
 However, considering the contribution of feed in comparison to the contribution of KOH, if used for pH management, it is questionable what makes more sense
 
 Another alkaline metal that is of interest with respect to aquapfeeds tailored for aquaponics is Na. 
