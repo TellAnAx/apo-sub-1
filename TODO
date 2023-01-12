@@ -24,6 +24,7 @@ RESULTS
 
 -Recalculate daily necessary buffer input
 - Add daily inputs of nutrients by aquafeeds to table
+- Rework R/wrangling_logQK.R so that the plot shows the correct ions!!!
 
 
 

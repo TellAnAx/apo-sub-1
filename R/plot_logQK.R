@@ -2,33 +2,54 @@ library(rlang)
 
 boxplot_saturation <- read_csv(here::here("results", "logQK.csv")) %>% 
   
+  
+  
+  #filter(logQK > -1) %>% 
+  
+  
+  
   mutate(
     cation = factor(
       cation,
       levels = c(
+        "K+1",
         "Ca+2",
+        "Mg+2",
         "Fe+3",
         "Mn+2",
-        "Cu+2"
+        "Cu+2",
+        "Zn+2"
       ),
       labels = c(
+        expression(K^{"+"}), 
         expression(Ca^{2*"+"}), 
+        expression(Mg^{2*"+"}), 
         expression(Fe^{3*"+"}), 
         expression(Mn^{2*"+"}), 
-        expression(Cu^{2*"+"})
-      )
+        expression(Cu^{2*"+"}),
+        expression(Zn^{2*"+"})
+      ),
+      exclude = "H2O"
     ),
     anion = factor(
       anion,
       levels = c(
         "H+1",
-        "H2O",
-        "PO4-3"
+        "PO4-3",
+        "CO3-2",
+        "SO4-2",
+        "NO3-1"
       ),
       labels = c(
         expression(H^{"+"}),
-        expression(H[2]*O),
-        expression(PO[4]^{3*"-"})
+        expression(PO[4]^{3*"-"}),
+        expression(CO[3]^{2*"-"}),
+        expression(SO[4]^{2*"-"}),
+        expression(NO[3]^{"-"})
+      ),
+      exclude = c(
+        "H2O",
+        "H3BO3"
       )
     )
   ) %>% 
