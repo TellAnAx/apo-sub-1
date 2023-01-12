@@ -5,6 +5,8 @@ library(tidyverse)
 library(gdata)
 library(viridis)
 library(RColorBrewer)
+library(bookdown)
+library(redoc)
 
 
 # Functions

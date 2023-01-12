@@ -39,7 +39,7 @@ The contribution of the different nutrient sources to the total nutrient input i
 # 1. Assumptions
 
 ```{r}
-assumption_data_general <- gdata::read.xls(here("data", "solubility", "Aquaponics - Masterfile Nutrients.xlsx"), sheet = 'general')
+assumption_data_general <- gdata::read.xls(here::here("data", "solubility", "Aquaponics - Masterfile Nutrients.xlsx"), sheet = 'general')
 
 head(assumption_data_general)
 ```
@@ -64,8 +64,20 @@ assumption_data_general %>%
     group = if_else(grepl("trout", group) == TRUE,"Salmonids", group),
     ) %>% 
   
+  write_csv(here::here("results", "contribution_species.csv")) %>% 
+  
   ggplot(aes(x = group, fill = fish_species)) + 
-  geom_bar(position = "stack")
+  geom_bar(position = "stack") + 
+  
+  labs(
+    x = "",
+    y = "Count",
+    fill = "Species"
+  ) +
+  
+  theme_bw()
+
+ggsave(here::here("plots", "species.png"))
 ```
 
 
@@ -91,7 +103,7 @@ for_filtering <- assumption_data_general %>%
 
 ```{r}
 assumption_data_rearing <- gdata::read.xls(
-  here("data", "solubility", "Aquaponics - Masterfile Nutrients.xlsx"), 
+  here::here("data", "solubility", "Aquaponics - Masterfile Nutrients.xlsx"), 
   sheet = "rearing")
 
 head(assumption_data_rearing)
@@ -539,7 +551,7 @@ water_data <- water_data %>%
 
 water_data %>% 
   
-  write.csv(here("interm", "water_data.csv"))
+  write.csv(here::here("interm", "water_data.csv"))
 
 ```
 
@@ -618,7 +630,7 @@ results <- rbind(results, temp)
 
 results <- results %>% 
   print() %>% 
-  write_csv(here("interm", "contribution_water.csv")) %>% 
+  write_csv(here::here("interm", "contribution_water.csv")) %>% 
   select(-mconf)
 ```
 
@@ -637,7 +649,7 @@ The digestibility data is based on the book "Fish Nutrition" (Lall, 2002).
 
 ```{r include=FALSE}
 # Load digestibility data
-feed_data <- read_csv2(here("data", "contribution", "nutrient_contribution.csv")) %>% 
+feed_data <- read_csv2(here::here("data", "contribution", "nutrient_contribution.csv")) %>% 
   
   select(-c("concWater_g/m3", "concWaterMax_g/m3")) %>% 
   
@@ -660,7 +672,7 @@ feed_data <- read_csv2(here("data", "contribution", "nutrient_contribution.csv")
 ### 2.3.1 Calculations
 
 ```{r}
-buffer_data <- read_csv(here("interm", "contribution_assumptions_summary.csv")) %>% 
+buffer_data <- read_csv(here::here("interm", "contribution_assumptions_summary.csv")) %>% 
   
   mutate(
     dailyCP_kg = meanFeed_kg_d * meanCP, #kg
@@ -681,7 +693,11 @@ buffer_data <- read_csv(here("interm", "contribution_assumptions_summary.csv")) 
   
   rename(Ca = dailyCa_g, K = dailyK_g, Na = dailyNa_g) %>% 
 
-  pivot_longer(everything(), names_to = "compound", values_to = "contribution_g") %>% 
+  pivot_longer(
+    everything(), 
+    names_to = "compound", 
+    values_to = "contribution_g"
+    ) %>% 
 
   print()
 ```
@@ -878,6 +894,9 @@ plotdata <- plotdata %>%
 plotdata$nutrient <- fct_relevel(plotdata$nutrient, "N", "P", "K", "Ca", "Mg", "S", "B", "Fe", "Mn", "Cu", "Zn", "Mo", "Ni", "Na")
   
 contribution_plot <- plotdata %>% 
+  
+  write_csv(here::here("results", "contribution_plotdata.csv")) %>% 
+  
 ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
   geom_col(position = 'fill') + 
   geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dashed", alpha = 0.5) + 
@@ -904,7 +923,7 @@ ggplot(aes(x = nutrient, y = Total, fill = Contribution)) +
                              
 contribution_plot
 
-ggsave(here("plots", "contribution_sources_digestincl.png"))
+ggsave(here::here("plots", "contribution_sources_digestincl.png"))
 ```
 
 
