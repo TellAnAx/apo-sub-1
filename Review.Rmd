@@ -8,24 +8,22 @@ output: redoc::redoc
 
 
 # Introduction
-Aquaponics is a hybrid food production system, coupling aquaculture and soilless horticulture (hydroponics). In comparison with uncoupled, independent systems, advocates of the aquaponics principle with an aquaculture background claim that added value is created by preventing the release of aquaculture wastes into the environment but converting them into edible yield instead [@Turnsek2020]. The downside of this concept is, however, that the complexity of the system adds extra costs that render aquaponics uncompetitive under present circumstances when compared with conventional hydroponics [@Quagrainie2017].
+Aquaponics is a hybrid food production system, coupling aquaculture and soilless horticulture (hydroponics). In comparison with uncoupled, independent systems, advocates of the aquaponics principle with an aquaculture background claim that added value is created by preventing the release of aquaculture wastes into the environment but converting them into edible yield instead [@Turnsek2020]. Furthermore, it was found that there is no significant difference in the yield of several leafy greens such as lettuce, spinach, basil, dill, coriander, parsley, rook and even fruiting plants such as tomato that can be achieved in aquaponic versus hydroponic systems [@Lennard2019; @Atique2022; @Anderson2017; @Maucieri2019a; @Suhl2016; @Pantanella2012]. This is noteworthy against the background that nutrient deficiencies are frequently reported when comparing the nutrient concentrations in aquaponic systems with those usually targeted in hydroponics [@Lunda2019; @Robaina2019; @Graber2009; @Bittsanszky2016]. On the other hand, the complexity of the system adds extra costs to aquaponics. Achieving similar yield is thus seen as insufficient to render aquaponics competitive under present circumstances when compared with conventional hydroponics [@Quagrainie2017]. Interestingly, aquaponics seems to offer the potential to reach even higher yields than in hydroponics if certain nutrients are amended. This was described for lettuce [@Monsees2019; @Delaide2016], basil [@Rodgers2022] and tomato [@Roosta2013]. However, a simple “off-the-shelf” solution for the management of plant nutrients that is as simple as the commercially available and fine-tuned plant fertilizers used in hydroponics is lacking. The development of a specific feed for aquaponic systems, hereinafter denoted as aquafeed, is thought to be such a solution [@Eck2019]. 
 
-One aspect contributing to high operating costs in aquaponics is the lack of simple “off-the-shelf” solutions for the management of plant nutrients.
-As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B) [@Marschner2012]. The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion [@Mengel2001]. 
+As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B) [@Marschner2012]. The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion [@Mengel2001].
 
-In hydroponics, plant nutrients are supplied in form of commercially available and fine-tuned plant fertilizers with dosage recommendations. It is usually sufficient to monitor the nutrient depletion via plant uptake by determining the electric conductivity (EC) of the nutrient solution as sum parameter [@Resh2016]. In open-loop hydroponic systems, the depleted nutrient solution is eventually replaced. In closed-loop systems, on the other hand, the depleted nutrient solution is topped up with deficient nutrients and recycled [@Maucieri2019]. The management of closed-loop systems requires the frequent determination of concentrations of all individual plant nutrients over several growth cycles, but, considering that large-scale commercial hydroponic farms specialize on one crop, it leads to a large database that enables the farmer to amend nutrients at specific points of time based on experience, making frequent monitoring of single nutrients obsolete in the long run.
+In aquaponic systems, the aquafeed and the source water are considered as main sources of nutrients [@Eck2019]. In addition, alkalinity supplements can play an important role in the supply of nutrients [@Rakocy2006]. These sources vary in their contribution to the total daily nutrient input, depending on the species reared and the location of the facility.
 
-In aquaponic systems, the three main sources of nutrients are 1) the feed for the aquatic livestock, hereinafter denoted as aquafeed, 2) the source water, and 3) alkalinity supplements [@Eck2019]. These sources vary in their contribution to the total daily nutrient input, depending on the species reared and the location of the facility.
+Aquafeeds are usually considered as of greatest importance in terms of nutrient input into aquaponic systems [@Robaina2019]. Though, data about the inclusion rates of nutrients relevant for plants in commercial aquafeeds is scarce because these compounds are either not essential for aquatic animals or can be taken up from water via the gills in sufficient quantities. These nutrients are thus usually not considered during feed formulation [@Lall2002]. 
+An aquafeed can vary in its nutrient composition due to slight changes in its raw material composition caused by fluctuations in feed ingredient availability and market prices. While feed manufacturers allow variations of crucial nutrients such as the crude protein (CP) inclusion rate only within tight limits, this is not the case for other nutrients that are disregarded in the formulation process. However, data about the ranges of microminerals in commercial aquafeeds is not available in literature.
 
-Aquafeeds are usually considered as of greatest importance in terms of nutrient input into aquaponic systems [@Schmautz2016; @Robaina2019]. Though, studies about the inclusion rates of plant nutrients in aquafeeds are scarce because these compounds are either not essential for aquatic animals or are taken up from water via the gills and they are thus usually not considered during feed formulation [@Lall2002]. **TABLE XXX** is summarizing some data with respect to average plant nutrient inclusion rates in fish feeds that was collected from commercial trout and salmon grower feeds [@Tacon1983]. Aquafeeds can vary in their composition due to the fact that the raw material composition of a specific feed might be altered because of availability and fluctuations in market prices of feed ingredients. While feed manufacturers allow variations of crucial nutrients such as the crude protein (CP) inclusion rate only within tight limits, this is not true for other nutrients that are disregarded in the formulation process. However, there is no available data about the ranges of microminerals in aquafeeds.
-
-When discussing aquafeeds as nutrient input, it is important to consider the digestibility of the nutrients, their retention in animal tissue and the route of their excretion. As shown in **Figure XXX**, before becoming available for plant uptake, aquafeeds are ingested by the cultivated animal. The indigestible mass fraction is then excreted in form of solid matter. The digestible mass fraction is utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are eventually excreted in form of dissolved matter via the gills and the urinary system [@Evans2003; @Hardy2002].
+When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in **Figure XXX**. Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are then excreted in form of dissolved matter via the gills and the urinary system [@Evans2003; @Hardy2002].
 
 
 
 ![A simple graphical representation of nutrient flows and excretion patterns in aquatic animals. Figure from Bureau and Hua, 2010.](images/2010_Bureau.png)
 
-N that is, for the most part, present as CP, is usually well-digestible, with the apparent digestibility coefficient (ADC) of feed ingredients usually being above 70% and on average approximately 90% [@IAFFD2021; @Guillaume2001]. The excretion of N as end product of the protein and amino acid catabolism takes place in form of ammonia and, to a small extent, urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski2002]. 
+N that is, for the most part, present as CP in aquafeeds, is usually well-digestible, with the apparent digestibility coefficient (ADC) of feed ingredients usually being above 70% and on average approximately 90% [@IAFFD2021; @Guillaume2001]. The excretion of N as end product of the protein and amino acid catabolism takes place in form of ammonia and, to a small extent, urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski2002]. 
 
 A less digestible nutrient is P with ADC estimates ranging from 70% to 40% and a resulting excretion of 30% to 60% of the supply [@Lall2002; @Sugiura2018]. Especially plant ingredients in aquafeeds can cause low ADC if they are rich in phytic acid. Phytic acid is poorly digestible and can furthermore reduce the digestibility of minerals in the feed. This might also explain contradictory information in literature with reported renal excretion rates of 90% of the total excreta [@Tomiyama1956] in contrast to  estimates of 28% of excretion taking place in dissolved form and 30% to 64% excreted as particulate P [@Dabrowski2002].
 
@@ -33,15 +31,14 @@ In terms of digestibility, information about the remaining plant nutrients is sc
 
 Excretion of the earth alkaline metals Ca and Mg takes primarily place in dissolved form via the gills and urine [@Lall2002; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while the renal excretion was found to be negligible [@Lall2002]. Cu is predominantly excreted via the bile [@Bury2003]. Excess dietary Cu is not taken up but excreted as feces. Thus the Cu inclusion rate in aquafeeds is reduced to minimize its release into the environment [@Lall2002]. Zn is mostly excreted renally and via the gills [@Lall2002].
 
+Tap water can vary in its composition, depending on its origin such as surface or groundwater. The extent of the variability of terrestrial waters in their chemical composition is shown in **FIGURE XXX**. Wheathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
 
 
 
 
-
-
-Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
 Due to its low water demand, aquaponics is generally seen as food production system suitable for urban areas or arid regions [@Kloas2015; @Joyce2019]. Establishing an aquaponic system in these regions comes with limited access to water sources such as well water or rivers and lakes. Rainwater, on the other hand, would require large storage capacities. Tap water is thus assumed to be the most important water source.
-The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation  [@EU2020]. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. 
+
+The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation  [@EU2020]. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
 
 
 
@@ -68,13 +65,12 @@ The quality of tap water is usually rigidly regulated by the authorities. In Eur
 [^2]: Calculated as [TIN] = [$\text{NH}_{4}^{+}$] + [$\text{NO}_{2}^{-}$] + [$\text{NO}_{3}^{-}$].
 
 
-Tap water can vary in its composition, depending on its origin such as surface or groundwater. The extent of the variability of terrestrial waters in their chemical composition is shown in **FIGURE XXX**. Wheathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
-
 
 
 ![Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 mg/L. Y-axis: Percentage of sampling points. Figure from Stumm and Morgan, 1996.](images/Stumm_Morgan_Aquatic_Chemistry_p873.png)
 
-Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter releases three moles of protons (H$^{+}$) per mole of ammonia (NH$_{3}$) that is converted to NO$_{3}^{-}$. This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used in aquaponics. **TABLE XXX** summarises some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
+Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter releases three moles of protons (H$^{+}$) per mole of ammonia (NH$_{3}$) that is converted to NO$_{3}^{-}$. This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used in aquaponics.
+**TABLE XXX** summarises some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
 
 
 
@@ -102,47 +98,9 @@ Lastly, the third continuous nutrient input are alkalinity supplements that are 
 
 
 
-Comparing the nutrient profile of plant-available fish excreta with nutrient concentrations used in conventional hydroponic systems, deficiencies were found [@Shaw2022; @Lunda2019; @Robaina2019; @Graber2009; @Bittsanszky2016]. This is in line with inconsistent results obtained in studies comparing the performance of aquaponic and hydroponic systems. For instance, basil yield was reported to be lower if grown in an aquaponic system [@Roosta2014]. For other leafy greens such as spinach, dill, rocket, coriander, parsley, and lettuce, no difference between plants grown in aquaponics versus hydroponics could be found [@Atique2022; @Lennard2019; @Maucieri2019a; @Anderson2017]. On the contrary, one study found higher lettuce yields in aquaponics compared with hydroponics [@Alcarraz201]. 
+## Chemical reactions affecting plant nutrient availability
+Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successfull nutrient management [@Sambo2019]. The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrains. The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature [@Jensen2003; @Stumm1981].
 
-To counteract these imbalances, it was suggested to complement aquaponic nutrient solutions with the missing nutrients. Studies showed that this practice leads to plant growth equal or even better than observed in hydroponics [@Delaide2016; @Monsees2019; @Rodgers2022]. Though, the supplementation of individual nutrients requires their continuous monitoring to ensure that optimum levels are met and maintained. This adds additional expenses to the budget.
-
-
-
-To circumvent the stated obstacles with respect to nutrient management in aquaponics, several suggestions were made such as the development of tailored aquafeeds, and usage of substances that are an alternative for the sodium hydrogen carbonate (soda, NaHCO$_{3}$) that is used in conventional aquaculture for pH control [@Seawright1998; @Goddek2019]. However, it needs to be emphasised that the development of an “off-the-shelf” solution for a problem implies that its application yields comparable results over a broad range of conditions. Therefore, three considerations are of striking importance within the context of an improved nutrient supply in aquaponics:
-
-1. It is necessary to identify the nutrients that can be supplied without facing over- or undersupply due to variability in other nutrient sources that were not considered. Thus, the **source of nutrients** and their variability must be examined closely.
-2. Independent from the supply route, it must be taken into account that the introduction of a substance into an aqueous system does not necessarily lead to an increase in its' concentration in solution. The **behavior of the nutrients** has to be considered.
-3. The **fate of the nutrient** within the system under different system conditions and setups needs to be assessed to get a clear idea where and in what form the introduction of a substance leads to the greatest positive impact.
-
-
-
-
-
-
-
-### Water
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Nutrient fate and behavior
-Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successfull nutrient management [@Sambo2019]. The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrained. The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature [@Jensen2003; @Stumm1981].
 Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. The saturation concentration of a salt can be described using solubility product constants $K_{sp}$, which are the product of the concentration of the cation(s) and the anion(s) at saturation concentration, as shown in **equation XXX**, with square brackets denoting for molar concentrations.
 
 
@@ -151,7 +109,7 @@ $$
 K_{sp} = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
 $$
 
-$K_{sp}$ is either determined empirically or derived from thermodynamic data. The saturation concentration $S$ of the salt can eventually be calculated by rearrangement of **equation XXX** as shown in **equation XXX**.
+$K_{sp}$ is either determined empirically or derived from thermodynamic data. The saturation concentration $S$ of the salt can eventually be calculated by rearranging **equation XXX** as shown in **equation XXX**.
 
 
 
@@ -159,7 +117,7 @@ $$
 S = \sqrt[m+n]{\frac{K_{sp}}{m^{m} \cdot n^{n}}}
 $$
 
-If the concentrations of the cation(s) and anion(s) in solution are known, it is possible to calculate the ion product $Q$ analogously to the calculation of $K_{sp}$ as shown in **equation XXX**, substituting $[cation]$ and $[anion]$ by the corresponding determined concentrations.
+If the concentrations of the cation(s) and anion(s) in solution are known, it is possible to calculate the ion product $Q$ analogously to the calculation of $K_{sp}$ as shown in **equation XXX**, substituting $[cation]$ and $[anion]$ by the corresponding empirical data.
 
 
 
@@ -169,19 +127,19 @@ $$
 
 $K_{sp}$ can now be compared with $Q$ to evaluate whether the solution is saturated or not by calculating the saturation index $U$ as shown in **equation XX**. If the saturation concentration is exceeded ($Q > K_{sp}$ and $\log{\frac{Q}{K}} > 0$), precipitation occurs. 
 
+
+
 $$
 U = \log{\frac{Q}{K_{sp}}}
 $$
 
-The formation of a salt can also be seen as the result of a neutralisation reaction. The reaction of phosphoric acid (H$_{3}$PO$_{4}$) with sodium hydroxide (NaOH) can be written in a simplified way as 
+The formation of a salt can also be seen as the result of a neutralisation reaction. For instance, the reaction of phosphoric acid (H$_{3}$PO$_{4}$) with sodium hydroxide (NaOH) can be written in a simplified way as 
 
 H$_{3}$PO$_{4}$ + NaOH <-> NaH$_{2}$PO$_{4}$ + H$_{2}$O
 
-, yielding sodium dihydrogen phosphate NaH$_{2}$PO$_{4}$ as product. A salt thus consist of the conjugated weak base (H$_{2}$PO$_{4}^{-}$) and acid (Na$^{+}$) of the strong acid (H$_{3}$PO$_{4}$) and base (NaOH) that led to its formation.
+, yielding sodium dihydrogen phosphate (NaH$_{2}$PO$_{4}$) as product. A salt thus consists of the conjugated weak base (H$_{2}$PO$_{4}^{-}$) and acid (Na$^{+}$) of the strong acid (H$_{3}$PO$_{4}$) and base (NaOH) that led to its formation.
 
-
-
-When its ions dissolve, or its strong acids or bases are introduced into the system, they are undergoing acid-base reactions with water. As an example, the reactions of trihydrogen phosphate  (H$_{3}$PO$_{4}$), commonly termed  phosphoric acid, with water are 
+When a salt dissolves, or its strong acids or bases are introduced into the system, they undergo acid-base reactions with water. As an example, the reactions of trihydrogen phosphate  (H$_{3}$PO$_{4}$), commonly termed  phosphoric acid, with water are 
 
 H$_{3}$PO$_{4}$ + H$_{2}$O <-> H$_{2}$PO$_{4}^{-}$ + H$_{3}$O$^{+}$ $K_{a1} = 10^{2.1}$
 
@@ -189,19 +147,26 @@ H$_{2}$PO$_{4}^{-}$ + H$_{2}$O <-> HPO$_{4}^{2-}$ + H$_{3}$O$^{+}$ $K_{a2} = 10^
 
 HPO$_{4}^{2-}$ + H$_{2}$O <-> PO$_{4}^{3-}$ + H$_{3}$O$^{+}$ $K_{a3} = 10^{12.0}$
 
-The reactions show that phosphate in aqueous solution is present in four different forms, the so-called species, which there are H$_{3}$PO$_{4}$, H$_{2}$PO$_{4}^{-}$, HPO$_{4}^{2-}$ and PO$_{4}^{3-}$. The extent to which the described dissociation reactions (the removal of H$^{+}$) occurs depends on the pH of the system and can be mathematically described by a characteristic equilibrium constant $K$ for each reaction step [@Jensen2003]. 
-The species differ in their chemical behavior.
+The reactions show that phosphate in aqueous solution is present in four forms, which there are H$_{3}$PO$_{4}$, H$_{2}$PO$_{4}^{-}$, HPO$_{4}^{2-}$ and PO$_{4}^{3-}$, that differ in their degree of protonation. These forms are the so-called species. The extent to which the described dissociation reactions (the removal of H$^{+}$) occurs depends on the pH of the system and can be mathematically described by a characteristic equilibrium constant $K_{a}$ for each reaction step [@Jensen2003]. 
+The species differ in their chemical behavior, with PO$_{4}^{3-}$ being known for forming precipitates if, for instance, both PO$_{4}^{3-}$ and Ca$^{2+}$ ions are present in solution and $Q > K_{sp}$. This could be avoided by complex formation reactions where a chelating agent, forms a complex molecule which is "hidden" and thus excluded from precipitation. Complex molecules are formed especially with cations of transition metal and they can lead to concentrations of these metals that are exceeding their saturation concentrations by three to four orders of magnitude [@Jensen2003].
 
 
-If, for instance, both PO$_{4}^{3-}$ and Fe$^{3+}$ ions are present in solution and $Q > K_{sp}$ , they will eventually form precipitates. This could be avoided by complex formation reactions where a chelating agent, hereinafter denoted as ligands, forms a complex molecule which is "hidden" and thus excluded from precipitation. Complex molecules are formed especially with cations of transition metal and they can lead to concentrations of these metals that are exceeding their saturation concentrations by three to four orders of magnitude (see e.g. Jensen, 2003).
-The effects and constraints that are resulting from the described reactions under conditions that are typical for hydroponics were exhaustively described [@DeRijck1997; @DeRijck1998; @DeRijck1998a; @DeRijck1999b]. However, no such work has been conducted for aquaponics.
+
+
+## Differences between hydroponic and aquaponic systems
+An understanding of the effects and constraints that are resulting from the described reactions is crucial for successful nutrient management in both hydroponic and aquaponic systems to ensure that nutrients that are introduced into the system are in fact present in a plant-available form. With respect to typical hydroponic conditions, these effects were exhaustively described [@DeRijck1997; @DeRijck1998; @DeRijck1998a; @DeRijck1999b]. However, no such work has been conducted for aquaponics.
+Overall, the two main differences described between hydroponic and aquaponic systems are 1) the pH and 2) the concentration of dissolved organic matter (DOM). It is known 
 
 
 
 ## Objectives
-This review intended to identify the average contribution of different nutrient sources to the total daily nutrient input in aquaponic systems based on literature data. Special emphasis was given to the variability of the nutrient concentrations in tap water, depending on the geographical location.
-To tackle the problem of nutrient imbalances in aquaponic systems, saturation indices of literature data were calculated in an attempt to find out whether the imbalances can be balanced by the supply of additional nutrients, for instance in form of feed, of if the occurrence of imbalances can be ascribed to physico-chemical boundaries such as precipitation reactions. 
-Given these inputs, recommendations with regards to the formulation of tailored aquafeeds  and nutrient management in aquaponics shall be developed to enhance the overall performance and profitability of aquaponic systems.
+
+The term “off-the-shelf” solution implies that its application leads to comparable results over a broad range of conditions. Therefore, the following considerations are of striking importance within the context of an improved nutrient supply in aquaponics:
+
+1. It is necessary to identify the nutrients that can be supplied without facing over- or undersupply. Thus, the **source of nutrients** and their variability must be examined closely.
+2. It must be taken into account that physico-chemical constraints might limit the concentration of a substance in solution. The **fate and behavior of the nutrients** has to be considered.
+
+This study attempts to exemplarily identify the average contribution of different nutrient sources and their variability with respect to the total daily nutrient inputs. Furthermore, it is intended to identify the saturation level of plant nutrients under standard aquaponic conditions. For this purpose, published studies are reviewed. Recommendations with regards to the potential formulation of tailored aquafeeds and nutrient management in aquaponics shall eventually be developed to enhance the overall performance and profitability of aquaponic systems.
 
 
 
