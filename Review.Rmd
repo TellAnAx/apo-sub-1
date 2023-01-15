@@ -17,7 +17,7 @@ In aquaponic systems, the aquafeed and the source water are considered as main s
 Aquafeeds are usually considered as of greatest importance in terms of nutrient input into aquaponic systems [@Robaina2019]. Though, data about the inclusion rates of nutrients relevant for plants in commercial aquafeeds is scarce because these compounds are either not essential for aquatic animals or can be taken up from water via the gills in sufficient quantities. These nutrients are thus usually not considered during feed formulation [@Lall2002]. 
 An aquafeed can vary in its nutrient composition due to slight changes in its raw material composition caused by fluctuations in feed ingredient availability and market prices. While feed manufacturers allow variations of crucial nutrients such as the crude protein (CP) inclusion rate only within tight limits, this is not the case for other nutrients that are disregarded in the formulation process. However, data about the ranges of microminerals in commercial aquafeeds is not available in literature.
 
-When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in **Figure XXX**. Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are then excreted in form of dissolved matter via the gills and the urinary system [@Evans2003; @Hardy2002].
+When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in **Figure XXX**. Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are then excreted in form of dissolved matter via the gills and the urinary system [@Evans2005; @Hardy2002].
 
 
 
@@ -199,18 +199,20 @@ All calculations were conducted using Visual MINTEQ (v3.1) and its default datab
 
 
 
-## Raw data acquisition
-Three datasets were created to approach the stated research questions: An aquaponic dataset, a source water dataset, and a feed dataset.
+## Data acquisition and wrangling
+The data acquisition and processing steps are graphically summarised in **FIGURE XXX**. Literature was screened for studies that focussed on nutrient dynamics in aquaponic systems, resulting in 117 individual observations originating from 39 publications. Selected literature comprised studies about permanently and on-demand coupled freshwater aquaponics, sludge remineralisation studies and hydroponic growth trials with water originating from aquaculture systems. The pH, total water volume of the system, daily water exchange rate, initial bodyweight, stocking density, daily feeding rate, and the concentrations of all essential plant nutrients in the system water were gathered.
 
-For the creation of the aquaponics dataset, literature was screened for studies that focussed on nutrient dynamics in aquaponic systems, resulting in 117 individual observations originating from 39 publications. Selected literature comprised studies about permanently and on-demand coupled freshwater aquaponics, sludge remineralisation studies and hydroponic growth trials with water originating from aquaculture systems. The pH, total water volume of the system, daily water exchange rate, initial bodyweight, stocking density, daily feeding rate, and the concentrations of all essential plant nutrients in the system water were gathered.
+
+
 
 The source water dataset was compiled by merging 64 water analysis reports from 12 countries which are shown in **FIGURE XXX** together with number of observations per country. Even though it was intended to randomize the selection of water analysis reports, the authors had to consider the accessibility of the analysis reports due to lacking English versions.
 
-![Number of water analysis reports per country included in the source water dataset.](plots/contribution_waterData_countryPlot.png){@fig:country}
+![Number of water analysis reports per country included in the source water dataset.](plots/contribution_waterData_countryPlot.png)
 
 The feed dataset comprised nutrient analyses of aquafeeds used during aquaponic studies. If commercial aquafeeds were used and only trade names reported, supplier datasheets were used and amended by literature data, if available. Incomplete observations with respect to experimental feeds were handled the same, merging data from multiple publications if the same feed was used.
 
 
+![Graphical representation of the data acquition and wrangling steps. Green box: filter applied; red box: external data added; solid line: dataset; dotted line: data derived from initial dataset; dashed line: data derived from external source; thick solid line: final usage of data.](images/data_analysis_flow.png)
 
 
 
