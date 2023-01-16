@@ -209,17 +209,17 @@ All calculations were conducted using Visual MINTEQ (v3.1) and its default datab
 
 
 ## Data acquisition and wrangling
-The data acquisition and processing steps are graphically summarised in **FIGURE XXX**. Literature was screened for studies that focussed on nutrient dynamics in aquaponic systems, resulting in an initial dataset (IDS) of 117 individual observations originating from 39 publications. Selected literature comprised studies about permanently and on-demand coupled freshwater aquaponics, sludge remineralisation studies and hydroponic growth trials with water originating from aquaculture systems. The cultivated species, location of the experimental site, pH, volume of the system parts, daily water exchange rate, initial and final bodyweight, stocking density, daily feeding rate, and the concentrations of all essential plant nutrients in the source water, feed, and system water were collected.
+The data acquisition and processing steps are graphically summarised in **FIGURE XXX**. Literature was screened for studies that focussed on nutrient dynamics in aquaponic systems, resulting in an initial dataset (IDS) of 117 individual observations originating from 39 publications. Selected literature comprised studies about permanently and on-demand coupled freshwater aquaponics, sludge remineralisation studies and hydroponic growth trials with water originating from aquaculture systems. The cultivated species, location of the experimental site, pH, volume of the system parts, daily water exchange rate, initial and final bodyweight, stocking density, daily feeding rate, feed name, and the concentrations of all essential plant nutrients in the source water, feed, and system water were collected.
 
-![Graphical representation of the data acquition and wrangling steps. Green box: filter applied; red box: external data added; solid line: dataset; dotted line: data derived from initial dataset; dashed line: data derived from external source; thick solid line: final usage of data.](images/data_analysis_flow.png)
+![Graphical representation of the data acquition and wrangling steps. IDS: Initial dataset; FDS1 and 2: Filtered datasets; SWDS: Source water dataset; FIDS: Feed information dataset; ASDS: Alkalinity supplements dataset; 
+Green box: filter applied; red box: external data added; solid line: dataset; dotted line: data derived from initial dataset; dashed line: data derived from external source; thick solid line: final usage of data.](images/data_analysis_flow.png)
 
 
 
 
 ## Origin of nutrients
-### Data wrangling and derivation of assumptions
-To calculate the proportion contribution of the source water, feed and alkalinity supplements to the total daily nutrient input, their average daily inputs had to be calculated. Thus, a filter was applied to the IDS, only including studies that reported system volume or dimensions, daily water exchange rates or volume, initial and final or average bodyweight of the fish stock together with the number of fish or total biomass, or the stocking density, and the feeding rate or total weight of feed given. 
-
+To calculate the proportion contribution of the source water, feed and alkalinity supplements to the total daily nutrient input in the reviewed studies, their average daily inputs per volume unit had to be calculated. For this purpose, statistics describing the average experimental system, system parameters and nutrient inputs were derived from the IDS and merged with external data sources in a four-stage process.
+The first step comprised the generation of system assumptions. For this purpose, a filter was applied to the IDS, only including studies that made use of an aquaculture unit, reported the total system volume and the final bodyweight of the livestock at the end of the experiment. The resulting filtered dataset (FDS1) held 39 observations from 10 publications. 
 
 ```{r Contribution: Number of publications}
 read_csv(here("results", "contribution_rearing_data.csv")) %>% 
@@ -234,24 +234,37 @@ read_csv(here("results", "contribution_rearing_data.csv")) %>%
   )
 ```
 
-The resulting filtered dataset (FDS) held 39 observations from 10 publications. Gathered location information in the FDS was used to search for water analysis reports provided by local authorities and water utilities in the corresponding municipalities. These were merged.
+FDS1 was used to calculate the average system volume ($\text{V}_{tot}$), average bodyweight (ABW), average number of livestock (AN), average livestock density (AD), and average water exchange rate (AWE). The ABW was defined as the mean bodyweight during the duration of experiment and was calculated as the arithmetic mean of the initial and final bodyweight. For the calculation of AD, AN and AWE, \emph{NA} values were removed. 
+Eventually, the average biomass (ABM) was computed by multiplication of ABW with AN or, if only AD was given, by multiplication of AD with $\text{V}_{tot}$. Vice versa, in case AD was not reported, it was calculated by dividing ABM by $\text{V}_{tot}$. The average daily water exchange volume by multiplication of ($\text{V}_{tot}$) with AWE.
 
-The source water dataset was compiled by merging 64 water analysis reports from 12 countries which are shown in **FIGURE XXX** together with number of observations per country. Even though it was intended to randomize the selection of water analysis reports, the authors had to consider the accessibility of the analysis reports due to lacking English versions.
+The second step was the estimation of the daily nutrient input via source water. For this purpose, gathered location information in the FDS was used to search for water analysis reports provided by the closest water treatment plant. Only official reports provided by local authorities and water utilities in the corresponding municipalities were used to ensure that analyses were conducted according to internationally accepted laboratory standards. 
+In water analysis, it is common practice to report the value of the detection limit instead of the measured value in case that the analyte concentration found was below the sensitivity of the instrument used for measurement [@DIN32645]. Retaining the detection limits in the dataset leads to mean concentration estimates that are too large. However, removing the affected observations would result in a loss a large proportion of the data, as shown in **FIGURE XXX**. Therefore, concentration data was recalculated using the *cenmle()* function from the R package *NADA* by maximum likelihood estimation (MLE) [@Helsel2012]. This ensured that the estimates for nutrient concentrations in tap water were reliable. 
 
-![Number of water analysis reports per country included in the source water dataset.](plots/contribution_waterData_countryPlot.png)
+![Proportion of water analysis observations per analyte reported to be below detection limit (n = XXX).](plots/contribution_waterData_belowLimit.png)
+
+The output was eventually used to calculate the two-sided 90% confidence interval for the concentration of each nutrient to describe the concentration range that will be found in 90% of all cases where tap water is used. 
+Finally, multiplying the obtained concentrations with AWE yielded the upper and lower limits of the 90% confidence interval of total daily individual plant nutrient inputs via source water.
+
+In the third step, daily nutrient inputs via aquafeeds were estimated. The IDS was filtered for studies reporting the name of the commercial aquafeed used (if not selfmade), the CP inclusion rate and the feeding rate. From the resulting FDS2, the average feeding rate (AFR), CP inclusion rate (ACP) and the averages of all plant nutrients were calculated. Due to lacking nutrient composition data, supplier datasheets were used and amended by literature data in case of utilization of commercial aquafeeds. Incomplete observations with respect to experimental feeds were handled in the same way, merging data from multiple publications if the same feed was used. \emph{NA} values were removed for the computation of averages.
+Eventually, the average daily feed input (AFI) was calculated by multiplying ABM from the generated system assumptions with AFR. By multiplying AFI with the average plant nutrient inclusion rates in the aquafeeds, the uncorrected total daily input of individual plant nutrients via aquafeeds could be calculated. Obtained values were then corrected by multiplication with apparent digestibility coefficients (ADC), accounting for the digestibility of aquafeeds by fish. An ADC of 90% was assumed for N whereas the ADC of all other plant nutrients was assumed to be 50% (Lall Fish Nutrition The Minerals, 2002). Finally, it was assumed that 50% of the digestible fraction is retained while the remaining 50% is excreted in dissolved form [@Halver2003]. The indigestible part of the feed is excreted as solid feces and was thus assumed not to participate in chemical reactions in solution.
+
+An estimate for the daily input of alkalinity supplements was derived from the AFI. The activity of nitrifying bacteria in the biofilter releases three moles of protons (H$^{+}$) per mole of ammonia (NH$_{3}$) that is converted to NO$_{3}^{-}$. This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. NH$_{3}$ results from the metabolization of CP 
 
 
 
 
 
-The feed dataset comprised nutrient analyses of aquafeeds used during aquaponic studies. If commercial aquafeeds were used and only trade names reported, supplier datasheets were used and amended by literature data, if available. Incomplete observations with respect to experimental feeds were handled the same, merging data from multiple publications if the same feed was used.
+
+
+
+
 
 
 To create initial assumptions for the calculation of the relative contributions of feed and buffer substances to the daily nutrient input, empirical data from the aquaponics and feed datasets were used. 
 
 ```{r include=FALSE}
 # Count observations
-read_csv("interm/contribution_assumptions_raw.csv") %>%
+read_csv(here::here("interm", "contribution_assumptions_raw.csv")) %>%
   
   print() %>% 
   
@@ -265,14 +278,12 @@ read_csv("interm/contribution_assumptions_raw.csv") %>%
 
 
 
-Arithmetic means of the pH, total volume of the aquaponic system, volume of daily exchanged water, daily mass of fed feed on dry matter basis, and nutrient mass fractions in the feed were calculated. To account for the digestibility of plant nutrients in aquafeeds by fish, apparent digestibility coefficients (ADC) of 90% were assumed for N whereas the ADC of all other plant nutrients was assumed to be 50% (Lall Fish Nutrition The Minerals, 2002).
+Arithmetic means of the pH, total volume of the aquaponic system, volume of daily exchanged water, daily mass of fed feed on dry matter basis, and nutrient mass fractions in the feed were calculated. 
 
 The input of pH-increasing substances was assumed to be correlated with the daily feed input. It was furthermore assumed that the entire indigestible fraction of N is excreted in form of NH$_{4}^{+}$. The necessary amounts of KOH and Ca(OH)$_{2}$ to neutralise the released protons were calculated.
 
 
-In water analysis, it is common practice to report the value of the detection limit instead of the measured value in case that the analyte concentration found was below the sensitivity of the instrument used for measurement [@DIN32645]. Retaining the detection limits in the dataset leads to mean concentration estimates that are too large. However, removing the affected observations would result in a loss a large proportion of the data, as shown in **FIGURE XXX**. Therefore, concentration data was recalculated using the *cenmle()* function from the R package *NADA* by maximum likelihood estimation (MLE) [@Helsel2012]. This ensured that the estimates for nutrient concentrations in tap water were reliable. The output was eventually used to calculate the two-sided 90% confidence interval for the concentration of each nutrient to describe the concentration range that will be found in 90% of all cases where tap water is used.
 
-![Proportion of water analysis observations per analyte reported to be below detection limit (n = XXX).](plots/contribution_waterData_belowLimit.png)
 
 
 
@@ -321,7 +332,11 @@ All observations that were affected by precipitation ($\log(\frac{Q}{K}) = 0$) w
 
 # Results
 
-## Derived assumptions
+## Gathered data and derived assumptions
+
+### Rearing data
+
+
 
 ```{r include=FALSE}
 assumptions <- read_csv(here::here("results", "contribution_assumptions_summary2.csv")) %>% 
@@ -362,6 +377,23 @@ As shown in **FIGURE XXX**, literature data comprised a total of nine different 
 
 
 ![Overview of species reared during aquaponic experiments](plots/species.png)
+
+
+
+
+### Water data
+
+```{r}
+read_csv(here::here("results", "contribution_water_countries.csv")) %>% 
+  group_by(Source, Country) %>% 
+  summarise(n = n()) %>% 
+  group_by(Source) %>% 
+  summarise(n = n())
+```
+
+Literature data consisted of studies from a total of twelve countries. The country distribution of the literature data in comparison with obtained water analysis reports is shown in **FIGURE XXX**. 
+
+![Number of studies per country in comparison with the number of water analysis reports per country included in the source water dataset.](plots/contribution_waterData_countryPlot.png)
 
 
 
