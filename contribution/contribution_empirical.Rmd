@@ -8,9 +8,9 @@ output: html_document
 
 
 ```{r Setup, message=FALSE, warning=FALSE, include=FALSE}
-#knitr::opts_chunk$set(echo = TRUE, include = FALSE)
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(include = FALSE)
 
+# Load packages
 library(here)
 library(XLConnect)
 library(tidyverse)
@@ -18,6 +18,12 @@ library(NADA)
 library(rlang)
 ```
 
+
+
+
+# Notes
+
+- Feed input depends on the average biomass in the tank (ABM_kg)
 
 
 # General
@@ -99,6 +105,8 @@ for_filtering <- assumption_data_general %>%
 
 ## 1.1 Rearing
 
+
+
 ### 1.1.1 Load data
 
 ```{r}
@@ -123,7 +131,16 @@ assumption_data_rearing %>%
 
 
 
+
+
 ### 1.1.2 Data wrangling
+
+**Filters applied:**
+- aquaculture unit present
+- Final bodyweight of livestock reported
+- total volume of system reported
+
+
 
 ```{r}
 assumption_data_rearing <- assumption_data_rearing %>% 
@@ -164,6 +181,8 @@ Following assumptions were derived from literature data:
 - **rearing volume:** The rearing volume refers to the rearing tanks in the systems and describes the water volume that is dedicated to the rearing of livestock.
  - **freshwater:** The amount of freshwater that is added to the system is referring to the total volume of the system. It is thus calculated by multiplying the total volume of the system with the water exchange rate.
  - **Average bodyweight:** The average bodyweight is the mean bodyweight during the experiment. Is is calculated by diving the sum of the initial and final bodyweight by two.
+ 
+ 
 
 ```{r}
 assumption_data_rearing <- assumption_data_rearing %>% 
@@ -237,7 +256,13 @@ assumption_summary_rearing <- assumption_summary_rearing_interm %>%
     meanRearingVTotalV_ratio = mean(meanRearingTotal_ratio, na.rm = TRUE),
     meanBiomass_kg = mean(meanIBiomass_kg, na.rm = TRUE), # kg
     meanBiomass_kg_Density_derived = mean(meanRearingV_m3 * density_kg_m3,na.rm = TRUE),
-    meanABM_kg = mean(meanABM_kg, na.rm = TRUE),
+    
+    
+    # Feed input depends on ABM
+    #meanABM_kg = mean(meanABM_kg, na.rm = TRUE), 
+    meanABM_kg = 150,
+    
+    
     meanFBM_kg = mean(meanFBM_kg, na.rm = TRUE),
     #sdBiomass_kg = sd(sdBiomass_kg, na.rm = TRUE),
     meanIDensity_kg_m3 = mean(density_kg_m3, na.rm = TRUE), # kg m^-3
@@ -260,6 +285,8 @@ assumption_summary_rearing <- assumption_summary_rearing_interm %>%
 
 ## 1.2 Feed
 
+
+
 ### 1.2.1 Load data
 
 The feed dataset contains information about the feeding rate and the feed composition.
@@ -276,6 +303,13 @@ head(assumption_data_feed)
 
 ### 1.2.2 Data wrangling
 
+**Filters applied:**
+- feed name reported if not selfmade
+- crude protein reported
+- feeding rate reported
+
+
+
 ```{r}
 assumption_data_feed <- assumption_data_feed %>% 
   
@@ -284,17 +318,21 @@ assumption_data_feed <- assumption_data_feed %>%
     CP = as.numeric(sub("%","",CP)) / 100
   ) %>% 
   
+  filter(
+    !is.na(CP) & 
+      !is.na(FR) &
+      feed_name != ""
+  ) %>% 
+  
   group_by(feed_name) %>% 
   
   summarise(
+    #Reference_ID = Reference_ID,
     FR = mean(FR),
     CP = mean(CP)
-  ) %>% 
-  
-  filter(
-    !is.na(CP) & 
-      !is.na(FR)
-  )
+  ) 
+
+assumption_data_feed
 ```
 
 
@@ -422,10 +460,27 @@ water_data %>%
 
 
 ```{r}
-# Barplot - Country frequencies in dataset
-water_data %>% 
-  ggplot(aes(y = Country, fill = Country)) +
-  geom_bar(fill = "blue") + 
+# Barplot - Country frequencies in dataset compared with reports
+gdata::read.xls(
+  here::here("data", "solubility", "Aquaponics - Masterfile Nutrients.xlsx"), 
+  sheet = "waterIN", skip = 1) %>% 
+  
+  distinct(Reference_ID, .keep_all = TRUE) %>% 
+  
+  select(c("city", "country")) %>% 
+
+  rename(City = city, Country = country) %>% 
+  
+  mutate(Source = "Literature") %>% 
+  
+  bind_rows(mutate(water_data, Source = "Reports")) %>% 
+  
+  write_csv(here::here("results", "contribution_water_countries.csv")) %>% 
+
+  ggplot(aes(y = reorder(Country, desc(Country)), fill = Source)) +
+  geom_bar(position = "dodge") + 
+  
+  scale_fill_brewer(palette = "Set1", direction = -1) +
 
   labs(
     x = "Number of included reports",
@@ -656,7 +711,8 @@ feed_data <- read_csv2(here::here("data", "contribution", "nutrient_contribution
   mutate(
     compound = factor(compound, levels = c('N', 'P', 'K', 'Ca', 'Mg', 'S', 'B', 'Fe', 'Mn', 'Zn', 'Cu', 'Mo', 'Ni', 'Na')),
     `feedComp_g/kg` = as.numeric(`feedComp_g/kg`),
-    digestibility = as.numeric(digestibility)
+    digestibility = as.numeric(digestibility),
+    retention = 0.5
   ) %>% 
   
   print()
@@ -667,7 +723,7 @@ feed_data <- read_csv2(here::here("data", "contribution", "nutrient_contribution
 
 
 
-## 2.3 pH management
+## 2.3 Alkalinity supplements
 
 ### 2.3.1 Calculations
 
@@ -857,8 +913,8 @@ Even though the most important plant nutrients (N, P, K) and all micronutrients,
 
 
 
-### 3.2.2 Indigestible nutrient contribution
-An important aspect that should not be forgotten is that the livestock in the RAS has to be considered a nutrient sink. When thinking about the total nutrient contribution to the system, it is, as showed, scenario-dependently true that feed is introducing the highest share of nutrients to the system. However, it must be taken into account that animal feed is only partly excreted, while the other part is retained in the animal in form of biomass. If we want to fertilize the plants, it is thus of importance to consider only the nutrients that are leaving the RAS unit. To do so, the nutrient retention by the livestock is taken into account in the next step.
+### 3.2.2 Digestible nutrient contribution
+An important aspect that should not be forgotten is that the livestock in the RAS has to be considered a nutrient sink. When thinking about the total nutrient contribution to the system, it is, as showed, scenario-dependently true that feed is introducing the highest share of nutrients to the system. However, it must be taken into account that animal feed is only partly excreted, while the other part is retained in the animal in form of biomass. If we want to fertilize the plants, it is thus of importance to consider only the nutrients that are leaving the RAS unit in dissolved form. To do so, the nutrient digestibility by the livestock is taken into account in the next step.
 
 ```{r include=FALSE}
 plotdata <- plotdata %>% 
@@ -929,9 +985,80 @@ ggsave(here::here("plots", "contribution_sources_digestincl.png"))
 
 
 
+As shown, taking the digestibility into consideration increases the share that source water has of the total amount of nutrients present in the system. However, the absolute amount of nutrients within the system decreases as it is now part of the fish in form of biomass and not available for plant growth any longer.
 
 
 
 
-As shown, taking the retention into consideration increases the share that source water has of the total amount of nutrients present in the system. However, the absolute amount of nutrients within the system decreases as it is now part of the fish in form of biomass and not available for plant growth any longer.
+
+### 3.2.3 Non-retained nutrients
+
+
+
+```{r include=FALSE}
+plotdata <- plotdata %>% 
+  
+  pivot_wider(
+    names_from = Contribution,
+    values_from = Total
+  ) %>% 
+  
+  mutate(
+    Feed = Feed * retention
+  ) %>% 
+  
+  select(-retention) %>% 
+  
+  pivot_longer(
+    cols = c(`Water`, Feed, Buffer),
+    names_to = 'Contribution',
+    values_to = 'Total'
+  ) %>% 
+  
+  drop_na()
+
+```  
+
+
+
+
+
+
+
+```{r}
+
+plotdata$nutrient <- fct_relevel(plotdata$nutrient, "N", "P", "K", "Ca", "Mg", "S", "B", "Fe", "Mn", "Cu", "Zn", "Mo", "Ni", "Na")
+  
+contribution_plot <- plotdata %>% 
+  
+  write_csv(here::here("results", "contribution_plotdata_retention.csv")) %>% 
+  
+ggplot(aes(x = nutrient, y = Total, fill = Contribution)) + 
+  geom_col(position = 'fill') + 
+  geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dashed", alpha = 0.5) + 
+  #scale_fill_brewer(palette = "Set1", direction = 1) +
+  
+  scale_fill_manual(values=c("grey","brown","lightblue"))+
+                             
+  facet_grid(rows = vars(buffer), cols = vars(water), labeller = label_parsed) + 
+  
+  labs(
+    x = "",
+    y = "Relative nutrient contribution",
+    fill = "Source"
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1
+    )
+  )
+
+                             
+contribution_plot
+
+ggsave(here::here("plots", "contribution_sources_retentionincl.png"))
+```
 
