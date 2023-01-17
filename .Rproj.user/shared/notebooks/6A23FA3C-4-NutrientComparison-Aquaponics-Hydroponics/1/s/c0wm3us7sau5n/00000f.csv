@@ -1,3 +1,0 @@
-"0","# Read Worksheet"
-"0","# Unit: mg/L"
-"0","resh_data <- readWorksheet(resh_hydroponic_plant_production, sheet = ""nutrient solutions"", region = c('A', 'C2:Q50'))"

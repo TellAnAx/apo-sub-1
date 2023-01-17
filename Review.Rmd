@@ -36,7 +36,8 @@ An aquafeed can vary in its nutrient composition due to slight changes in its ra
 
 When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in Figure \@ref(fig:pathwaydigestion).  Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are then excreted in form of dissolved matter via the gills and the urinary system [@Evans2005; @Hardy2002].
 
-```{r pathwaydigestion, echo=FALSE, fig.cap="A simple graphical representation of nutrient flows and excretion patterns in aquatic animals (from Bureau and Hua, 2010)."}
+```{r pathwaydigestion, fig.cap="A simple graphical representation of nutrient flows and excretion patterns in aquatic animals (from Bureau and Hua, 2010).", echo=FALSE}
+
 knitr::include_graphics("images/2010_Bureau.png")
 ```
 
@@ -50,14 +51,14 @@ In terms of digestibility, information about the remaining plant nutrients is sc
 
 Excretion of the earth alkaline metals Ca and Mg takes primarily place in dissolved form via the gills and urine [@Lall2002; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while the renal excretion was found to be negligible [@Lall2002]. Cu is predominantly excreted via the bile [@Bury2003]. Excess dietary Cu is not taken up but excreted as feces. Thus the Cu inclusion rate in aquafeeds is reduced to minimize its release into the environment [@Lall2002]. Zn is mostly excreted renally and via the gills [@Lall2002].
 
-Tap water can vary in its composition, depending on its origin such as surface or groundwater. The extent of the variability of terrestrial waters in their chemical composition is shown in **FIGURE XXX**. Wheathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
+Tap water can vary in its composition, depending on its origin such as surface or groundwater. The extent of the variability of terrestrial waters in their chemical composition is shown in Figure \@ref(fig:waterConcFreq). Wheathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
 
 
 
 
 Due to its low water demand, aquaponics is generally seen as food production system suitable for urban areas or arid regions [@Kloas2015; @Joyce2019]. Establishing an aquaponic system in these regions comes with limited access to water sources such as well water or rivers and lakes. Rainwater, on the other hand, would require large storage capacities. Tap water is thus assumed to be the most important water source.
 
-The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation  [@EU2020]. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
+The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation [@EU2020]. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
 
 
 
@@ -84,14 +85,15 @@ The quality of tap water is usually rigidly regulated by the authorities. In Eur
 [^2]: Calculated as [TIN] = [$\text{NH}_{4}^{+}$] + [$\text{NO}_{2}^{-}$] + [$\text{NO}_{3}^{-}$].
 
 
+```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 mg/L. Y-axis: Percentage of sampling points (from Stumm and Morgan, 1996).", echo=FALSE}
+
+knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
+```
 
 
-![Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 mg/L. Y-axis: Percentage of sampling points (from Stumm and Morgan, 1996).](images/Stumm_Morgan_Aquatic_Chemistry_p873.png)
 
 Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter releases three moles of protons (H$^{+}$) per mole of ammonia (NH$_{3}$) that is converted to NO$_{3}^{-}$. This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used in aquaponics.
 **TABLE XXX** summarises some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
-
-
 
 
 
@@ -121,37 +123,49 @@ Lastly, the third continuous nutrient input are alkalinity supplements that are 
 Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successful nutrient management [@Sambo2019]. The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrains. In hydroponics, these constraints are well-described as they have to be taken into account when intending to formulate cost-efficient fertilizers [@DeRijck1999b]. 
 The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions [@Sambo2019]. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature [@Jensen2003; @Stumm1981].
 
-Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. The saturation concentration of a salt can be described using solubility product constants $K_{sp}$, which are the product of the concentration of the cation(s) and the anion(s) at saturation concentration, as shown in **equation XXX**, with square brackets denoting for molar concentrations.
+Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. The saturation concentration of a salt can be described using solubility product constants $K_{sp}$, which are the product of the concentration of the cation(s) and the anion(s) at saturation concentration, as shown in Equation \@ref(eq:Ksp), with square brackets denoting for molar concentrations.
 
 
 
-$$
-K_{sp} = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
-$$
-
-$K_{sp}$ is either determined empirically or derived from thermodynamic data. The saturation concentration $S$ of the salt can eventually be calculated by rearranging **equation XXX** as shown in **equation XXX**.
-
-
-
-$$
-S = \sqrt[m+n]{\frac{K_{sp}}{m^{m} \cdot n^{n}}}
-$$
-
-If the concentrations of the cation(s) and anion(s) in solution are known, it is possible to calculate the ion product $Q$ analogously to the calculation of $K_{sp}$ as shown in **equation XXX**, substituting $[cation]$ and $[anion]$ by the corresponding empirical data.
+\begin{equation}
+  K_{sp} = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
+  (#eq:Ksp)
+\end{equation}
 
 
 
-$$
-Q = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
-$$
-
-$K_{sp}$ can now be compared with $Q$ to evaluate whether the solution is saturated or not by calculating the saturation index $U$ as shown in **equation XX**. If the saturation concentration is exceeded ($Q > K_{sp}$ and $\log{\frac{Q}{K}} > 0$), precipitation occurs. 
+$K_{sp}$ is either determined empirically or derived from thermodynamic data. The saturation concentration $S$ of the salt can eventually be calculated by rearranging Equation \@ref(eq:Ksp) as shown in Equation \@ref(eq:S).
 
 
 
-$$
-U = \log{\frac{Q}{K_{sp}}}
-$$
+\begin{equation}
+  S = \sqrt[m+n]{\frac{K_{sp}}{m^{m} \cdot n^{n}}}
+  (#eq:S)
+\end{equation}
+
+
+
+If the concentrations of the cation(s) and anion(s) in solution are known, it is possible to calculate the ion product $Q$ analogously to the calculation of $K_{sp}$ as shown in Equation \@ref(eq:Q), substituting $[cation]$ and $[anion]$ by the corresponding empirical data.
+
+
+
+\begin{equation}
+  Q = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
+  (#eq:Q)
+\end{equation}
+
+
+
+$K_{sp}$ can now be compared with $Q$ to evaluate whether the solution is saturated or not by calculating the saturation index $U$ as shown in Equation \@ref(eq:U). If the saturation concentration is exceeded ($Q > K_{sp}$ and $\log{\frac{Q}{K}} > 0$), precipitation occurs. 
+
+
+
+\begin{equation}
+  U = \log{\frac{Q}{K_{sp}}}
+  (#eq:U)
+\end{equation}
+
+
 
 The formation of a salt can also be seen as the result of a neutralisation reaction. For instance, the reaction of phosphoric acid (H$_{3}$PO$_{4}$) with sodium hydroxide (NaOH) can be written in a simplified way as 
 
@@ -222,10 +236,15 @@ All calculations were conducted using Visual MINTEQ (v3.1) and its default datab
 
 
 ## Data acquisition and wrangling
-The data acquisition and processing steps are graphically summarised in **FIGURE XXX**. Literature was screened for studies that focussed on nutrient dynamics in aquaponic systems, resulting in an initial dataset (IDS) of 117 individual observations originating from 39 publications. Selected literature comprised studies about permanently and on-demand coupled freshwater aquaponics, sludge remineralisation studies and hydroponic growth trials with water originating from aquaculture systems. The cultivated species, location of the experimental site, pH, volume of the system parts, daily water exchange rate, initial and final bodyweight, stocking density, daily feeding rate, feed name, and the concentrations of all essential plant nutrients in the source water, feed, and system water were collected.
+The data acquisition and processing steps are graphically summarised in Figure \@ref(fig:dataAnalysisWorkflow). Literature was screened for studies that focussed on nutrient dynamics in aquaponic systems, resulting in an initial dataset (IDS) of 117 individual observations originating from 39 publications. Selected literature comprised studies about permanently and on-demand coupled freshwater aquaponics, sludge remineralisation studies and hydroponic growth trials with water originating from aquaculture systems. The cultivated species, location of the experimental site, pH, volume of the system parts, daily water exchange rate, initial and final bodyweight, stocking density, daily feeding rate, feed name, and the concentrations of all essential plant nutrients in the source water, feed, and system water were collected.
 
-![Graphical representation of the data acquition and wrangling steps. IDS: Initial dataset; FDS1 and 2: Filtered datasets; SWDS: Source water dataset; FIDS: Feed information dataset; ASDS: Alkalinity supplements dataset; 
-Green box: filter applied; red box: external data added; solid line: dataset; dotted line: data derived from initial dataset; dashed line: data derived from external source; thick solid line: final usage of data.](images/data_analysis_flow.png)
+
+
+```{r dataAnalysisWorkflow, fig.cap="Graphical representation of the data acquition and wrangling steps. IDS: Initial dataset; FDS1 and 2: Filtered datasets; SWDS: Source water dataset; FIDS: Feed information dataset; ASDS: Alkalinity supplements dataset; Green box: filter applied; red box: external data added; solid line: dataset; dotted line: data derived from initial dataset; dashed line: data derived from external source; thick solid line: final usage of data.", echo=FALSE}
+
+knitr::include_graphics("images/data_analysis_flow.png")
+```
+
 
 
 
@@ -233,6 +252,8 @@ Green box: filter applied; red box: external data added; solid line: dataset; do
 ## Origin of nutrients
 To calculate the proportion contribution of the source water, feed and alkalinity supplements to the total daily nutrient input in the reviewed studies, their average daily inputs per volume unit had to be calculated. For this purpose, statistics describing the average experimental system, system parameters and nutrient inputs were derived from the IDS and merged with external data sources in a four-stage process.
 The first step comprised the generation of system assumptions. For this purpose, a filter was applied to the IDS, only including studies that made use of an aquaculture unit, reported the total system volume and the final bodyweight of the livestock at the end of the experiment. The resulting filtered dataset (FDS1) held 39 observations from 10 publications. 
+
+
 
 ```{r Contribution: Number of publications}
 read_csv(here("results", "contribution_rearing_data.csv")) %>% 
@@ -251,9 +272,16 @@ FDS1 was used to calculate the average system volume ($\text{V}_{tot}$), average
 Eventually, the average biomass ($ABM$) was computed by multiplication of $ABW$ with $AN$ or, if only $AD$ was given, by multiplication of $AD$ with $\text{V}_{tot}$. Vice versa, in case $AD$ was not reported, it was calculated by dividing $ABM$ by $\text{V}_{tot}$. The average daily water exchange volume by multiplication of ($\text{V}_{tot}$) with $AWE$.
 
 The second step was the estimation of the daily nutrient input via source water. For this purpose, gathered location information in the FDS was used to search for water analysis reports provided by the closest water treatment plant. Only official reports provided by local authorities and water utilities in the corresponding municipalities were used to ensure that analyses were conducted according to internationally accepted laboratory standards. 
-In water analysis, it is common practice to report the value of the detection limit instead of the measured value in case that the analyte concentration found was below the sensitivity of the instrument used for measurement [@DIN32645]. Retaining the detection limits in the dataset leads to mean concentration estimates that are too large. However, removing the affected observations would result in a loss a large proportion of the data, as shown in **FIGURE XXX**. Therefore, concentration data was recalculated using the *cenmle()* function from the R package *NADA* by maximum likelihood estimation (MLE) [@Helsel2012]. This ensured that the estimates for nutrient concentrations in tap water were reliable. 
+In water analysis, it is common practice to report the value of the detection limit instead of the measured value in case that the analyte concentration found was below the sensitivity of the instrument used for measurement [@DIN32645]. Retaining the detection limits in the dataset leads to mean concentration estimates that are too large. However, removing the affected observations would result in a loss a large proportion of the data, as shown in Figure \@ref(fig:waterAnalysesPerCountry). Therefore, concentration data was recalculated using the *cenmle()* function from the R package *NADA* by maximum likelihood estimation (MLE) [@Helsel2012]. This ensured that the estimates for nutrient concentrations in tap water were reliable. 
 
-![Proportion of water analysis observations per analyte reported to be below detection limit (n = XXX).](plots/contribution_waterData_belowLimit.png)
+
+
+```{r waterAnalysesPerCountry, fig.cap="Proportion of water analysis observations per analyte reported to be below detection limit (n = XXX).", echo=TRUE}
+
+knitr::include_graphics("plots/contribution_waterData_belowLimit.png")
+```
+
+
 
 The output was eventually used to calculate the two-sided 90% confidence interval for the concentration of each nutrient to describe the concentration range that will be found in 90% of all cases where tap water is used. 
 Finally, multiplying the obtained concentrations with $AWE$ yielded the upper and lower limits of the 90% confidence interval of total daily individual plant nutrient inputs via source water.
@@ -261,14 +289,19 @@ Finally, multiplying the obtained concentrations with $AWE$ yielded the upper an
 In the third step, daily nutrient inputs via aquafeeds were estimated. The IDS was filtered for studies reporting the name of the commercial aquafeed used (if not selfmade), the $CP$ inclusion rate and the feeding rate. From the resulting FDS2, the average feeding rate ($AFR$), $CP$ inclusion rate ($ACP$) and the averages of all plant nutrients were calculated. Due to lacking nutrient composition data, supplier datasheets were used and amended by literature data in case of utilization of commercial aquafeeds. Incomplete observations with respect to experimental feeds were handled in the same way, merging data from multiple publications if the same feed was used. \emph{NA} values were removed for the computation of averages.
 Eventually, the average daily feed input ($AFI$) was calculated by multiplying ABM from the generated system assumptions with AFR. By multiplying $AFI$ with the average plant nutrient inclusion rates in the aquafeeds, the uncorrected total daily input of individual plant nutrients via aquafeeds could be calculated. Obtained values were then corrected by multiplication with apparent digestibility coefficients ($ADC$), accounting for the digestibility of aquafeeds by fish. An $ADC$ of 90% was assumed for N whereas the $ADC$ of all other nutrients was assumed to be 50% (Lall Fish Nutrition The Minerals, 2002). Finally, it was assumed that 50% of the digestible fraction is retained while the remaining 50% is excreted in dissolved form [@Halver2003]. The indigestible part of the feed is excreted as solid feces and was thus assumed not to participate in chemical reactions in solution.
 
-An estimate for the daily input of alkalinity supplements was derived from $AFI$. The activity of nitrifying bacteria in the biofilter follows the overall simplified reaction 
-
-$$
-\text{NH}_{4}^{+} + 2 \text{ O}_{2} \rightarrow \text{NO}_{3}^{-} + 2 \text{ H}^{+} + \text{ H}_{2}\text{O}
-$$
+An estimate for the daily input of alkalinity supplements was derived from $AFI$. The activity of nitrifying bacteria in the biofilter follows the overall simplified reaction equation \@ref(eq:nitrification) [@Timmons2010].
 
 
-[@Timmons2010], thus releasing two moles of protons (H$^{+}$) per mole of ammonium ($\text{NH}_{4}^{+}$) that is converted to nitrate ($\text{NO}_{3}^{-}$). Neutralization of these protons has to take place to counteract the resulting decrease in pH. Thus, the amounts of $\text{NaHCO}_{3}$, $\text{KOH}$ or $\text{Ca(OH)}_{2}$ that are necessary to neutralise the released protons were calculated by assuming that the digestible, non-retained proportion of $CP$ is excreted as $\text{NH}_{4}^{+}$. 
+
+\begin{equation}
+  \text{NH}_{4}^{+} + 2 \text{ O}_{2} \rightarrow \text{NO}_{3}^{-} + 2 \text{ H}^{+} + \text{ H}_{2}\text{O}
+  (#eq:nitrification)
+\end{equation}
+
+
+Per mole of ammonium ($\text{NH}_{4}^{+}$) that is converted to nitrate ($\text{NO}_{3}^{-}$), two moles of protons (H$^{+}$) are released. Neutralization of these protons has to take place to counteract the resulting decrease in pH. Thus, the amounts of $\text{NaHCO}_{3}$, $\text{KOH}$ or $\text{Ca(OH)}_{2}$ that are necessary to neutralise the released protons were calculated by assuming that the digestible, non-retained proportion of $CP$ is excreted as $\text{NH}_{4}^{+}$. 
+
+
 
 $$
 AFI \frac{CP}{f_{K}} \cdot \frac{f_{S}\text{M(H)}}{\text{M(N)}}
