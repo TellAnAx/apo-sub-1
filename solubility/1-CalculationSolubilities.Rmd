@@ -1,0 +1,267 @@
+---
+title: "Nutrient Solubility"
+author: "Anıl A. Tellbüscher"
+date: '2022-06-15'
+output: html_document
+  toc: TRUE
+  toc_float: TRUE
+---
+
+
+
+```{r}
+library(XLConnect)
+library(tidyverse)
+
+options(digits = 2)
+```
+
+
+
+
+
+
+
+# 1. Data preparation
+
+## 1.1 Load data
+
+```{r}
+# Load Workbook
+#water_chemistry <- loadWorkbook("/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Water Chemistry.xlsx")
+
+water_chemistry <- loadWorkbook("data/Aquaponics - Water Chemistry.xlsx")
+```
+
+
+
+```{r}
+# Read worksheet
+data <- readWorksheet(water_chemistry, sheet = "rawdata", endCol = 14)
+```
+
+
+
+## 1.2 Transform data
+
+```{r}
+# Rename columns
+colnames(data) <- c(
+  'name'
+  ,'chemFormula'
+  ,'cation'
+  ,'anion'
+  ,'chemCation'
+  ,'chemAnion'
+  ,'coeffCation' # n(Cation) per n(Salt)
+  ,'coeffAnion' # n(Anion) per n(Salt)
+  ,'MSalt' # Molar mass of Salt in g/mol
+  ,'MCation' # Molar mass of Cation in g/mol
+  ,'MAnion' # Molar mass of Anion in g/mol
+  ,'massPercent' # Mass percentage at 25 degrees Celsius (Handbook of Chemistry and Physics, 88th ed.)
+  ,'Ks0' # Solubility product constant at 25 degrees Celsius (Handbook of Chemistry and Physics, 88th ed.)
+  ,'densH2O' # Density of water at 25 degrees Celsius in kg/L
+  #  ,'solPrecalc'
+  #  ,'solSalt' # Solubility of salts that are well-soluble in g/L
+)
+
+rownames(data) <- data$name
+```
+
+
+
+```{r}
+write.csv(data, file = "data/solubilityData_for3-NutrientSolubilityCorrected.csv")
+```
+
+
+
+# 2. Calculations
+
+Initially, the molar solubility of poorly soluble salts is calculated by using their solubility product constants $K_{s0}$.
+
+```{r}
+# TRANSFORMATIONS AND CALCULATIONS
+
+# 1. Calculation of solubility of salts from Ks0; accounts for poorly soluble salts
+data <- data %>%
+  mutate(
+    # Molar solubility of the Salt
+    solSalt_mol = (Ks0 / (coeffCation^coeffCation * coeffAnion^coeffAnion))^(1/(coeffCation + coeffAnion)),
+    # Mass solubility of the Salt
+    solSalt_mg = solSalt_mol * MSalt * 1e3
+  )
+```
+
+
+
+Those substances in the list where no $K_{s0}$ value is available are well-soluble. Their solubility can be described by using a mass percentage that is denoting the mass of the salt that can be dissolved in a mass of water, given the temperature and the corresponding density of water.
+
+```{r}
+# 2. Filling up missing values by solubilities derived from Handbook of Chemistry and Physics, 88th ed. after conversion
+#    into mg/L as unit
+for(i in 1:nrow(data)){
+  if(is.na(data$Ks0[i]) == TRUE){
+    data$solSalt_mg[i] <- ((data$massPercent[i] * 1e-2) * data$densH2O[i]) / (1 - (data$massPercent[i]*1e-2)) * 1e6
+    
+    data$solSalt_mg2[i] <- data$solSalt[i] * 1e3
+    
+    data$solSalt_mol[i] <- data$solSalt_mg[i]*1e-3 / data$MSalt[i]
+  }
+}
+```
+
+
+
+As we are interested in the solubility of the individual ions of the salts and not the salt itself, the calculated molar solubilities can be converted by multiplying them with the stoichiometric coefficient of the ions in the salt.
+A further step is to convert the molar solubilities into mass solubilities for the sake of convenience.
+
+```{r}
+data <- data %>%
+  mutate(
+    #
+    # TRANSFORMATIONS
+    #
+    
+    # Make factor
+    cation = as.factor(cation),
+    anion = as.factor(anion),
+    chemCation = as.factor(chemCation),
+    chemAnion = as.factor(chemAnion),
+
+    # Molar solubility of the Cation
+    solCation_mol = solSalt_mol * coeffCation,
+    # Mass solbility of the Cation
+    solCation_mg = solCation_mol * MCation * 1e3,
+    
+    # Molar solubility of the Anion
+    solAnion_mol = solSalt_mol * coeffAnion,
+    # Mass solubility of the Anion
+    solAnion_mg = solAnion_mol * MAnion * 1e3
+  ) %>%
+  
+  select(
+    c("chemFormula", "cation", "anion", "chemCation", "chemAnion", "coeffCation", "coeffAnion", "MSalt", "MCation", "MAnion", "Ks0", "solSalt_mol", "solCation_mol", "solAnion_mol", "solSalt_mg", "solCation_mg", "solAnion_mg")
+  ) %>%
+  drop_na(solSalt_mol)
+```
+
+
+
+```{r}
+# Export solubility results
+source('R/export.R')
+```
+
+
+
+
+# 2. Plots
+
+## 2.1 Create plot dataset
+```{r include=FALSE}
+plotdata <- data %>% 
+  filter(anion != 'Sulfid')
+```
+
+
+
+## 2.2 Cation plot
+
+The following plot shows the solubility of cations in dependence of some salt-forming anions.
+
+```{r}
+plotdata %>%
+  ggplot(aes(x = cation, y = solCation_mg, color = anion)) + 
+  geom_point() + 
+  scale_y_continuous(trans='log10') +
+  facet_wrap(facets = vars(cation), scales = "free")
+```
+
+
+
+In general, it can be seen that the solubility of phosphate, carbonate and hydroxide salts is low compared with salts of other anions.
+
+```{r}
+plotdata %>%
+  ggplot(aes(x = cation, y = solCation_mg)) + 
+  geom_boxplot() + 
+  scale_y_continuous(trans='log10')
+```
+
+
+
+
+
+## 2.3 Anion plot
+
+```{r}
+plotdata %>%
+  ggplot(aes(x = anion, y = solCation_mg, color = cation)) + 
+  geom_point() + 
+  scale_y_continuous(trans='log10') +
+  facet_wrap(facets = vars(anion), scales = "free")
+```
+
+
+
+```{r}
+plotdata %>%
+  ggplot(aes(x = anion, y = solCation_mg)) + 
+  geom_boxplot() + 
+  scale_y_continuous(trans='log10')
+```
+
+
+
+
+
+# Comparison with empirical data
+
+```{r}
+#data <- readWorksheetFromFile(file = "/Users/anil/Library/CloudStorage/OneDrive-JihočeskáuniverzitavČeskýchBudějovicích/General/Aquaponics - Masterfile Nutrients.xlsx", sheet = "waterTRANS")
+
+
+data <- readWorksheetFromFile(file = "data/Aquaponics - Masterfile Nutrients.xlsx"
+                  ,sheet = "waterTRANS"
+)
+
+# COMPARISON WITH EMPIRICAL DATA
+#
+#
+exportdata <- plotdata %>%
+  select(c(chemFormula, cation, anion, solCation_mg, solAnion_mg)) %>%
+  pivot_longer(
+    cols = solCation_mg:solAnion_mg,
+    names_to = "ion",
+    values_to = "solubility")
+
+for(i in 1:nrow(exportdata)){
+  if(exportdata$ion[i] == "solCation_mg"){
+    exportdata$ion[i] <- as.character(exportdata$cation[i])
+  } else {
+    exportdata$ion[i] <- as.character(exportdata$anion[i])
+  }
+}
+
+exportdata <- exportdata %>%
+  select(-c(chemFormula, cation, anion)) %>%
+  rename(
+    "Ion" = "ion",
+    "Calculated" = "solubility"
+  ) %>%
+  group_by(Ion) %>%
+  summarise(Calculated = min(Calculated)) %>%
+  arrange(desc(Calculated))
+
+# Reduce number of digits
+exportdata <- format(as.data.frame(exportdata), digits=2, nsmall=2)
+
+
+# 
+write.csv(exportdata,
+          file = "data/Solubility_compared.csv",
+          quote = FALSE
+)
+```
+

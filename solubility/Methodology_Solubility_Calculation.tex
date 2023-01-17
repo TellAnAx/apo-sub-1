@@ -1,0 +1,236 @@
+\documentclass[11pt]{scrartcl}
+
+
+
+\usepackage{mhchem}
+
+\usepackage{siunitx}
+\DeclareSIUnit \atm {atm}
+
+\usepackage{longtable}
+
+\usepackage{csvsimple}
+
+\usepackage{booktabs}
+
+\usepackage{graphicx}
+
+\usepackage{rotating}
+
+\usepackage{caption}
+
+%%% Bibliography
+\usepackage[
+style=authoryear
+,url=false
+]{biblatex}
+\addbibresource{Methodology_Calculations.bib}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Implications of pH in Aquaponics for target plant nutrient concentrations derived from Hydroponics}
+\subtitle{A brief description of the methodology}
+\date{September 25th, 2022}
+\author{An{\i}l Axel Tellb{\"u}scher\thanks{E-Mail: atellbuscher@frov.jcu.cz}\\ Faculty of Fisheries and Protection of Waters\\ Laboratory of Nutrition\\ University of South Bohemia}
+
+\begin{document}
+
+\maketitle
+
+\section*{General}
+The saturation concentration of a cation in solution is determined by the least soluble salt that can be formed with the present anionic species in solution. The concentration of the salt-forming anion, on the other hand, is not reflected by its total concentration $c_{T}$ that is used for the formulation of nutrient solutions such as the Hoagland solution (see Tab. \ref{tab:hoagland}) but determined by the pH due to speciation reactions. Thus, the true concentration of the species that is causing precipitation has to be calculated.\\
+A \textbf{chemical species} is a \emph{"[s]pecific form of an element defined as to isotopic composition, electronic or oxidation state, and/or complex or molecular structure."} \parencite{IUPAC2019}. An example would be the species couple of [\ce{NH4+}] and [\ce{NH3}], whose total concentration $c_{T}$ is commonly termed total ammonia nitrogen (TAN). The concentration of both species at a given $\text{TAN} = c_{T} = \SI{5}{\milli\mol\per\liter}$ is a function of pH and can be calculated if the pH and the dissociation constant $K$ of the reaction is known.
+%
+%
+%	TABLE - HOAGLAND SOLUTION
+%
+%
+\begin{table}[!h]
+
+\centering
+
+	\caption{Total concentrations of plant nutrients in the nutrient solution after Hoagland and Arnon \parencite{Resh2016}.}
+	\label{tab:hoagland}
+	
+\vspace{0.5em}
+	
+	\begin{tabular}{lrr}
+	
+\toprule
+
+Nutrient & $\gamma$[\si{\milli\gram\per\liter}] & c[\si{\milli\mol\per\liter}] \\
+
+\midrule
+
+\textbf{Anions} & 		& \\
+\ce{NH4+}-N 		& 14		& \num{7.8e-1} \\
+\ce{NO3-}-N		& 196	& 3.16 \\
+\ce{PO4^3-}-P	& 31		& \num{3.3e-1} \\
+\vspace{0.5em}
+\ce{SO4^2-}-S	& 64		& \num{6.7e-1} \\
+
+\textbf{Cations} & & \\
+\ce{K+}		& 234	& 5.98 \\
+\ce{Ca^2+}	& 160	& 3.99 \\
+\ce{Mg^2+}	& 48		& 1.97 \\
+\ce{Fe^3+}	& 0.6	& \num{10.7e-3} \\
+\ce{Mn^2+}	& 0.5	& \num{9.1e-3} \\
+\ce{Cu^2+}	& 0.02	& \num{5.5e-4} \\
+\ce{Zn^2+}	& 0.05	& \num{7.6e-4} \\
+\ce{Mo^6+}	& 0.01	& \num{1.0e-4} \\
+
+\bottomrule
+		
+	\end{tabular}	
+\end{table}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Calculations}
+
+\subsection{Calculation of Nutrient Species Concentrations}
+Being directly pH-dependent, the \textbf{hydroxide} concentration can be calculated by Eq. \ref{eq:OH-}.
+%
+\begin{align}
+	[\ce{OH-}] = 10^{\text{pH}-14}
+	\label{eq:OH-}
+\end{align}
+%
+The concentration of \textbf{diprotic acids} [\ce{A^2-}] such as carbonic acid \ce{H2CO3} and sulphuric acid \ce{H2SO4} or \textbf{triprotic acids} [\ce{A^3-}] such as phosphoric acid \ce{H3PO4} can be calculated by using Eq. \ref{eq:diprotic} and \ref{eq:triprotic}, respectively.
+%
+\begin{align}
+	[A^{2-}] = c_T \cdot \frac{1}{\frac{[H^+]^2}{K_{a1}K_{a2}}+\frac{[H^+]}{K_{a2}}+1}
+	\label{eq:diprotic}
+\end{align}
+%
+\begin{align}
+	[A^{3-}] = c_T \cdot \frac{1}{\frac{[H^+]^3}{K_{a1}K_{a2}K_{a3}}+\frac{[H^+]^2}{K_{a2}K_{a3}}+\frac{[H^+]}{K_{a3}}+1}
+		\label{eq:triprotic}
+\end{align}
+%
+Here, $K_{a,n}$ represents the acidity constants of the corresponding deprotonation levels.\\
+In the case of carbonate, it is assumed that all carbonate species in the water are originating from atmospheric \ce{CO2} ($p = \SI{5.4e-2}{\atm}$), neglecting the use of carbonate buffers in aquaculture. The initial \textbf{carbon dioxide concentration in water} is thus calculated by applying Henry's law.
+%
+\begin{align}
+	[\ce{CO2_{(aq)}}] = p(\ce{CO2_{(g)}}) \cdot K_{H}
+\end{align}
+%
+Eventually, the concentrations of \ce{CO2_{(aq)}} and \ce{H2CO3} resulting from the reaction
+%
+\begin{align}
+	\ce{CO2_{(aq)} + H2O <=> H2CO3}	
+\end{align}
+%
+are summed up as 
+%
+\begin{align}
+	\ce{[CO2_{(aq)}] + [H2CO3] = [H2CO3*]}	
+\end{align}
+%
+as it is common practice (see e.g. \cite{Sigg2011}). In all equations, $c_{T}$ is denoting for the total molar concentration of an element and brackets are denoting for molar concentrations of the individual species. No correction for activities was done. The numeric values used for the calculations are stated in Tab. \ref{tab:acidityConstants}.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Calculation of Solubility}
+Salts consist of positively charged cations and negatively charged anions. The solubility of a salt is described by its solubility product constant $K_{sp}$ as shown in Eq. \ref{eq:solProduct}.
+%
+\begin{align}
+	K_{sp} = [\ce{C^{a+}}]^{i} \cdot [\ce{A^{b-}}]^{j}
+	\label{eq:solProduct}
+\end{align}
+%
+With $K_{sp}$ of a salt and the concentration of one of the ions in solution being known, the saturation concentration $S$ of the other ion can be calculated. The saturation concentration is the highest possible concentration up to which no precipitation of the salt occurs.\\
+In all equations, brackets are denoting for molar concentrations. The solubility products used for the calculation of theoretical maximum solubilities of pure salts are given in Table \ref{tab:solubilityProducts}. 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Constants}
+%
+%
+%	TABLE - ACIDITY CONSTANTS
+%
+%
+\begin{table}[!h]
+
+\centering
+
+	\caption{Equilibrium constants of dissociation reactions.}
+	\label{tab:acidityConstants}
+	
+\vspace{.5em}
+
+	\begin{tabular}{lrrr}
+	
+\toprule
+
+Reaction & Abbrev. & Value & Reference \\
+
+\midrule
+		
+\ce{H2O + H2O <=> OH- + H3O+} 			& $K_{W}$ 	& \num{1.0e-13} & \\
+\ce{CO2 + H2O <=> H2CO3}* 				& $K_{H}$	& \num{3.4e-2}  & \cite{Sigg2011} 		\\
+\ce{H2CO3 + H2O <=> HCO3- + H3O+}		& $K_{a1}$	& \num{4.46e-7} & \cite{Sigg2011} 		\\
+\ce{HCO3- + H2O <=> CO3^{2-} + H3O+}		& $K_{a2}$	& \num{4.16e-11}& \cite{Sigg2011} 		\\
+\ce{H3PO4 + H2O <=> H2PO4- + H3O+} 		& $K_{a1}$ 	& \num{7.52e-3} & \cite{Kuester2011}		\\
+\ce{H2PO4- + H2O <=> HPO4^{2-} + H3O+}	& $K_{a2}$	& \num{6.23e-8} & \cite{Kuester2011}		\\
+\ce{HPO4^{2-} + H2O <=> PO4^{3-} + H3O+}& $K_{a3}$	& \num{3.5e-13} & \cite{Kuester2011}		\\
+\ce{H2SO4 + H2O <=> HSO4- + H3O+}		& $K_{a1}$	& \num{1.0e3} 	& \cite{Kuester2011}		\\
+\ce{HSO4- + H2O <=> SO4^{2-} + H3O+}		& $K_{a2}$	& \num{1.2e-2} 	& \cite{Kuester2011}		\\
+
+\bottomrule
+	
+	\end{tabular}	
+\end{table}
+%
+%
+%
+%	TABLE - SOLUBILITY PRODUCTS
+%
+\begin{table}[!hb]
+	\caption{Solubility products ($K_{sp}$) of some poorly soluble salts of relevant plant nutrients at \SI{25}{\degreeCelsius}.}
+	\label{tab:solubilityProducts}
+\vspace{.5em}
+%
+\csvreader[
+	before reading	= \begin{center},
+	tabular 		= lrr,
+	table head		= \toprule Compound & Solubility product & Reference \\ \midrule,
+	table foot 		= \bottomrule,
+	after reading	= \end{center}
+]{data/Solubility_products.csv}
+{Compound = \compound, Solubility product = \constant, Reference = \reference}{%
+\compound & \tablenum{\constant} & \reference
+}%
+\end{table}
+%
+\vspace{0.5em}
+%
+%
+%
+%
+%
+\newpage
+\printbibliography
+%
+\end{document}

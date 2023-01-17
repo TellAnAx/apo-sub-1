@@ -1,0 +1,487 @@
+---
+title: "Nutrient Solubility"
+subtitle: "Comparison of empirical nutrient concentrations with theoretical solubilities"
+author: "Anıl A. Tellbüscher"
+date: '2022-06-26'
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(XLConnect)
+```
+
+# General
+- Comparison of empirical nutrient concentrations in the aquaculture or remineralisation unit with theoretical solubilities of some salts and recommended concentrations from hydroponic literature
+- All concentrations need to be corrected
+  - Values for PO4 are representing c_total, so they must be converted into [PO4 3-] to assess whether values are indeed above maximum solubility
+
+
+
+# 1. Nutrient solubility data
+After excluding nutrients that have a highly variable input, the next questions are 
+
+1. if the inclusion of one or multiple of the remaining nutrients would actually lead to an increase of their free concentration
+2. whether or not the inclusion of these nutrients might cause interactions with other nutrients such as precipitation
+
+
+
+## Load data
+```{r}
+nutrientSolubility <- read.csv('data/solubilityCalculated.csv')
+```
+
+
+
+## Convert dataset
+
+### Create cation solubility dataset
+```{r}
+# Preparation of solubility data
+cationSolubility <- nutrientSolubility %>% 
+  filter(X != "Iron(III) hydroxide" & chemAnion != "S") %>% 
+  select(-c('X', 'chemFormula')) %>% 
+  arrange('solSaltmg') %>% 
+  group_by(chemCation) %>% 
+  summarise(minSolubility = min(solCationmg)) %>% 
+  rename("nutrient" = "chemCation") %>% 
+  arrange(minSolubility) %>% 
+  print()
+```
+
+
+
+### Create anion solubility dataset
+```{r}
+anionSolubility <- nutrientSolubility %>% 
+  filter(X != "Iron(III) hydroxide" & chemAnion != "S") %>% 
+  select(-c('X', 'chemFormula')) %>% 
+  arrange('solSaltmg') %>% 
+  group_by(chemAnion) %>% 
+  summarise(minSolubility = min(solAnionmg)) %>% 
+  rename("nutrient" = "chemAnion") %>% 
+  arrange(minSolubility) %>% 
+  print()
+```
+
+
+
+### Create dataset that contains lowest mass solubility for all the compounds
+```{r}
+lowSolubility <- cationSolubility %>% 
+  bind_rows(anionSolubility) %>% 
+  mutate(
+    # Conversion of nutrient into factor
+    nutrient = factor(nutrient, 
+                            levels = c('Fe', 'Cu', 'Ca', 'Ni', 'Zn', 'Mn', 'Mg', 'B', 'K', 'NH4', 'PO4', 'OH', 'CO3', 'SO4', 'SO3', 'H2PO4', 'HCO3', 'NO3', 'Cl', 'HPO4'),
+                            labels = c('Fe', 'Cu', 'Ca', 'Ni', 'Zn', 'Mn', 'Mg', 'B', 'K', 'N', 'P', 'OH', 'CO3', 'S', 'SO3', 'H2PO4', 'HCO3', 'NO3', 'Cl', 'HPO4'))) %>% 
+  print()
+```
+
+
+
+
+
+# 2. Target concentrations
+
+## Load data
+```{r}
+resh_hydroponic_plant_production <- loadWorkbook(filename = "data/Resh - Hydroponic Plant Production.xlsx")
+resh <- readWorksheet(resh_hydroponic_plant_production, sheet = "nutrient solutions", region = c('A', 'C2:Q50'))
+
+resh <- data.frame(resh[[2]], row.names = resh[[1]][2:49,1])
+```
+
+
+
+## Convert dataset
+```{r}
+targetConc <- resh %>% 
+  rename('P' = 'PO4_P_mgL', 'K' = 'K_mgL', 'Ca' = 'Ca_mgL', 'Mg' = 'Mg_mgL', 'S' = 'SO4_S_mgL', 'B' = 'B_mgL', 'Fe' = 'Fe_mgL', 'Mn' = 'Mn_mgL', 'Cu' = 'Cu_mgL', 'Zn' = 'Zn_mgL', 'Na' = 'Na_mgL', 'NH4' = 'NH4_N_mgL', 'Mo' = 'Mo_mgL', 'NO3' = 'NO3_N_mgL', 'Cl' = 'Cl_mgL') %>% 
+  
+  # Calculate total N
+  mutate(
+    N = NH4 + NO3
+  ) %>% 
+  select(-c('NH4', 'NO3')) %>% 
+  
+  # Create longtable
+  pivot_longer(
+    everything(),
+    names_to = 'nutrient',
+    values_to = 'concentration'
+    ) %>% 
+  
+  # Remove missing values
+  drop_na() %>% 
+  group_by(nutrient) %>% 
+  summarise(mean = mean(concentration)) %>% 
+  arrange(desc(mean))
+```  
+
+
+
+## Convert units
+```{r}
+# Load data
+molarWeight <- read.csv2('data/molarWeight.csv')
+molarWeight$g_per_mol <- as.numeric(molarWeight$g_per_mol)
+
+
+targetConc %>% 
+  # Add molar weight dataset
+  left_join(molarWeight, by = c('nutrient' = 'element')) %>% 
+  
+  # Convert mmol/L into mg/L
+  mutate(
+    concentration = mean * g_per_mol
+    ) %>% 
+  select(-c('mean', 'g_per_mol'))
+```
+
+
+
+
+
+# 3. Empirical data
+Only data from on-demand coupled aquaponic systems or supernatants from remineralisation tanks is used. This is because the data shall not be impacted by plant uptake of nutrients. Instead, it is intended to visualize a satiation concentration that should be reached over time. 
+
+
+## Load data
+```{r}
+# Load data
+masterfile_nutrients <- loadWorkbook(filename = "data/Aquaponics - Masterfile Nutrients.xlsx")
+empirical_data <- readWorksheet(masterfile_nutrients, sheet = 'waterAVERAGE')
+```
+
+
+
+## Create plot dataset
+With respect to the plot dataset that is created using empirical data, the following modifications are made:
+
+- NH4+, NO2- and NO3- are summed up to obtain the total nitrogen in solution
+- due to the fact that only true phosphate is causing precipitation with other species, 
+
+```{r include=FALSE}
+plotdata <- empirical_data %>% 
+  
+  mutate(
+    # Summing up all nitrogenous compounds
+    N_mgL = N.NH4_mgL + N.NO2_mgL + N.NO3_mgL
+    
+    # Calculating [PO4^3-] species concentration from c_T using pH - conversion from mol\L into mg\L
+    #,P.PO4_mgL = calc_PO4(c_tot = P.PO4_mgL, pH = pH, unit = "mg") * 30.974 * 1e3
+      ) %>% 
+  
+  # Renaming of columns
+  select('Reference_ID', 'Treatment_ID', 'days', 'pH', ends_with('mgL'), 'source', 'condition') %>% 
+  select(-c("N.NH4_mgL","N.NO2_mgL","N.NO3_mgL")) %>% 
+  rename('P' = 'P.PO4_mgL', 'K' = 'K_mgL', 'Ca' = 'Ca_mgL', 'Mg' = 'Mg_mgL', 'S' = 'S.SO4_mgL', 'B' = 'B_mgL', 'Fe' = 'Fe_mgL', 'Mn' = 'Mn_mgL', 'Cu' = 'Cu_mgL', 'Zn' = 'Zn_mgL', 'Na' = 'Na_mgL', 'N' = 'N_mgL', 'Mo' = 'Mo_mgL', 'Ni' = 'Ni_mgL') %>% 
+  
+  # Remove NAs
+  drop_na(days) %>% 
+  
+  # Convert into longtable
+  pivot_longer(P:N, names_to = 'nutrient', values_to = 'concentration') %>% 
+  
+  # Conversion into factor
+  mutate(nutrient = factor(nutrient,
+                           levels = c('N', 'P', 'K', 'Ca', 'Mg', 'S', 'B', 'Fe', 'Mn', 'Zn', 'Cu', 'Mo', 'Ni', 'Na'))) %>% 
+  
+  drop_na(concentration)
+
+
+plotdata$source <- if_else(plotdata$source == "waterREMIN", "remineralisation", "system") 
+```
+
+
+
+## Add nutrient classification
+```{r}
+# Load data
+classes <- read.csv2('data/nutrientClassification.csv')
+
+plotdata <- plotdata %>% 
+  left_join(classes, by = c('nutrient' = 'nutrient'))
+```
+
+
+
+## Write data for further analysis
+```{r}
+write.csv(plotdata, file = 'data/empirical_data.csv')
+```
+
+
+
+## Remove unnecessary data from minimum solubility dataset
+```{r}
+lowSolubility <- lowSolubility[which(lowSolubility$nutrient %in% plotdata$nutrient),]
+droplevels(lowSolubility$nutrient)
+```
+
+
+
+
+
+## Plot data
+
+### Total Plot
+The plot is created using empirical data. Concentrations of plant nutrients are plotted against the sampling day. The data is further classified according to the unit where the sample for analysis was drawn from (is it water from an aquaculture unit or supernatant from a remineralisation system?)
+
+Black dashed lines are indicating the theoretical solubility if it was depending on the salt with the lowest solubility in the system, while the red dashed lines indicate the average target concentrations suggested by Resh.
+
+```{r echo=TRUE}
+plotdata %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility, aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc, aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+Overall, while the concentrations of some nutrients remain below the theoretically possible concentration, others are above these concentrations by up to three orders of magnitude. Affected cations are Ca, Mg, Fe, Mn, Cu, and Zn, while only P as anion is affected. The reasons could be the strong pH-dependence of the solubility of phosphate, carbonate and hydroxide salts and complex formation reactions on side of the transition metals.
+
+**In the next step, a pH-correction of the theoretical solubility threshold based on empirical data will be done, see RMarkdown file 3-NutrientSolubility-pH-corrected.**
+
+
+
+
+## Group plots
+
+### Macronutrients
+
+Black dashed lines are indicating the theoretical solubility if it was depending on the salt with the lowest solubility in the system, while the red dashed lines indicate the average target concentrations suggested by Resh.
+
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group3 == 'macronutrient', select = nutrient)))
+
+plotdata %>% 
+  filter(group3 == 'macronutrient') %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Microminerals
+
+Black dashed lines are indicating the theoretical solubility if it was depending on the salt with the lowest solubility in the system, while the red dashed lines indicate the average target concentrations suggested by Resh.
+
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group3 == 'micronutrient', select = nutrient)))
+
+plotdata %>% 
+  filter(group3 == 'micronutrient') %>% 
+  
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  
+  geom_point() +
+  
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  
+  scale_y_log10() + 
+  
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Group 1
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group1 == 1, select = nutrient)))
+
+plotdata %>% 
+  filter(group1 == 1) %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Group 2
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group1 == 2, select = nutrient)))
+
+plotdata %>% 
+  filter(group1 == 2) %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Group 3
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group1 == 3, select = nutrient)))
+
+plotdata %>% 
+  filter(group1 == 3) %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Group 4 
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group1 == 4, select = nutrient)))
+
+plotdata %>% 
+  filter(group1 == 4) %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Nonmetals
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group2 == 'nonmetal', select = nutrient)))
+
+plotdata %>% 
+  filter(group2 == 'nonmetal') %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Alkaline metals
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group2 == 'alkaline metal', select = nutrient)))
+
+plotdata %>% 
+  filter(group2 == 'alkaline metal') %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Alkaline earth metals
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group2 == 'alkaline earth metal', select = nutrient)))
+
+plotdata %>% 
+  filter(group2 == 'alkaline earth metal') %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Metalloids
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group2 == 'metalloid', select = nutrient)))
+
+plotdata %>% 
+  filter(group2 == 'metalloid') %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+
+
+
+### Transition metals
+```{r echo=TRUE}
+plotlevels <- unlist(unique(subset(plotdata, group2 == 'transition metal', select = nutrient)))
+
+plotdata %>% 
+  filter(group2 == 'transition metal') %>% 
+  ggplot(aes(x = days, y = concentration, colour = condition, shape = source)) + 
+  geom_point() +
+  geom_hline(data = lowSolubility[which(lowSolubility$nutrient %in% plotlevels),], aes(yintercept = minSolubility), linetype = 'dashed') + 
+  geom_hline(data = targetConc[which(targetConc$nutrient %in% plotlevels),], aes(yintercept = mean), linetype = 'dashed', color = 'red') + 
+  facet_wrap(facets = vars(as.factor(nutrient)), scales = 'free') + 
+  scale_y_log10() + 
+  labs(
+    x = 'Days',
+    y = 'log(c) [mg/L]'
+    )
+```
+

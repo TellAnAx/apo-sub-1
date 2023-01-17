@@ -7,10 +7,18 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## GitHub Documents
-
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
-
-## Including Code
+# Status of the Review
+The most updated branch is **review**. The branch is based on the branch **visualminteq**, where all results were created using the Visual Minteq software.
+The branch **gwb2022** holds the results of the calculations using The Geochemist's Workbench 2022 Community Edition. It is no longer maintained as the results are lacking considerations of dissolved organic matter (DOM).
 
 
+
+# Files
+
+|Folder|Description|
+|---|---|
+|contribution|Nutrient contribution of different sources|
+|contribution_shiny|Shiny app for the visualisation of the contribution of different nutrient sources to the total nutrient budget in aquaponic systems|
+|solubility|Calculation of nutrient solubilities based on empirical data|
+|discharge|Nutrient discharge modeling|
+|

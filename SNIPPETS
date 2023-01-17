@@ -1,0 +1,135 @@
+TEXT SNIPPETS
+
+Aquaponics can be defined as the combination of an aquaculture unit and a plant production unit with the objective to convert aquaculture wastes into edible yield. Against this background, the term “edible” implies several requirements with regards to the quality of the harvest such as appearance and uniformity as defined for instance by the International Standards for Fruit and Vegetables [@OECD1962]. Furthermore, it has to be emphasized that the final product needs to be competitive in price to be marketable and thus interesting for potential adopters of the technology. Though, aquaponic systems require a high initial investment and come with comparably high labor costs due to the complexity of the system [@Turnsek2019; @Quagrainie2017]. One aspect that is contributing to high operating costs in aquaponics is the lack of simple “off-the-shelf” solutions for the management of plant nutrients. 
+
+
+In hydroponics, on the other hand, plant nutrients are supplied in form of commercially available and chemically fine-tuned plant fertilizers with dosage recommendations. It is usually sufficient to monitor the nutrient depletion via plant uptake by determining the electric conductivity (EC) of the nutrient solution as sum parameter [@Resh2016]. Taking into account that labour costs can be accounted for 40-50% of the total operational costs of aquaponic facilities [@Baganz2020; @Quagrainie2017] (**Engle**), an entrepreneur who is carefully weighing whether to invest in aquaponics or hydroponics might opt for the latter.
+
+
+ it was found that the operating costs of an aquaponic system are higher than those of a hydroponic facility (Quagrainie, 2017). This might explain why most of the existing aquaponic systems operated are operated by hobbyists, scientists or serve demonstration purposes (Pattillo, 2022).
+
+However, an early attempt to formulate a "designer diet" for aquaponics was made already three decades ago, with the result that the dissolved concentration of certain nutrients did not increase with an increase of its inclusion rate in the fish feed (Seawright, 1998). Though, the underlying constraints were not further investigated. 
+
+
+
+
+
+## Chemical modeling
+Solving equilibrium problems in systems with only one or two compounds and their species is comparably simple. However, the complexity increases dramatically in multi-compound systems, making the use of computers and dedicated software necessary. 
+
+
+
+
+
+
+
+# REsults part Hoagland solution
+In comparison with results for the saturation index calculation of Hoagland's nutrient solution under different pH conditions, as shown in **FIGURE XXX**, it is evident that target concentrations for Ca at pH = 7.5 and for Fe and Mn both at pH = 6.0 and pH = 7.5 exceed the maximum solubility are above the maximum solubility. In 
+
+
+![Comparison of mineral saturation indices calculated based on the Hoagland Solution (Resh) under pH levels representative for hydroponics (ph = 6.0) and aquaponics (pH = 7.5). Only cations where oversaturation was found are shown.](plots/scatterplot_hoagland_saturation.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###----------------------------------------------------------------------------
+
+**Properties and prices of some alkalinity supplements used in aquaculture and aquaponics. Prices from https://www.alibaba.com (accessed January 14th, 2023). All chemicals food grade and with a minimum order quantity of one kilogram. Reported is the cheapest sales price. Table adapted from Bisogni and Timmons, 1994.**
+
+|Chemical Formula|Common Name|Solubility|Solubilization rate|Price|
+|---|---|---|---|---|
+|$\text{NaOH}$|sodium hydroxide|high|rapid|$\approx 0.30 \text{ EUR kg}^{-1}$|
+|$\text{Na}_{2}\text{CO}_{3}$|sodium carbonate, soda ash|high|rapid|$\approx 0.20 \text{ EUR kg}^{-1}$|
+|$\text{NaHCO}_{3}$|sodium bicarbonate, baking soda|high|rapid|$\approx 0.01 \text{ EUR kg}^{-1}$|
+|$\text{KOH}$|potassium hydroxide|high|rapid|$\approx 0.60 \text{ EUR kg}^{-1}$|
+|$\text{K}_{2}\text{CO}_{3}$|potassium carbonate|high|rapid|$\approx 0.50 \text{ EUR kg}^{-1}$|
+|$\text{KHCO}_{3}$|potassium bicarbonate|high|rapid|$\approx 0.50 \text{ EUR kg}^{-1}$|
+|$\text{CaCO}_{3}$|calcium carbonate, calcite|moderate|moderate|$\approx 0.13 \text{ EUR kg}^{-1}$|
+|$\text{CaO}$|slaked lime|high|moderate|$\approx 0.10 \text{ EUR kg}^{-1}$|
+|$\text{Ca(OH)}_{2}$|calcium hydroxide, hydrated lime|high|moderate|$\approx 0.25 \text{ EUR kg}^{-1}$|
+|$\text{CaMg(CO}_{3})_{2}$|dolomite|moderate|slow|$\approx 0.10 \text{ EUR kg}^{-1}$|
+|$\text{MgCO}_{3}$|magnesium carbonate, magnesite|moderate|slow|$\approx 0.30 \text{ EUR kg}^{-1}$|
+|$\text{Mg(OH)}_{2}$|magnesium hydroxide, brucite|moderate|slow|$\approx 0.50 \text{ EUR kg}^{-1}$|
+
+
+
+###----------------------------------------------------------------------------
+
+
+
+
+
+Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
+Due to its low water demand, aquaponics is generally seen as food production system suitable for urban areas or arid regions [@Kloas2015; @Joyce2019]. Establishing an aquaponic system in these regions comes with limited access to water sources such as well water or rivers and lakes. Rainwater, on the other hand, would require large storage capacities. Tap water is thus assumed to be the most important water source.
+The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation  [@EU2020]. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. 
+
+
+
+**Average plant nutrient composition found in trout, salmon, and eel grower feeds [@Tacon1983] and maximum allowable concentrations (MAC) of substances considered as plant nutrients defined by the EU Drinking Water Directive [@EU2020].**
+
+|Nutrient|Aquafeeds|Tap water (limit)|
+|---|---|---|
+|$\text{NO}_{3}^{-}$|-|50 mg L$^{-1}$|
+|$\text{NO}_{2}^{-}$|-|0.5 mg L$^{-1}$|
+|$\text{NH}_{4}^{+}$|-|0.5 mg L$^{-1}$|
+|TIN|$64 \text{ g kg}^{-1}$ [^1]|50 mg L$^{-1}$ [^2]|
+|P|13.26 g kg$^{-1}$|no MAC|
+|K|9.83 g kg$^{-1}$|no MAC|
+|Ca|17.75 g kg$^{-1}$|no MAC|
+|Mg|2.13 g kg$^{-1}$|no MAC|
+|$\text{SO}_{4}^{2-}$||250 mg L$^{-1}$|
+|Fe|229 mg kg$^{-1}$|200 µg L$^{-1}$|
+|Mn|96 mg kg$^{-1}$|50 µg L$^{-1}$|
+|Cu|14 mg kg$^{-1}$|2 mg L$^{-1}$|
+|Zn|163 mg kg$^{-1}$|no MAC|
+|Ni|3 mg kg$^{-1}$|20 µg L$^{-1}$|
+
+[^1]: Calculated based on an aquafeed with 40% CP (dry matter base) and the Kjeldahl factor 6.25.
+[^2]: Calculated as [TIN] = [$\text{NH}_{4}^{+}$] + [$\text{NO}_{2}^{-}$] + [$\text{NO}_{3}^{-}$].
+
+
+Tap water can vary in its composition, depending on its origin such as surface or groundwater. The extent of the variability of terrestrial waters in their chemical composition is shown in **FIGURE XXX**. Wheathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
+
+
+
+![Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 mg/L. Y-axis: Percentage of sampling points. Figure from Stumm and Morgan, 1996.](images/Stumm_Morgan_Aquatic_Chemistry_p873.png)
+
+Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter releases three moles of protons (H$^{+}$) per mole of ammonia (NH$_{3}$) that is converted to NO$_{3}^{-}$. This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used in aquaponics. **TABLE XXX** summarises some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
+
+
+
+
+###----------------------------------------------------------------------------
+
+**Properties and prices of some Na based alkalinity supplements used in aquaculture and their K and Ca based alternatives for aquaponics. Prices from https://www.alibaba.com (accessed January 14th, 2023). All chemicals food grade and with a minimum order quantity of one kilogram. Reported is the cheapest sales price. Table adapted from Bisogni and Timmons, 1994.**
+
+|Chemical Formula|Common Name|Solubility|Solubilization rate|Price|
+|---|---|---|---|---|
+|$\text{NaOH}$|sodium hydroxide|high|rapid|$\approx 0.30 \text{ EUR kg}^{-1}$|
+|$\text{Na}_{2}\text{CO}_{3}$|sodium carbonate, soda ash|high|rapid|$\approx 0.20 \text{ EUR kg}^{-1}$|
+|$\text{NaHCO}_{3}$|sodium bicarbonate, baking soda|high|rapid|$\approx 0.01 \text{ EUR kg}^{-1}$|
+|$\text{KOH}$|potassium hydroxide|high|rapid|$\approx 0.60 \text{ EUR kg}^{-1}$|
+|$\text{K}_{2}\text{CO}_{3}$|potassium carbonate|high|rapid|$\approx 0.50 \text{ EUR kg}^{-1}$|
+|$\text{KHCO}_{3}$|potassium bicarbonate|high|rapid|$\approx 0.50 \text{ EUR kg}^{-1}$|
+|$\text{CaCO}_{3}$|calcium carbonate, calcite|moderate|moderate|$\approx 0.13 \text{ EUR kg}^{-1}$|
+|$\text{CaO}$|slaked lime|high|moderate|$\approx 0.10 \text{ EUR kg}^{-1}$|
+|$\text{Ca(OH)}_{2}$|calcium hydroxide, hydrated lime|high|moderate|$\approx 0.25 \text{ EUR kg}^{-1}$|
+|$\text{CaMg(CO}_{3})_{2}$|dolomite|moderate|slow|$\approx 0.10 \text{ EUR kg}^{-1}$|
+
+
+
+
+
+
+###----------------------------------------------------------------------------
+

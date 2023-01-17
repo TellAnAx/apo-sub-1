@@ -1,0 +1,15 @@
+[0] Config.pm:307> INFO - This is Biber 2.17
+[0] Config.pm:310> INFO - Logfile is '/Volumes/SSD/Projekte/Projekt18 - PhD-Aquaponics/2 - Nutrient Solubility/.texpadtmp/Methodology_Solubility_Calculation.blg'
+[83] biber-darwin:340> INFO - === Tue Sep 20, 2022, 14:28:26
+[102] Biber.pm:418> INFO - Reading '/Volumes/SSD/Projekte/Projekt18 - PhD-Aquaponics/2 - Nutrient Solubility/.texpadtmp/Methodology_Solubility_Calculation.bcf'
+[196] Biber.pm:972> INFO - Found 6 citekeys in bib section 0
+[210] Biber.pm:4383> INFO - Processing section 0
+[221] Biber.pm:4574> INFO - Looking for bibtex file '/Volumes/SSD/Projekte/Projekt18 - PhD-Aquaponics/2 - Nutrient Solubility/Methodology_Calculations.bib' for section 0
+[223] bibtex.pm:1713> INFO - LaTeX decoding ...
+[235] bibtex.pm:1518> INFO - Found BibTeX data source '/Volumes/SSD/Projekte/Projekt18 - PhD-Aquaponics/2 - Nutrient Solubility/Methodology_Calculations.bib'
+[316] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[316] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[317] Biber.pm:4203> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[317] Biber.pm:4209> INFO - No sort tailoring available for locale 'en-US'
+[328] bbl.pm:654> INFO - Writing '/Volumes/SSD/Projekte/Projekt18 - PhD-Aquaponics/2 - Nutrient Solubility/.texpadtmp/Methodology_Solubility_Calculation.bbl' with encoding 'UTF-8'
+[331] bbl.pm:757> INFO - Output to /Volumes/SSD/Projekte/Projekt18 - PhD-Aquaponics/2 - Nutrient Solubility/.texpadtmp/Methodology_Solubility_Calculation.bbl

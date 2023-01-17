@@ -1,0 +1,28 @@
+- Aquaponic systems are complex and expensive due to the combination of plant and fish production
+- One problem that is often mentioned are nutrient imbalances. 
+    - In hydroponics the EC is used as sum parameter and nothing else has to be monitored
+    - In aquaponics it is not that easy
+- Due to the fact that the produced yield needs to have a price similar to other products to be competitive, there is a need to make aquaponics as simple as hydroponics is.
+    - An off-the-shelf solution for nutrient addition would be great
+    - Until now, there is no holistic overview of nutrient management practices. What to add where and how?
+- To find solutions to the stated problem, it is necessary to answer three questions:
+    - Where do the nutrients come from
+    - How do they interact
+    - What happens to them eventually
+- Where they come from: Three main input routes:
+    - Water
+    - Feed
+    - Chemicals
+- Tap water can be seen as most important source of water for aquaponics
+- The water composition changes between locations due to the heritage of the water (surface water? Groundwater? Geological conditions,…). MAC values are defined by the legislation.
+- Feed can vary in the composition of certain nutrients due to the fact that the feed ingredient composition might be altered due to availability and fluctuations in market prices, coming with the need to replace feed ingredients by others while maintaining a certain level of macronutrients. Thus, the quality and composition of feed can differ already among batches. However, for plants the macro- and micronutrient composition is equally important. Thought, there is no data about the range of the mineral composition of fish feeds. 
+- Chemicals are added to the system in order to maintain a certain pH. 
+    - Their composition is supposed to be constant as chemicals of a certain grade are always containing a high proportion of the chemical in pure form. 
+- How they interact and what happens to them
+- Reactions
+- Precipitation
+- Chemical modelling
+- Objectives
+    - Evaluating the importance and variability of different input routes
+    - Looking into the fate and behaviour of nutrients by chemical modelling using literature data
+    - Deriving recommendations for nutrient input and aquaponic system management with focus on plant nutrients
