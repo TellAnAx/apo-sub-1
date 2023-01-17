@@ -6,7 +6,21 @@ header-includes:
    - \usepackage{mhcmem}
 output: redoc::redoc
 ---
+```{r}
+# Knitr options
+knitr::opts_chunk$set(include = FALSE)
 
+# Load packages
+library(here)
+library(XLConnect)
+library(tidyverse)
+library(gdata)
+library(viridis)
+library(RColorBrewer)
+library(bookdown)
+library(redoc)
+library(png)
+```
 
 
 # Introduction
@@ -182,13 +196,7 @@ This study reviews aquaponics studies in an attempt to exemplary identify the av
 
 # Methodology
 
-```{r Setup, message=FALSE, warning=FALSE, include=FALSE}
-#knitr::opts_chunk$set(echo = TRUE, include = FALSE)
-knitr::opts_chunk$set(include = FALSE)
-
-# Setup
-source('R/init.R') # Load packages and functions
-
+```{r Source scripts, message=FALSE, warning=FALSE, include=FALSE}
 # Data import
 source('R/data_import.R') # Currently using gdata
 
