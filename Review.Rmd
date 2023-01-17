@@ -260,7 +260,6 @@ An estimate for the daily input of alkalinity supplements was derived from the A
 
 
 
-To create initial assumptions for the calculation of the relative contributions of feed and buffer substances to the daily nutrient input, empirical data from the aquaponics and feed datasets were used. 
 
 ```{r include=FALSE}
 # Count observations
