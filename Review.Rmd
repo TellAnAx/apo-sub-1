@@ -2,13 +2,14 @@
 title: "Sources, behavior and fate of nutrients and their implications for the formulation of aquafeeds and nutrient management tailored for aquaponic systems"
 author: "Anıl Axel Tellbüscher"
 bibliography: references.bib
-header-includes:
-   - \usepackage{mhcmem}
-output: redoc::redoc
+output:
+  bookdown::word_document2: default
+  #redoc::redoc
+  
 ---
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 # Knitr options
-knitr::opts_chunk$set(include = FALSE)
+knitr::opts_chunk$set(echo = FALSE)
 
 # Load packages
 library(here)
@@ -18,7 +19,7 @@ library(gdata)
 library(viridis)
 library(RColorBrewer)
 library(bookdown)
-library(redoc)
+#library(redoc)
 library(png)
 ```
 
@@ -33,11 +34,13 @@ In aquaponic systems, the aquafeed and the source water are considered as main s
 Aquafeeds are usually considered as of greatest importance in terms of nutrient input into aquaponic systems [@Robaina2019]. Though, data about the inclusion rates of nutrients relevant for plants in commercial aquafeeds is scarce because these compounds are either not essential for aquatic animals or can be taken up from water via the gills in sufficient quantities. These nutrients are thus usually not considered during feed formulation [@Lall2002]. 
 An aquafeed can vary in its nutrient composition due to slight changes in its raw material composition caused by fluctuations in feed ingredient availability and market prices. While feed manufacturers allow variations of crucial nutrients such as the crude protein (CP) inclusion rate only within tight limits, this is not the case for other nutrients that are disregarded in the formulation process. However, data about the ranges of microminerals in commercial aquafeeds is not available in literature.
 
-When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in **Figure XXX**. Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are then excreted in form of dissolved matter via the gills and the urinary system [@Evans2005; @Hardy2002].
+When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in Figure \@ref(fig:pathwaydigestion).  Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are then excreted in form of dissolved matter via the gills and the urinary system [@Evans2005; @Hardy2002].
+
+```{r pathwaydigestion, echo=FALSE, fig.cap="A simple graphical representation of nutrient flows and excretion patterns in aquatic animals (from Bureau and Hua, 2010)."}
+knitr::include_graphics("images/2010_Bureau.png")
+```
 
 
-
-![A simple graphical representation of nutrient flows and excretion patterns in aquatic animals (from Bureau and Hua, 2010).](images/2010_Bureau.png)
 
 N that is, for the most part, present as CP in aquafeeds, is usually well-digestible, with the apparent digestibility coefficient (ADC) of feed ingredients usually being above 70% and on average approximately 90% [@IAFFD2021; @Guillaume2001]. The excretion of N as end product of the protein and amino acid catabolism takes place in form of ammonia and, to a small extent, urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski2002]. 
 
