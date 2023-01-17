@@ -1,0 +1,15 @@
+Nutrient;Aquafeeds;Tap water (limit)
+$\text{NO}_{3}^{-}$;$-$;$50 \text{ mg L}^{-1}$
+$\text{NO}_{2}^{-}$;$-$;$0.5 \text{ mg L}^{-1}$
+$\text{NH}_{4}^{+}$;$-$;$0.5 \text{ mg L}^{-1}$
+$\text{TIN}$;$64 \text{ g kg}^{-1}$;$50 \text{ mg L}^{-1}$
+$\text{P}$;$13.26 \text{ g kg}^{-1}$;$\text{no MAC}$
+$\text{K}$;$9.83 \text{ g kg}^{-1}$;$\text{no MAC}$
+$\text{Ca}$;$17.75 \text{ g kg}^{-1}$;$\text{no MAC}$
+$\text{Mg}$;$2.13 \text{ g kg}^{-1}$;$\text{no MAC}$
+$\text{SO}_{4}^{2-}$;$-$;$250 \text{ mg L}^{-1}$
+$\text{Fe}$;$229 \text{ mg kg}^{-1}$;$200\: \mu \text{g L}^{-1}$
+$\text{Mn}$;$96 \text{ mg kg}^{-1}$;$50\: \mu \text{g L}^{-1}$
+$\text{Cu}$;$14 \text{ mg kg}^{-1}$;$2 \text{ mg kg}^{-1}$
+$\text{Zn}$;$163 \text{ mg kg}^{-1}$;$\text{no MAC}$
+$\text{Ni}$;$3 \text{ mg kg}^{-1}$;$20\: \mu \text{g L}^{-1}$

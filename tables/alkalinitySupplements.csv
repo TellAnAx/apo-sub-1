@@ -1,0 +1,11 @@
+﻿Chemical Formula;Common Name;Solubility;Solubilization Rate;Price
+$\text{NaOH}$;sodium hydroxide;high;rapid;$\approx 0.30 \text{ EUR kg}^{-1}$
+$\text{Na}_{2}\text{CO}_{3}$;sodium carbonate;high;rapid;$\approx 0.20 \text{ EUR kg}^{-1}$
+$\text{NaHCO}_{3}$;sodium bicarbonate;high;rapid;$\approx 0.01 \text{ EUR kg}^{-1}$
+$\text{KOH}$;potassium hydroxide;high;rapid;$\approx 0.60 \text{ EUR kg}^{-1}$
+$\text{K}_{2}\text{CO}_{3}$;potassium carbonate;high;rapid;$\approx 0.50 \text{ EUR kg}^{-1}$
+$\text{KHCO}_{3}$;potassium bicarbonate;high;rapid;$\approx 0.50 \text{ EUR kg}^{-1}$
+$\text{CaCO}_{3}$;calcite, calcium carbonate;moderate;moderate;$\approx 0.13 \text{ EUR kg}^{-1}$
+$\text{CaO}$;slaked lime;high;moderate;$\approx 0.10 \text{ EUR kg}^{-1}$
+$\text{Ca(OH)}_{2}$;calcium hydroxide, hydrated lime;high;moderate;$\approx 0.25 \text{ EUR kg}^{-1}$
+$\text{CaMg(CO}_{3})_{2}$;dolomite;moderate;slow;$\approx 0.10 \text{ EUR kg}^{-1}$

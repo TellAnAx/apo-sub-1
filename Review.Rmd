@@ -36,6 +36,8 @@ An aquafeed can vary in its nutrient composition due to slight changes in its ra
 
 When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in Figure \@ref(fig:pathwaydigestion).  Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are then excreted in form of dissolved matter via the gills and the urinary system [@Evans2005; @Hardy2002].
 
+
+
 ```{r pathwaydigestion, fig.cap="A simple graphical representation of nutrient flows and excretion patterns in aquatic animals (from Bureau and Hua, 2010).", echo=FALSE}
 
 knitr::include_graphics("images/2010_Bureau.png")
@@ -58,31 +60,20 @@ Tap water can vary in its composition, depending on its origin such as surface o
 
 Due to its low water demand, aquaponics is generally seen as food production system suitable for urban areas or arid regions [@Kloas2015; @Joyce2019]. Establishing an aquaponic system in these regions comes with limited access to water sources such as well water or rivers and lakes. Rainwater, on the other hand, would require large storage capacities. Tap water is thus assumed to be the most important water source.
 
-The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation [@EU2020]. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
+The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation [@EU2020]. Table \@ref(tab:nutCompTab) summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
 
 
 
-**Average plant nutrient composition found in trout, salmon, and eel grower feeds [@Tacon1983] and maximum allowable concentrations (MAC) of substances considered as plant nutrients defined by the EU Drinking Water Directive [@EU2020].**
+```{r nutCompTab, echo=FALSE, message=FALSE, warning=FALSE}
 
-|Nutrient|Aquafeeds|Tap water (limit)|
-|---|---|---|
-|$\text{NO}_{3}^{-}$|-|50 mg L$^{-1}$|
-|$\text{NO}_{2}^{-}$|-|0.5 mg L$^{-1}$|
-|$\text{NH}_{4}^{+}$|-|0.5 mg L$^{-1}$|
-|TIN|$64 \text{ g kg}^{-1}$ [^1]|50 mg L$^{-1}$ [^2]|
-|P|13.26 g kg$^{-1}$|no MAC|
-|K|9.83 g kg$^{-1}$|no MAC|
-|Ca|17.75 g kg$^{-1}$|no MAC|
-|Mg|2.13 g kg$^{-1}$|no MAC|
-|$\text{SO}_{4}^{2-}$||250 mg L$^{-1}$|
-|Fe|229 mg kg$^{-1}$|200 µg L$^{-1}$|
-|Mn|96 mg kg$^{-1}$|50 µg L$^{-1}$|
-|Cu|14 mg kg$^{-1}$|2 mg L$^{-1}$|
-|Zn|163 mg kg$^{-1}$|no MAC|
-|Ni|3 mg kg$^{-1}$|20 µg L$^{-1}$|
+table <- read_csv2(here("tables", "nutrientCompositionFeedWater.csv"))
+
+knitr::kable(table, escape = FALSE, caption = "Average plant nutrient composition found in trout, salmon, and eel grower feeds [@Tacon1983] and maximum allowable concentrations (MAC) of substances considered as plant nutrients defined by the EU Drinking Water Directive [@EU2020].", label = "nutCompTab")
+```
 
 [^1]: Calculated based on an aquafeed with 40% CP (dry matter base) and the Kjeldahl factor 6.25.
 [^2]: Calculated as [TIN] = [$\text{NH}_{4}^{+}$] + [$\text{NO}_{2}^{-}$] + [$\text{NO}_{3}^{-}$].
+
 
 
 ```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 mg/L. Y-axis: Percentage of sampling points (from Stumm and Morgan, 1996).", echo=FALSE}
@@ -93,27 +84,16 @@ knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
 
 
 Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter releases three moles of protons (H$^{+}$) per mole of ammonia (NH$_{3}$) that is converted to NO$_{3}^{-}$. This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used in aquaponics.
-**TABLE XXX** summarises some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
+Table \@ref(tab:alkalinitySuppl) summarises some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
 
 
 
-**Properties and prices of some Na based alkalinity supplements used in aquaculture and their K and Ca based alternatives for aquaponics (adapted from Bisogni and Timmons, 1994). Prices from https://www.alibaba.com (accessed January 14th, 2023). All chemicals food grade and with a minimum order quantity of one kilogram. Reported is the cheapest sales price.**
+```{r alkalinitySuppl, echo=FALSE, message=FALSE, warning=FALSE}
 
-|Chemical Formula|Common Name|Solubility|Solubilization rate|Price|
-|---|---|---|---|---|
-|$\text{NaOH}$|sodium hydroxide|high|rapid|$\approx 0.30 \text{ EUR kg}^{-1}$|
-|$\text{Na}_{2}\text{CO}_{3}$|sodium carbonate, soda ash|high|rapid|$\approx 0.20 \text{ EUR kg}^{-1}$|
-|$\text{NaHCO}_{3}$|sodium bicarbonate, baking soda|high|rapid|$\approx 0.01 \text{ EUR kg}^{-1}$|
-|$\text{KOH}$|potassium hydroxide|high|rapid|$\approx 0.60 \text{ EUR kg}^{-1}$|
-|$\text{K}_{2}\text{CO}_{3}$|potassium carbonate|high|rapid|$\approx 0.50 \text{ EUR kg}^{-1}$|
-|$\text{KHCO}_{3}$|potassium bicarbonate|high|rapid|$\approx 0.50 \text{ EUR kg}^{-1}$|
-|$\text{CaCO}_{3}$|calcium carbonate, calcite|moderate|moderate|$\approx 0.13 \text{ EUR kg}^{-1}$|
-|$\text{CaO}$|slaked lime|high|moderate|$\approx 0.10 \text{ EUR kg}^{-1}$|
-|$\text{Ca(OH)}_{2}$|calcium hydroxide, hydrated lime|high|moderate|$\approx 0.25 \text{ EUR kg}^{-1}$|
-|$\text{CaMg(CO}_{3})_{2}$|dolomite|moderate|slow|$\approx 0.10 \text{ EUR kg}^{-1}$|
+table <- read_csv2(here("tables", "alkalinitySupplements.csv"))
 
-
-
+knitr::kable(table, escape = FALSE, caption = "Properties and prices of some Na based alkalinity supplements used in aquaculture and their K and Ca based alternatives for aquaponics (adapted from Bisogni and Timmons, 1994). Prices from https://www.alibaba.com (accessed January 14th, 2023). All chemicals food grade and with a minimum order quantity of one kilogram. Reported is the cheapest sales price.", label = "alkalinitySuppl")
+```
 
 
 
@@ -129,7 +109,7 @@ Dissolution of a salt occurs if its ionic compounds are present in solution belo
 
 \begin{equation}
   K_{sp} = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
-  (#eq:Ksp)
+  (\#eq:Ksp)
 \end{equation}
 
 
@@ -140,7 +120,7 @@ $K_{sp}$ is either determined empirically or derived from thermodynamic data. Th
 
 \begin{equation}
   S = \sqrt[m+n]{\frac{K_{sp}}{m^{m} \cdot n^{n}}}
-  (#eq:S)
+  (\#eq:S)
 \end{equation}
 
 
@@ -151,7 +131,7 @@ If the concentrations of the cation(s) and anion(s) in solution are known, it is
 
 \begin{equation}
   Q = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
-  (#eq:Q)
+  (\#eq:Q)
 \end{equation}
 
 
@@ -162,7 +142,7 @@ $K_{sp}$ can now be compared with $Q$ to evaluate whether the solution is satura
 
 \begin{equation}
   U = \log{\frac{Q}{K_{sp}}}
-  (#eq:U)
+  (\#eq:U)
 \end{equation}
 
 
@@ -174,6 +154,7 @@ H$_{3}$PO$_{4}$ + NaOH <-> NaH$_{2}$PO$_{4}$ + H$_{2}$O
 , yielding sodium dihydrogen phosphate (NaH$_{2}$PO$_{4}$) as product. A salt thus consists of the conjugated weak base (H$_{2}$PO$_{4}^{-}$) and acid (Na$^{+}$) of the strong acid (H$_{3}$PO$_{4}$) and base (NaOH) that led to its formation.
 
 When a salt dissolves, or its strong acids or bases are introduced into the system, they undergo acid-base reactions with water. As an example, the reactions of trihydrogen phosphate  (H$_{3}$PO$_{4}$), commonly termed  phosphoric acid, with water are 
+
 
 H$_{3}$PO$_{4}$ + H$_{2}$O <-> H$_{2}$PO$_{4}^{-}$ + H$_{3}$O$^{+}$ $K_{a1} = 10^{2.1}$
 
@@ -716,3 +697,4 @@ Lastly, it is questionable whether the total concentration of the nutrients is a
 
 
 # References
+
