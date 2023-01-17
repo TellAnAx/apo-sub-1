@@ -2,6 +2,8 @@
 title: "Sources, behavior and fate of nutrients and their implications for the formulation of aquafeeds and nutrient management tailored for aquaponic systems"
 author: "Anıl Axel Tellbüscher"
 bibliography: references.bib
+header-includes:
+   - \usepackage{mhcmem}
 output: redoc::redoc
 ---
 
@@ -234,8 +236,8 @@ read_csv(here("results", "contribution_rearing_data.csv")) %>%
   )
 ```
 
-FDS1 was used to calculate the average system volume ($\text{V}_{tot}$), average bodyweight (ABW), average number of livestock (AN), average livestock density (AD), and average water exchange rate (AWE). The ABW was defined as the mean bodyweight during the duration of experiment and was calculated as the arithmetic mean of the initial and final bodyweight. For the calculation of AD, AN and AWE, \emph{NA} values were removed. 
-Eventually, the average biomass (ABM) was computed by multiplication of ABW with AN or, if only AD was given, by multiplication of AD with $\text{V}_{tot}$. Vice versa, in case AD was not reported, it was calculated by dividing ABM by $\text{V}_{tot}$. The average daily water exchange volume by multiplication of ($\text{V}_{tot}$) with AWE.
+FDS1 was used to calculate the average system volume ($\text{V}_{tot}$), average bodyweight ($ABW$), average number of livestock ($AN$), average livestock density ($AD$), and average water exchange rate ($AWE$). $ABW$ was defined as the mean bodyweight during the duration of experiment and was calculated as the arithmetic mean of the initial and final bodyweight. For the calculation of $AD$, $AN$ and $AWE$, \emph{NA} values were removed. 
+Eventually, the average biomass ($ABM$) was computed by multiplication of $ABW$ with $AN$ or, if only $AD$ was given, by multiplication of $AD$ with $\text{V}_{tot}$. Vice versa, in case $AD$ was not reported, it was calculated by dividing $ABM$ by $\text{V}_{tot}$. The average daily water exchange volume by multiplication of ($\text{V}_{tot}$) with $AWE$.
 
 The second step was the estimation of the daily nutrient input via source water. For this purpose, gathered location information in the FDS was used to search for water analysis reports provided by the closest water treatment plant. Only official reports provided by local authorities and water utilities in the corresponding municipalities were used to ensure that analyses were conducted according to internationally accepted laboratory standards. 
 In water analysis, it is common practice to report the value of the detection limit instead of the measured value in case that the analyte concentration found was below the sensitivity of the instrument used for measurement [@DIN32645]. Retaining the detection limits in the dataset leads to mean concentration estimates that are too large. However, removing the affected observations would result in a loss a large proportion of the data, as shown in **FIGURE XXX**. Therefore, concentration data was recalculated using the *cenmle()* function from the R package *NADA* by maximum likelihood estimation (MLE) [@Helsel2012]. This ensured that the estimates for nutrient concentrations in tap water were reliable. 
@@ -243,12 +245,35 @@ In water analysis, it is common practice to report the value of the detection li
 ![Proportion of water analysis observations per analyte reported to be below detection limit (n = XXX).](plots/contribution_waterData_belowLimit.png)
 
 The output was eventually used to calculate the two-sided 90% confidence interval for the concentration of each nutrient to describe the concentration range that will be found in 90% of all cases where tap water is used. 
-Finally, multiplying the obtained concentrations with AWE yielded the upper and lower limits of the 90% confidence interval of total daily individual plant nutrient inputs via source water.
+Finally, multiplying the obtained concentrations with $AWE$ yielded the upper and lower limits of the 90% confidence interval of total daily individual plant nutrient inputs via source water.
 
-In the third step, daily nutrient inputs via aquafeeds were estimated. The IDS was filtered for studies reporting the name of the commercial aquafeed used (if not selfmade), the CP inclusion rate and the feeding rate. From the resulting FDS2, the average feeding rate (AFR), CP inclusion rate (ACP) and the averages of all plant nutrients were calculated. Due to lacking nutrient composition data, supplier datasheets were used and amended by literature data in case of utilization of commercial aquafeeds. Incomplete observations with respect to experimental feeds were handled in the same way, merging data from multiple publications if the same feed was used. \emph{NA} values were removed for the computation of averages.
-Eventually, the average daily feed input (AFI) was calculated by multiplying ABM from the generated system assumptions with AFR. By multiplying AFI with the average plant nutrient inclusion rates in the aquafeeds, the uncorrected total daily input of individual plant nutrients via aquafeeds could be calculated. Obtained values were then corrected by multiplication with apparent digestibility coefficients (ADC), accounting for the digestibility of aquafeeds by fish. An ADC of 90% was assumed for N whereas the ADC of all other plant nutrients was assumed to be 50% (Lall Fish Nutrition The Minerals, 2002). Finally, it was assumed that 50% of the digestible fraction is retained while the remaining 50% is excreted in dissolved form [@Halver2003]. The indigestible part of the feed is excreted as solid feces and was thus assumed not to participate in chemical reactions in solution.
+In the third step, daily nutrient inputs via aquafeeds were estimated. The IDS was filtered for studies reporting the name of the commercial aquafeed used (if not selfmade), the $CP$ inclusion rate and the feeding rate. From the resulting FDS2, the average feeding rate ($AFR$), $CP$ inclusion rate ($ACP$) and the averages of all plant nutrients were calculated. Due to lacking nutrient composition data, supplier datasheets were used and amended by literature data in case of utilization of commercial aquafeeds. Incomplete observations with respect to experimental feeds were handled in the same way, merging data from multiple publications if the same feed was used. \emph{NA} values were removed for the computation of averages.
+Eventually, the average daily feed input ($AFI$) was calculated by multiplying ABM from the generated system assumptions with AFR. By multiplying $AFI$ with the average plant nutrient inclusion rates in the aquafeeds, the uncorrected total daily input of individual plant nutrients via aquafeeds could be calculated. Obtained values were then corrected by multiplication with apparent digestibility coefficients ($ADC$), accounting for the digestibility of aquafeeds by fish. An $ADC$ of 90% was assumed for N whereas the $ADC$ of all other nutrients was assumed to be 50% (Lall Fish Nutrition The Minerals, 2002). Finally, it was assumed that 50% of the digestible fraction is retained while the remaining 50% is excreted in dissolved form [@Halver2003]. The indigestible part of the feed is excreted as solid feces and was thus assumed not to participate in chemical reactions in solution.
 
-An estimate for the daily input of alkalinity supplements was derived from the AFI. The activity of nitrifying bacteria in the biofilter releases three moles of protons (H$^{+}$) per mole of ammonia (NH$_{3}$) that is converted to NO$_{3}^{-}$. This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. NH$_{3}$ results from the metabolization of CP 
+An estimate for the daily input of alkalinity supplements was derived from $AFI$. The activity of nitrifying bacteria in the biofilter follows the overall simplified reaction 
+
+$$
+\text{NH}_{4}^{+} + 2 \text{ O}_{2} \rightarrow \text{NO}_{3}^{-} + 2 \text{ H}^{+} + \text{ H}_{2}\text{O}
+$$
+
+
+[@Timmons2010], thus releasing two moles of protons (H$^{+}$) per mole of ammonium ($\text{NH}_{4}^{+}$) that is converted to nitrate ($\text{NO}_{3}^{-}$). Neutralization of these protons has to take place to counteract the resulting decrease in pH. Thus, the amounts of $\text{NaHCO}_{3}$, $\text{KOH}$ or $\text{Ca(OH)}_{2}$ that are necessary to neutralise the released protons were calculated by assuming that the digestible, non-retained proportion of $CP$ is excreted as $\text{NH}_{4}^{+}$. 
+
+$$
+AFI \frac{CP}{f_{K}} \cdot \frac{f_{S}\text{M(H)}}{\text{M(N)}}
+$$
+
+with $f_{K} = 6.25$, denoting for the Kjeldahl factor.
+
+
+$$
+\text{NH}_{4}^{+} + 1.83 \text{ O}_{2} + 1.97 \text{ HCO}_{3} \rightarrow 0.0244 \text{C}_{5}\text{H}_{7}\text{O}_{2}\text{N} + 0.976 \text{ NO}_{3}^{-} + 2.90 \text{ H}_{2}\text{O} + 1.86 \text{ CO}_{2}
+$$
+[@Timmons2010], thus consuming $1.97 \text{ mol} \cdot 60.71 \text{g mol}^{-1} = 119.5 \text{g}$ of 
+
+releasing two moles of protons (H$^{+}$) per mole of ammonium ($\text{NH}_{4}^{+}$) that is converted to nitrate ($\text{NO}_{3}^{-}$). To counteract the resulting decrease in pH
+
+This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. NH$_{3}$ results from the metabolization of CP 
 
 
 
@@ -277,9 +302,7 @@ read_csv(here::here("interm", "contribution_assumptions_raw.csv")) %>%
 
 
 
-Arithmetic means of the pH, total volume of the aquaponic system, volume of daily exchanged water, daily mass of fed feed on dry matter basis, and nutrient mass fractions in the feed were calculated. 
 
-The input of pH-increasing substances was assumed to be correlated with the daily feed input. It was furthermore assumed that the entire indigestible fraction of N is excreted in form of NH$_{4}^{+}$. The necessary amounts of KOH and Ca(OH)$_{2}$ to neutralise the released protons were calculated.
 
 
 
