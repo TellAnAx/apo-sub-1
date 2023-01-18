@@ -57,6 +57,12 @@ Tap water can vary in its composition, depending on its origin such as surface o
 
 
 
+```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 mg/L. Y-axis: Percentage of sampling points (from Stumm and Morgan, 1996).", echo=FALSE}
+
+knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
+```
+
+
 
 Due to its low water demand, aquaponics is generally seen as food production system suitable for urban areas or arid regions [@Kloas2015; @Joyce2019]. Establishing an aquaponic system in these regions comes with limited access to water sources such as well water or rivers and lakes. Rainwater, on the other hand, would require large storage capacities. Tap water is thus assumed to be the most important water source.
 
@@ -76,14 +82,7 @@ knitr::kable(table, escape = FALSE, caption = "Average plant nutrient compositio
 
 
 
-```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 mg/L. Y-axis: Percentage of sampling points (from Stumm and Morgan, 1996).", echo=FALSE}
-
-knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
-```
-
-
-
-Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter releases three moles of protons (H$^{+}$) per mole of ammonia (NH$_{3}$) that is converted to NO$_{3}^{-}$. This leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, the released H$^{+}$ has to be neutralized to maintain a stable pH and ensure both high nitrification performance and the welfare of the fish stock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used in aquaponics.
+Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, a stable pH has to be maintained to ensure both high nitrification performance and the welfare of the livestock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided in aquaponic systems due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used. These come with the benefit of providing an additional source of nutrients besides increasing the pH.
 Table \@ref(tab:alkalinitySuppl) summarises some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
 
 
@@ -103,47 +102,9 @@ knitr::kable(table, escape = FALSE, caption = "Properties and prices of some Na 
 Hydroponics literature highlights that an understanding of aquatic chemistry is crucial for successful nutrient management [@Sambo2019]. The prerequisite for plant nutrients to be available for plant uptake via the roots is that they must be present in dissolved form. However, the concentration of dissolved substances underlies physico-chemical constrains. In hydroponics, these constraints are well-described as they have to be taken into account when intending to formulate cost-efficient fertilizers [@DeRijck1999b]. 
 The most important reactions that are determining the concentration of plant nutrients in water are dissolution-precipitation, acid-base, and complex formation reactions [@Sambo2019]. The following description of the named reactions intends to give a very brief introduction into their underlying mechanisms and their relevance for nutrient management. Describing these reactions in greater detail is out of scope of this manuscript. Further information can be obtained by consulting the dedicated literature [@Jensen2003; @Stumm1981].
 
-Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. The saturation concentration of a salt can be described using solubility product constants $K_{sp}$, which are the product of the concentration of the cation(s) and the anion(s) at saturation concentration, as shown in Equation \@ref(eq:Ksp), with square brackets denoting for molar concentrations.
 
 
-
-\begin{equation}
-  K_{sp} = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
-  (\#eq:Ksp)
-\end{equation}
-
-
-
-$K_{sp}$ is either determined empirically or derived from thermodynamic data. The saturation concentration $S$ of the salt can eventually be calculated by rearranging Equation \@ref(eq:Ksp) as shown in Equation \@ref(eq:S).
-
-
-
-\begin{equation}
-  S = \sqrt[m+n]{\frac{K_{sp}}{m^{m} \cdot n^{n}}}
-  (\#eq:S)
-\end{equation}
-
-
-
-If the concentrations of the cation(s) and anion(s) in solution are known, it is possible to calculate the ion product $Q$ analogously to the calculation of $K_{sp}$ as shown in Equation \@ref(eq:Q), substituting $[cation]$ and $[anion]$ by the corresponding empirical data.
-
-
-
-\begin{equation}
-  Q = [cation^{n+}]^{m} \cdot [anion^{m-}]^{n}
-  (\#eq:Q)
-\end{equation}
-
-
-
-$K_{sp}$ can now be compared with $Q$ to evaluate whether the solution is saturated or not by calculating the saturation index $U$ as shown in Equation \@ref(eq:U). If the saturation concentration is exceeded ($Q > K_{sp}$ and $\log{\frac{Q}{K}} > 0$), precipitation occurs. 
-
-
-
-\begin{equation}
-  U = \log{\frac{Q}{K_{sp}}}
-  (\#eq:U)
-\end{equation}
+Dissolution of a salt occurs if its ionic compounds are present in solution below a concentration denoting the saturation concentration of the same or another salt containing these ions. 
 
 
 
@@ -365,7 +326,21 @@ with expressions in square brackets denoting for empirically found concentration
 \end{equation}
 
 
-However, the empirical concentrations are resembling the saturation concentration for the respective salt and derived from thermodynamic data in case of poorly soluble salts.
+However, the empirical concentrations are resembling the saturation concentration for the respective salt and derived from thermodynamic data in case of poorly soluble salts. 
+
+
+
+The saturation concentration $S$ of the salt can eventually be calculated by rearranging Equation \@ref(eq:Ksp) as shown in Equation \@ref(eq:S).
+
+
+
+\begin{equation}
+  S = \sqrt[m+n]{\frac{K_{sp}}{m^{m} \cdot n^{n}}}
+  (\#eq:S)
+\end{equation}
+
+
+
 
 
 For instance, a concentration of $[\text{Fe}^{3+}] = [\text{PO}_{4}^{3-}] = 1\:\mu \text{mol L}^{-1}$ and the $K_{sp}(\text{FePO}_{4}) = 9.91 \cdot 10^{-16}$ [@Lide2007] results in 
@@ -390,9 +365,9 @@ All observations that were affected by precipitation ($\log(\frac{Q}{K}) = 0$) w
 
 # Results
 
-## Gathered data and derived assumptions
+## Origin of nutrients
 
-### Rearing data
+### Data integrity
 
 
 
@@ -430,11 +405,15 @@ read_csv(here::here("results", "contribution_species.csv")) %>%
   
 ```
 
-As shown in **FIGURE XXX**, literature data comprised a total of nine different cultivated fish species, of which four were cyprinids, three percids, one silurid and salmonid species, respectively. Percid fish were cultivated in 63% and Silurids in 23% of the studies, while Cyprinids were used in 10% and Salmonids in only 2% of the studies.
+As shown in Figure \@ref(fig:speciesPlot), literature data comprised a total of nine different cultivated fish species, of which four were cyprinids, three percids, one silurid and salmonid species, respectively. Percid fish were cultivated in 63% and Silurids in 23% of the studies, while Cyprinids were used in 10% and Salmonids in only 2% of the studies.
 
 
+```{r speciesPlot, fig.cap="Overview of species reared during aquaponic experiments", echo=FALSE}
 
-![Overview of species reared during aquaponic experiments](plots/species.png)
+knitr::include_graphics("plots/species.png")
+
+```
+
 
 
 
@@ -449,9 +428,15 @@ read_csv(here::here("results", "contribution_water_countries.csv")) %>%
   summarise(n = n())
 ```
 
-Literature data consisted of studies from a total of twelve countries. The country distribution of the literature data in comparison with obtained water analysis reports is shown in **FIGURE XXX**. 
+Literature data consisted of studies from a total of twelve countries. The country distribution of the literature data in comparison with obtained water analysis reports is shown in Figure \@ref(fig:waterCountries). 
 
-![Number of studies per country in comparison with the number of water analysis reports per country included in the source water dataset.](plots/contribution_waterData_countryPlot.png)
+
+```{r waterCountries, fig.cap="Number of studies per country in comparison with the number of water analysis reports per country included in the source water dataset", echo=FALSE}
+
+
+knitr::include_graphics("plots/contribution_waterData_countryPlot.png")
+```
+
 
 
 
@@ -505,7 +490,7 @@ Source water: n = 64;Aquafeeds: n = 54
 
 
 
-**Figure XXX** visualises the proportion of the daily total nutrient inputs from each nutrient source after consideration of aquafeed digestibility.
+Figure \@ref(fig:contributionPlot) visualises the proportion of the daily total nutrient inputs from each nutrient source after consideration of aquafeed digestibility.
 The results confirm that aquafeeds were the main nutrient source in the reviewed studies. Considering the range of the possible nutrient contribution by source water that is given by the upper and lower limits of the 95% confidence interval, it was found that aquafeeds provided between 99.8% and 99.9% of N, 99.7% and 99.9% of P, 94.4% and 94.4% and 96.8% of K. They were thus contributing almost nearly the total amount of the most important macronutrients. In addition, aquafeeds were the main contributors to the daily total input of Fe (98.9% to 99.4%), Mn (98.5% to 99.5%), Mo (93.0% to 96.4%), and Zn (98.0% to 100%). The variability for these plant nutrients was comparably low.
 The most variable plant nutrient with respect to its source concentration was found to be Cu with a contribution of aquafeeds between 71.9% and 100% to the total daily inputs. The variability of the following plant nutrients decreased in descending order: B (68.8% to 80.1%), Ni (75.5% to 86.6%), S (64.1% to 74.8%), Mg (54.0% to 62.9%), and Ca (64.1% to 70.1%).
 Interestingly, aquafeeds were found not to be the predominant input route of Na (38.4% to 55.7%) on average. 
@@ -514,7 +499,13 @@ It becomes evident that the addition of pH adjusting substances results in them 
 decreasing the share of the feed from XXX% to YYY% if KOH is added. The use of Ca(OH)$_{2}$ leads to only half of the molar input of Ca compared to K as its hydroxide contains two hydroxide ions. However, it is still contributing almost 100% of the daily total Ca input while the shares of feed and water are dropping to XXX% and YYY%, respectively.
 
 
-![Relative contribution of source water, feed and substances for pH management to the total daily nutrient input in aquaculture and aquaponic systems. Shown are scenarios reflecting the lower and upper limit of the 95% confidence interval of concentration data for source water. Data derived from water analysis (n = 69) and feed analysis reports (n = 9), taking digestibility into account, assuming 90% apparent digestibility of N, 50% apparent digestibility of all other plant nutrients, 100% purity and no contribution of pH management substances to other nutrient inputs.](plots/contribution_sources_digestincl.png)
+```{r contributionPlot, fig.cap="Relative contribution of source water, feed and alkalinity supplements to total daily nutrient inputs in aquaculture and aquaponic systems. Shown are scenarios reflecting the lower and upper limit of the 90% confidence interval of concentration data from source water. Data derived from water analysis (n = 69) and commercial feed analysis reports (n = 9), taking digestibility and retention of feed nutrients into account by assuming 90% apparent digestibility of N, 50% apparent digestibility of all other plant nutrients, 50% retention of the digestible mass fraction by livestock and 100% purity of alkalinity supplements.", echo=FALSE}
+
+knitr::include_graphics("plots/contribution_sources_retentionincl.png")
+```
+
+
+
 
 ```{r eval=FALSE, include=FALSE}
 
