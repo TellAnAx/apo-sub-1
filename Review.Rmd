@@ -530,7 +530,7 @@ read_csv(here::here("results", "contribution_plotdata.csv")) %>%
 
 
 ## Fate and behavior of nutrients
-The proportion of potential cation complexation by DOM was calculated to assess the possible impact of DOM on the solubility of plant nutrients in the reviewed studies. The results are shown in **FIGURE XXX**.
+The proportion of potential cation complexation by DOM was calculated to assess the possible impact of DOM on the solubility of plant nutrients in the reviewed studies. The results are shown in Figure \@ref(fig:species).
 
 ```{r include=FALSE}
 read_csv(here::here("results", "dom.csv")) %>% 
@@ -550,9 +550,14 @@ The highest average affinity for the formation of complex molecules was found fo
 
 
 
-![Complexation of cationic plant nutrients by DOM. Shown is the complexated proportion relative to the total concentration of the affected cationic plant nutrients in solution. Cation concentrations are derived from selected aquaponic studies (n = XXX). Calculations were made using Visual MINTEQ (Gaussian DOM) under the assumption that  $20 \text{ mg L}^{-1}$ of DOM are present in each system.](plots/boxplot_species_dom_vm.png)
+```{r species, fig.cap="Complexation of cationic plant nutrients by DOM. Shown is the complexated proportion relative to the total concentration of the affected cationic plant nutrients in solution. Cation concentrations are derived from selected aquaponic studies (n = XXX). Calculations were made using Visual MINTEQ (Gaussian DOM) under the assumption that  $20 \text{ mg L}^{-1}$ of DOM are present in each system.", echo=FALSE}
 
-After determination of the proportion of plant nutrients masked by complexation, making them unavailable for precipitation, mineral saturation indices were calculated. This was to assess whether the solubility of a plant nutrient is controlled by the formation of precipitates, thus not enabling further dissolution. **FIGURE XXX** visualises the results, showing calculated $\log(\frac{Q}{K})$ values for cationic plant nutrients with the corresponding precipitate-forming anions. 
+knitr::include_graphics("plots/boxplot_species_dom_vm.png")
+```
+
+
+
+After determination of the proportion of plant nutrients masked by complexation, making them unavailable for precipitation, mineral saturation indices were calculated. This was to assess whether the solubility of a plant nutrient is controlled by the formation of precipitates, thus not enabling further dissolution. Figure \@ref(fig:saturation) visualises the results, showing calculated $\log(\frac{Q}{K})$ values for cationic plant nutrients with the corresponding precipitate-forming anions. 
 
 ```{r eval=FALSE, include=FALSE}
 read_csv(here::here("results", "logQK.csv")) %>%
@@ -572,11 +577,18 @@ read_csv(here::here("results", "logQK.csv")) %>%
 ```
 
 
-![Boxplot of mineral saturation indices of cations in relation to different anions calculated from aquaponic studies. Dashed red line describes 100% saturation. Observations above the line indicate over-, those below the line undersaturation. Observations below but close to zero indicate solubility control by formation of a precipitate by the corresponding cation-anion combination.](plots/boxplot_empirical_saturation_vm.png)
+
+
+```{r saturation, fig.cap="Boxplot of mineral saturation indices of cations in relation to different anions calculated from aquaponic studies. Dashed red line describes 100% saturation. Observations above the line indicate over-, those below the line undersaturation. Observations below but close to zero indicate solubility control by formation of a precipitate by the corresponding cation-anion combination.", echo=FALSE}
+
+knitr::include_graphics("plots/boxplot_empirical_saturation_vm.png")
+```
+
+
 
 The results indicate that maximum solubility of Ca, Fe and Cu was reached in several studies. In this context, the solubility of Ca appears to be controlled by the formation of carbonates due to the proximity of the $\log(\frac{Q}{K})$ values to zero. The formation of phosphates was found to control the solubility of Fe, while both oxide and hydroxide formation determined the solubility of Cu. The solubility of Mn cannot be explained by the formation of precipitates and was thus likely controlled by formation of complex molecules. Zn solubility might have been controlled by the formation of carbonates and phosphates in few cases. However, the 75% quantile value of the saturation index of -1.73 and -2.45 for carbonates and phosphates, respectively, indicates that the maximum concentration was not reached. Instead, the true concentration reached only $10^{-1.73} \cdot 100\%$ = `r round(10^(-1.73) * 100, digits = 2)`% of the maximum saturation.
 
-Those plant nutrients that were affected by precipitation were tested for the proportion of their total concentration that is expected to precipitate. The distribution of the obtained results is clearly bimodal as visible in **FIGURE XXX**. The median will thus be used in the following.
+Those plant nutrients that were affected by precipitation were tested for the proportion of their total concentration that is expected to precipitate. The distribution of the obtained results is clearly bimodal as visible in Figure \@ref(fig:precipitation). The median will thus be used in the following.
 
 
 
@@ -616,8 +628,10 @@ Much less prone for precipitation were $\text{Ca}^{2+}$, $\text{Cu}^{2+}$ and $\
 
 
 
+```{r precipitation, fig.cap="Percentage of total amounts of plant nutrients present in solution that is prone to precipitation. Data originating from n = XXX publications.", echo=FALSE}
 
-![Percentage of total amounts of plant nutrients present in solution that is prone to precipitation. Data originating from n = XXX publications.](plots/violinplot_precipitated2_vm.png)
+knitr::include_graphics("plots/violinplot_precipitated2_vm.png")
+```
 
 
 
