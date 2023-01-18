@@ -733,14 +733,14 @@ buffer_data <- read_csv(here::here("interm", "contribution_assumptions_summary.c
   mutate(
     dailyCP_kg = meanFeed_kg_d * meanCP, #kg
     dailyN_kg = dailyCP_kg / 6.25, #divide by Kjeldahl factor
-    dailyH_kg = dailyN_kg / 3.5,
+    dailyH_kg = dailyN_kg / 3.5, # Expand this step
     dailyH_mol = dailyH_kg * 1000,
     dailyKOH_mol = dailyH_mol,
-    dailyK_g = dailyKOH_mol * 39.098,
+    dailyK_g = dailyKOH_mol * 39.098, # Molar mass K
     dailyCaOH2_mol = dailyH_mol / 2,
-    dailyCa_g = dailyCaOH2_mol * 40.078,
+    dailyCa_g = dailyCaOH2_mol * 40.078, # Molar mass Ca
     dailyNaHCO3_mol = dailyH_mol,
-    dailyNa_g = dailyNaHCO3_mol * 22.989
+    dailyNa_g = dailyNaHCO3_mol * 22.989 # Molar mass Na
   ) %>% 
   
   print() %>% 
