@@ -222,7 +222,7 @@ assumption_summary_rearing_interm <- assumption_data_rearing %>%
     meanTotalV = mean(totalV_m3),
     #sdTotalV = sd(totalV_m3),
     meanRearingTotal_ratio = mean(rearing_total_ratio),
-    meanIBiomass_kg = mean(biomass_kg), # kg
+    meanInitBiomass_kg = mean(biomass_kg), # kg
     #sdBiomass_kg = sd(biomass_kg),
     meanABM_kg = mean(ABM_g) / 1000,
     meanFBM_kg = mean(FBM_g) / 1000,
@@ -254,15 +254,15 @@ assumption_summary_rearing <- assumption_summary_rearing_interm %>%
     meanTotalV = mean(meanTotalV, na.rm = TRUE),
     #sdTotalV = sd(sdTotalV, na.rm = TRUE),
     meanRearingVTotalV_ratio = mean(meanRearingTotal_ratio, na.rm = TRUE),
-    meanBiomass_kg = mean(meanIBiomass_kg, na.rm = TRUE), # kg
+    meanInitBiomass_kg = mean(meanInitBiomass_kg, na.rm = TRUE), # kg
+    
+    # FEED INPUT DEPENDS ON ABM!!!
+    
+    meanABM_kg = mean(meanABM_kg, na.rm = TRUE), 
+    #meanABM_kg = 150,
+    
+    
     meanBiomass_kg_Density_derived = mean(meanRearingV_m3 * density_kg_m3,na.rm = TRUE),
-    
-    
-    # Feed input depends on ABM
-    #meanABM_kg = mean(meanABM_kg, na.rm = TRUE), 
-    meanABM_kg = 150,
-    
-    
     meanFBM_kg = mean(meanFBM_kg, na.rm = TRUE),
     #sdBiomass_kg = sd(sdBiomass_kg, na.rm = TRUE),
     meanIDensity_kg_m3 = mean(density_kg_m3, na.rm = TRUE), # kg m^-3
