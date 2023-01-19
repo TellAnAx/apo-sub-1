@@ -6,9 +6,9 @@ meanDuration_d,89.06
 meanRearingV_m3,2.81
 meanTotalV,4.53
 meanRearingVTotalV_ratio,0.81
-meanBiomass_kg,23.65
+meanInitBiomass_kg,23.65
+meanABM_kg,40.98
 meanBiomass_kg_Density_derived,11.09
-meanABM_kg,150
 meanFBM_kg,1.15
 meanIDensity_kg_m3,3.95
 meanAD_kg_m3,7.69
@@ -19,4 +19,4 @@ meanFR,0.02
 meanCP,0.41
 meanCP_factor_d,0.01
 meanN_factor_d,0.04
-meanFeed_kg_d,2.47
+meanFeed_kg_d,0.67

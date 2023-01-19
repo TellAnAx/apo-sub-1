@@ -24,17 +24,18 @@ library(png)
 ```
 
 
+
 # Introduction
-Aquaponics is a hybrid food production system, coupling aquaculture and soilless horticulture (hydroponics). In comparison with uncoupled, independent systems, advocates of the aquaponics principle with an aquaculture background claim that added value is created by preventing the release of aquaculture wastes into the environment but converting them into edible yield instead [@Turnsek2020]. Furthermore, it was found that there is no significant difference in the yield of several leafy greens such as lettuce, spinach, basil, dill, coriander, parsley, rook and even fruiting plants such as tomato that can be achieved in aquaponic versus hydroponic systems [@Lennard2019; @Atique2022; @Anderson2017; @Maucieri2019a; @Suhl2016; @Pantanella2012]. This is noteworthy against the background that nutrient deficiencies are frequently reported when comparing the nutrient concentrations in aquaponic systems with those usually targeted in hydroponics [@Lunda2019; @Robaina2019; @Graber2009; @Bittsanszky2016]. On the other hand, the complexity of the system adds extra costs to aquaponics. Achieving similar yield is thus seen as insufficient to render aquaponics competitive under present circumstances when compared with conventional hydroponics [@Quagrainie2017]. Interestingly, aquaponics seems to offer the potential to reach even higher yields than in hydroponics if certain nutrients are amended. This was described for lettuce [@Monsees2019; @Delaide2016], basil [@Rodgers2022] and tomato [@Roosta2013]. However, a simple “off-the-shelf” solution for the management of plant nutrients that is as simple as the commercially available and fine-tuned plant fertilizers used in hydroponics is lacking. The development of a specific feed for aquaponic systems, hereinafter denoted as aquafeed, is thought to be such a solution [@Lennard2017; @Eck2019]. 
+Aquaponics is a hybrid food production system, coupling aquaculture and soilless horticulture (hydroponics). In comparison with uncoupled, independent systems, advocates of the aquaponics principle with an aquaculture background claim that added value is created by preventing the release of aquaculture wastes into the environment but converting them into edible yield instead [@Turnsek2020]. Furthermore, it was found that there is no significant difference in the yield of several leafy greens such as lettuce, spinach, basil, dill, coriander, parsley, rook and even fruiting plants such as tomato that can be achieved in aquaponic versus hydroponic systems [@Lennard2019; @Atique2022; @Anderson2017; @Maucieri2019a; @Suhl2016; @Pantanella2012]. This is noteworthy against the background that nutrient deficiencies are frequently reported when comparing the nutrient concentrations in aquaponic systems with those usually targeted in hydroponics [@Lunda2019; @Robaina2019; @Graber2009; @Bittsanszky2016]. On the other hand, the system's complexity adds extra costs to aquaponics. Achieving similar yield is thus seen as insufficient to render aquaponics competitive under present circumstances when compared with conventional hydroponics [@Quagrainie2017]. Interestingly, aquaponics seems to offer the potential to reach even higher yields than in hydroponics if certain nutrients are amended. This was described for lettuce [@Monsees2019; @Delaide2016], basil [@Rodgers2022] and tomato [@Roosta2013]. However, a simple “off-the-shelf” solution for the management of plant nutrients that is as simple as the commercially available and fine-tuned plant fertilizers used in hydroponics is lacking. The development of a specific feed for aquaponic systems, hereinafter denoted as aquafeed, is thought to be such a solution [@Lennard2017; @Eck2019]. 
 
 As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B) [@Marschner2012]. The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion [@Mengel2001].
 
-In aquaponic systems, the aquafeed and the source water are considered as main sources of nutrients [@Eck2019]. In addition, alkalinity supplements can play an important role in the supply of nutrients [@Rakocy2006]. These sources vary in their contribution to the total daily nutrient input, depending on the species reared and the location of the facility.
+In aquaponic systems, the aquafeed and the source water are considered as main sources of nutrients [@Eck2019]. In addition, alkalinity supplements can play an important role in the supply of nutrients [@Rakocy2006]. These sources vary in their contribution to the total daily nutrient input, depending on the species reared and the facility's location.
 
-Aquafeeds are usually considered as of greatest importance in terms of nutrient input into aquaponic systems [@Robaina2019]. Though, data about the inclusion rates of nutrients relevant for plants in commercial aquafeeds is scarce because these compounds are either not essential for aquatic animals or can be taken up from water via the gills in sufficient quantities. These nutrients are thus usually not considered during feed formulation [@Lall2002]. 
-An aquafeed can vary in its nutrient composition due to slight changes in its raw material composition caused by fluctuations in feed ingredient availability and market prices. While feed manufacturers allow variations of crucial nutrients such as the crude protein (CP) inclusion rate only within tight limits, this is not the case for other nutrients that are disregarded in the formulation process. However, data about the ranges of microminerals in commercial aquafeeds is not available in literature.
+Aquafeeds are usually considered as of greatest importance in terms of nutrient input into aquaponic systems [@Robaina2019]. Though, data about the inclusion rates of nutrients relevant for plants in commercial aquafeeds is scarce because these compounds are either not essential for aquatic animals or can be taken up from water via the gills in sufficient quantities. These nutrients are thus usually not considered during feed formulation [@Lall2003]. 
+An aquafeed can vary in its nutrient composition due to slight changes in its raw material composition caused by fluctuations in feed ingredient availability and market prices. While feed manufacturers allow variations of crucial nutrients such as the crude protein (CP) inclusion rate only within tight limits, this is not the case for other nutrients that are disregarded in the formulation process. However, data about the ranges of microminerals in commercial aquafeeds is not available in the literature.
 
-When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in Figure \@ref(fig:pathwaydigestion).  Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal and the metabolic end products are then excreted in form of dissolved matter via the gills and the urinary system [@Evans2005; @Hardy2002].
+When discussing aquafeeds as nutrient input, it is important to consider their route of excretion, as shown in Figure \@ref(fig:pathwaydigestion).  Only dissolved nutrients are available for plant uptake. After ingestion by the cultivated animal, the indigestible mass fraction is excreted in form of solid matter. The digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal. The metabolic end products are then excreted in the form of dissolved matter via the gills and the urinary system [@Evans2005; @Hardy2002].
 
 
 
@@ -45,15 +46,15 @@ knitr::include_graphics("images/2010_Bureau.png")
 
 
 
-N that is, for the most part, present as CP in aquafeeds, is usually well-digestible, with the apparent digestibility coefficient (ADC) of feed ingredients usually being above 70% and on average approximately 90% [@IAFFD2021; @Guillaume2001]. The excretion of N as end product of the protein and amino acid catabolism takes place in form of ammonia and, to a small extent, urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski2002]. 
+N that is, for the most part, present as CP in aquafeeds, is usually well-digestible, with the apparent digestibility coefficient (ADC) of feed ingredients usually being above 70% and on average approximately 90% [@IAFFD2021; @Guillaume2001]. The excretion of N as end product of the protein and amino acid catabolism takes place in form of ammonia and, to a small extent, urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski2003]. 
 
-A less digestible nutrient is P with ADC estimates ranging from 70% to 40% and a resulting excretion of 30% to 60% of the supply [@Lall2002; @Sugiura2018]. Especially plant ingredients in aquafeeds can cause low ADC if they are rich in phytic acid. Phytic acid is poorly digestible and can furthermore reduce the digestibility of minerals in the feed. This might also explain contradictory information in literature with reported renal excretion rates of 90% of the total excreta [@Tomiyama1956] in contrast to  estimates of 28% of excretion taking place in dissolved form and 30% to 64% excreted as particulate P [@Dabrowski2002].
+A less digestible nutrient is P with ADC estimates ranging from 70% to 40% and a resulting excretion of 30% to 60% of the supply [@Lall2003; @Sugiura2018]. Especially plant ingredients in aquafeeds can cause low ADC if they are rich in phytic acid. Phytic acid is poorly digestible and can furthermore reduce the digestibility of minerals in the feed. This might also explain contradictory information in literature with reported renal excretion rates of 90% of the total excreta [@Tomiyama1956] in contrast to  estimates of 28% of excretion taking place in dissolved form and 30% to 64% excreted as particulate P [@Dabrowski2003].
 
 In terms of digestibility, information about the remaining plant nutrients is scarce. Variability of ADC among different feed ingredients was shown in Atlantic salmon (\emph{Salmo salar}) for Ca, Mg, Fe, Mn and Zn, with an ADC ranging between 30% to 50% [@Sugiura1998].
 
-Excretion of the earth alkaline metals Ca and Mg takes primarily place in dissolved form via the gills and urine [@Lall2002; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while the renal excretion was found to be negligible [@Lall2002]. Cu is predominantly excreted via the bile [@Bury2003]. Excess dietary Cu is not taken up but excreted as feces. Thus the Cu inclusion rate in aquafeeds is reduced to minimize its release into the environment [@Lall2002]. Zn is mostly excreted renally and via the gills [@Lall2002].
+Excretion of the earth alkaline metals Ca and Mg primarily occurs in dissolved form via the gills and urine [@Lall2003; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while renal excretion was found to be negligible [@Lall2003]. Cu is predominantly excreted via the bile [@Bury2003]. Excess dietary Cu is not taken up but excreted as feces. Thus the Cu inclusion rate in aquafeeds is reduced to minimize its release into the environment [@Lall2003]. Zn is mostly excreted renally and via the gills [@Lall2003].
 
-Tap water can vary in its composition, depending on its origin such as surface or groundwater. The extent of the variability of terrestrial waters in their chemical composition is shown in Figure \@ref(fig:waterConcFreq). Wheathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
+Tap water can vary in its composition, depending on its origin such as surface or groundwater. The extent of the variability of terrestrial waters in their chemical composition is shown in Figure \@ref(fig:waterConcFreq). Weathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
 
 
 
@@ -66,7 +67,7 @@ knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
 
 Due to its low water demand, aquaponics is generally seen as food production system suitable for urban areas or arid regions [@Kloas2015; @Joyce2019]. Establishing an aquaponic system in these regions comes with limited access to water sources such as well water or rivers and lakes. Rainwater, on the other hand, would require large storage capacities. Tap water is thus assumed to be the most important water source.
 
-The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation [@EU2020]. Table \@ref(tab:nutCompTab) summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
+The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive defines maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation [@EU2020]. Table \@ref(tab:nutCompTab) summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
 
 
 
@@ -135,7 +136,7 @@ Overall, the two main differences described between hydroponic and aquaponic sys
 
 The pH, as described before, determines the speciation of nutrients and thus their mobility and plant availability. In hydroponic systems, maintaining a pH between 5.8 and 6.4 is recommended to provide optimum conditions for the plants, depending on the species to be cultivated [@Resh2016]. Nitrifying bacteria, on the other hand, show best activity at a pH above 7.0 [@Ward2011]. The first permanently coupled aquaponic systems that consisted of a closed loop where water would permanently circulate between the aquaculture and hydroponics unit. As a trade-off between optimum conditions for plants and nitrifyers, the pH in these systems was recommended to be maintained close to 7.0 [@Rakocy2006]. The desire to overcome the limitation that the performance of at least one of the two units of a permanently coupled aquaponic system would be compromised led to the development of on-demand coupled aquaponic systems with two independent loops. Here, a unidirectional connection between a recirculation aquaculture system (RAS) and a separate hydroponic system allows to maintain different pH in both units. The aquaculture water can eventually be fed into a fertilizer reservoir and allows for further addition of nutrients, pH adjustment and alike [@Kloas2015]. However, when examining the fate and behavior of nutrients in aquaponics from a chemical point of view, the conditions at the input site matter. 
 
-DOM is a collective term for a multitude of not closer defined disolved carbon-based molecules originating from decay of organic matter in water. DOM can be divided into humic and non-humic substances, with the former consisting of humin, humic and fulvic acids and the latter being a potpourri of amino acids, (poly-)peptides, carbohydrates and other organic substances [@Boyd2019]. DOM has several beneficial effects on plants. as the mobilisation of microminerals via complexation [@Schnitzer1969; @Chen2004a]. Furthermore, DOM was found to potentially act as biostimulant for plant growth [@Canellas2015]. However, DOM is usually not present in large quantities in hydroponic systems, but instead tried to be removed. DOM serves as C source for heterotrophic bacteria, thus enhancing their growth and causing a depletion of oxygen in the rhizosphere. Furthermore, strong growth comes with the formation of biofilms that can potentially clog small and thin components such as vents, tubes and jets of irrigation systems [@Raviv2007]. Using the total organic carbon (TOC) concentration as sum parameter for the determination of DOM, $20 \text{ mg L}^{-1}$ TOC were reported in wastewater from hydroponic greenhouses [@Prystay2001]. The DOM in hydroponics likely originates from root exudates of the plants that are excreted in order to take up other nutrients [@Mengel2001]. In RAS, TOC concentrations are originating from the steady input of aquafeeds [@Daalsgard2001]. In a study with pikeperch (\emph{Sander lucioperca}) reared in RAS at a stocking density of $15 \text{ kg m}^{-3}$ under different accumulating feed burdens, TOC concentrations ranging from $20.4 \text{ mg L}^{-1}$ to $47.0 \text{ mg L}^{-1}$ were found [@Steinberg2018].
+DOM is a collective term for a multitude of not closer defined disolved carbon-based molecules originating from decay of organic matter in water. DOM can be divided into humic and non-humic substances, with the former consisting of humin, humic and fulvic acids and the latter being a potpourri of amino acids, (poly-)peptides, carbohydrates and other organic substances [@Boyd2019]. DOM has several beneficial effects on plants. as the mobilisation of microminerals via complexation [@Schnitzer1969; @Chen2004a]. Furthermore, DOM was found to potentially act as biostimulant for plant growth [@Canellas2015]. However, DOM is usually not present in large quantities in hydroponic systems, but instead tried to be removed. DOM serves as C source for heterotrophic bacteria, thus enhancing their growth and causing a depletion of oxygen in the rhizosphere. Furthermore, strong growth comes with the formation of biofilms that can potentially clog small and thin components such as vents, tubes and jets of irrigation systems [@Raviv2007]. Using the total organic carbon (TOC) concentration as sum parameter for the determination of DOM, $20 \text{ mg L}^{-1}$ TOC were reported in wastewater from hydroponic greenhouses [@Prystay2001]. The DOM in hydroponics likely originates from root exudates of the plants that are excreted in order to take up other nutrients [@Mengel2001]. In RAS, TOC concentrations are originating from the steady input of aquafeeds [@Dalsgaard2011]. In a study with pikeperch (\emph{Sander lucioperca}) reared in RAS at a stocking density of $15 \text{ kg m}^{-3}$ under different accumulating feed burdens, TOC concentrations ranging from $20.4 \text{ mg L}^{-1}$ to $47.0 \text{ mg L}^{-1}$ were found [@Steinberg2018].
 
 
 
@@ -197,7 +198,7 @@ The first step comprised the generation of system assumptions. For this purpose,
 
 
 
-```{r Contribution: Number of publications}
+```{r Contribution: Number of publications, echo=FALSE, warning=FALSE, message=FALSE}
 read_csv(here("results", "contribution_rearing_data.csv")) %>% 
   summarise(
     observations = n(),
@@ -213,73 +214,76 @@ read_csv(here("results", "contribution_rearing_data.csv")) %>%
 FDS1 was used to calculate the average system volume ($\text{V}_{tot}$), average bodyweight ($ABW$), average number of livestock ($AN$), average livestock density ($AD$), and average water exchange rate ($AWE$). $ABW$ was defined as the mean bodyweight during the duration of experiment and was calculated as the arithmetic mean of the initial and final bodyweight. For the calculation of $AD$, $AN$ and $AWE$, \emph{NA} values were removed. 
 Eventually, the average biomass ($ABM$) was computed by multiplication of $ABW$ with $AN$ or, if only $AD$ was given, by multiplication of $AD$ with $\text{V}_{tot}$. Vice versa, in case $AD$ was not reported, it was calculated by dividing $ABM$ by $\text{V}_{tot}$. The average daily water exchange volume by multiplication of ($\text{V}_{tot}$) with $AWE$.
 
-The second step was the estimation of the daily nutrient input via source water. For this purpose, gathered location information in the FDS was used to search for water analysis reports provided by the closest water treatment plant. Only official reports provided by local authorities and water utilities in the corresponding municipalities were used to ensure that analyses were conducted according to internationally accepted laboratory standards. 
-In water analysis, it is common practice to report the value of the detection limit instead of the measured value in case that the analyte concentration found was below the sensitivity of the instrument used for measurement [@DIN32645]. Retaining the detection limits in the dataset leads to mean concentration estimates that are too large. However, removing the affected observations would result in a loss a large proportion of the data, as shown in Figure \@ref(fig:waterAnalysesPerCountry). Therefore, concentration data was recalculated using the *cenmle()* function from the R package *NADA* by maximum likelihood estimation (MLE) [@Helsel2012]. This ensured that the estimates for nutrient concentrations in tap water were reliable. 
+```{r Water: Number of publications and reports, include=FALSE}
+report_water_total <- read_csv(here::here("results", "contribution_water_countries.csv")) %>% 
+  group_by(Source) %>% 
+  summarise(n = n()) %>% 
+  group_by(Source) %>% 
+  summarise(n = n()) %>% 
+  pivot_wider(names_from = Source, values_from = n)
+
+report_water_total
+
+report_water_studies_total <- read_csv(here::here("results", "contribution_water_countries.csv")) %>% 
+  group_by(Source) %>% 
+  summarise(n = n()) %>% 
+  pivot_wider(names_from = Source, values_from = n)
+
+report_water_studies_total
+```
+
+The second step was estimating the daily nutrient input via source water. For this purpose, gathered location information in the FDS was used to search for water analysis reports provided by the closest water treatment plant. Only official reports provided by local authorities and water utilities in the corresponding municipalities were used to ensure that analyses were conducted according to internationally accepted laboratory standards. Both literature data and collected water analysis reports originated from a total of `r report_water_total$Literature` countries, with `r report_water_studies_total$Literature` literature studies and `r report_water_studies_total$Reports` analysis reports. It was not possible to obtain water analysis reports from Finland, Iran, Israel and The Netherlands. Thus, reports from Austria, France, Portugal and Turkey were included instead. The country distribution of the literature data in comparison with gathered water analysis reports is shown in Figure \@ref(fig:waterCountries). 
+
+```{r waterCountries, fig.cap="Number of studies per country in comparison with the number of water analysis reports per country included in the source water dataset", echo=FALSE}
 
 
+knitr::include_graphics("plots/contribution_waterData_countryPlot.png")
+```
 
-```{r waterAnalysesPerCountry, fig.cap="Proportion of water analysis observations per analyte reported to be below detection limit (n = XXX).", echo=TRUE}
+In water analysis, it is common practice to report the value of the detection limit instead of the measured value in case that the analyte concentration found was below the sensitivity of the instrument used for measurement [@DIN32645]. Figure \@ref(fig:waterAnalysesPerCountry) shows the proportion of data for all considered analytes in the water analysis reports that were found to be below the detection limit. Retaining the detection limits in the dataset leads to mean concentration estimates that are too high. Therefore, concentration data was recalculated using the *cenmle()* function from the R package *NADA* by maximum likelihood estimation (MLE) [@Helsel2011]. This ensured that the estimates for nutrient concentrations in tap water were reliable. The output was eventually used to calculate the two-sided 90% confidence interval for the concentration of each nutrient to describe the concentration range that will be found in 90% of all cases where tap water is used. 
+Finally, multiplying the obtained concentrations with $AWE$ yielded the upper and lower limits of the 90% confidence interval of total daily individual plant nutrient inputs via source water.
+
+```{r waterAnalysesPerCountry, fig.cap="Proportion of water analysis observations per analyte reported to be below detection limit (n = XXX).", echo=FALSE, message=FALSE, warning=FALSE}
 
 knitr::include_graphics("plots/contribution_waterData_belowLimit.png")
 ```
-
-
-
-The output was eventually used to calculate the two-sided 90% confidence interval for the concentration of each nutrient to describe the concentration range that will be found in 90% of all cases where tap water is used. 
-Finally, multiplying the obtained concentrations with $AWE$ yielded the upper and lower limits of the 90% confidence interval of total daily individual plant nutrient inputs via source water.
 
 In the third step, daily nutrient inputs via aquafeeds were estimated. The IDS was filtered for studies reporting the name of the commercial aquafeed used (if not selfmade), the $CP$ inclusion rate and the feeding rate. From the resulting FDS2, the average feeding rate ($AFR$), $CP$ inclusion rate ($ACP$) and the averages of all plant nutrients were calculated. Due to lacking nutrient composition data, supplier datasheets were used and amended by literature data in case of utilization of commercial aquafeeds. Incomplete observations with respect to experimental feeds were handled in the same way, merging data from multiple publications if the same feed was used. \emph{NA} values were removed for the computation of averages.
 Eventually, the average daily feed input ($AFI$) was calculated by multiplying ABM from the generated system assumptions with AFR. By multiplying $AFI$ with the average plant nutrient inclusion rates in the aquafeeds, the uncorrected total daily input of individual plant nutrients via aquafeeds could be calculated. Obtained values were then corrected by multiplication with apparent digestibility coefficients ($ADC$), accounting for the digestibility of aquafeeds by fish. An $ADC$ of 90% was assumed for N whereas the $ADC$ of all other nutrients was assumed to be 50% (Lall Fish Nutrition The Minerals, 2002). Finally, it was assumed that 50% of the digestible fraction is retained while the remaining 50% is excreted in dissolved form [@Halver2003]. The indigestible part of the feed is excreted as solid feces and was thus assumed not to participate in chemical reactions in solution.
 
 Lastly, an estimate for the daily input of alkalinity supplements was derived from $\text{AFI}$. First, the daily CP input was calculated by multiplying $\text{AFI}$ with the percentage of $\text{CP}$ on dry matter basis in the feed.
 
-
-
 \begin{equation}
   m_{\text{CP}} = \text{AFI} \cdot \text{CP}
 \end{equation}
 
-
 Eventually, digestibility and retention were considered and $\text{CP}$ converted into the mass of non-retained N by division through the Kjeldahl factor $f_{K} = 6.25$.
-
-
 
 \begin{equation}
   m(\text{N}) = \frac{m_{\text{CP}} \cdot \text{ADC} - r \cdot m_{\text{CP}} \cdot \text{ADC}}{f_{K}}
 \end{equation}
 
-
 The activity of nitrifying bacteria in the biofilter follows the overall simplified reaction equation \@ref(eq:nitrification) [@Timmons2010].
-
-
 
 \begin{equation}
   \text{NH}_{4}^{+} + 2 \text{ O}_{2} \rightarrow \text{NO}_{3}^{-} + 2 \text{ H}^{+} + \text{ H}_{2}\text{O}
   (\#eq:nitrification)
 \end{equation}
 
-
 Per mole of ammonium ($\text{NH}_{4}^{+}$) that is converted to nitrate ($\text{NO}_{3}^{-}$), two moles of protons (H$^{+}$) are released. Furthermore, it can be derived from equation \@ref(eq:nitrification) that $n(\text{NH}_{4}^{+}) = n(N)$ and $2n(N) = n(\text{H}^{+})$. Thus, the amount of moles that have to be neutralized based on $\text{AFI}$ can be calculated as 
-
-
 
 \begin{equation}
   n(\text{H}^{+}) = 2 \cdot \frac{m(\text{N})}{M(\text{N})}
   (\#eq:moles)
 \end{equation}
 
-
 with the molar mass $M(\text{N}) = 14.007 \text{ g mol}^{-1}$. The chemical reaction with bases such as $\text{NaHCO}_{3}$, $\text{KOH}$ or $\text{Ca(OH)}_{2}$ is eventually a simple neutralization reaction of the pattern
-
-
 
 \begin{equation}
   \text{H}^{+} + \text{OH}^{-} \rightarrow \text{H}_{2}|text{O}
 \end{equation}
 
-
 The mass of Na, K or Ca can consequently be calculated by rearranging equation \@ref(eq:moles) and using the correct stoichiometric conversion factor.
-
 
 
 
@@ -291,8 +295,6 @@ The mass of Na, K or Ca can consequently be calculated by rearranging equation \
 The IDS was filtered for studies that were reporting the pH of the rearing water, did not conduct a plant growth trial and maintained aerobic conditions. The resulting FDS comprised 25 observations originating from 16 publications.
 Due to aerobic conditions, metals were assumed to be present in their reduced forms, for instance [Fe$^{3+}$] >> [Fe$^{2+}$], with values in brackets denoting for molar concentrations. The systems in all observations were considered open systems, resulting in dissolved CO$_{2}$ being in equilibrium with atmospheric CO$_{2}$ at a partial pressure of $p_{\text{CO}_{2}} = 0.054 \text{ atm}$. According to Henry's Law, this would result in a concentration of [CO$_{2}$(aq)]$_{total} = K_{H} \cdot p_{\text{CO}_{2}} = 0.018$ mol L$^{-1}$, using the Henry constant of $K_{H} = 3.4 \cdot 10^{-2} \text{ mol L}^{-1} \text{ atm}^{-1}$ [@Stumm1981].
 
-
-
 ```{r include=FALSE}
 references <- data.frame(refs = list.files("data"))
 
@@ -303,14 +305,9 @@ references %>%
   )
 ```
 
-
-
 ### Complexation, mineral saturation and precipitation
 The complexation of plant nutrients by dissolved organic matter (DOM) was simulated using a Gaussian DOM model [@Grimm1991]. It was assumed that DOM is present in the systems at a concentration of 20 mg L$^{-1}$. The charge of the DOM species was calculated according to database values.
 To assess whether the waters in the selected literature were saturated with regards to specific minerals, mineral saturation indices $\log(\frac{Q}{K})$ were calculated. The saturation index of a mineral is the ratio between its ion product $Q$ and its solubility product $K_{sp}$. $Q$ can be generally expressed as follows 
-
-
-
 \begin{equation}
   Q = [\text{cation}(aq)]^m \cdot [\text{anion}(aq)]^n
   (\#eq:Q)
@@ -318,16 +315,17 @@ To assess whether the waters in the selected literature were saturated with rega
 
 with expressions in square brackets denoting for empirically found concentrations of the cationic and anionic components of a mineral taken to the power of their stoichiometric coefficients $m$ and $n$. $K_{sp}$ is calculated similarly, as shown in equation \@ref(eq:Ksp)
 
-
-
 \begin{equation}
   K_{sp} = [\text{cation}_{sat}]^{m} \cdot [\text{anion}_{sat}]^{n}
   (\#eq:Ksp)
 \end{equation}
 
-
 However, the empirical concentrations are resembling the saturation concentration for the respective salt and derived from thermodynamic data in case of poorly soluble salts. 
 
+
+
+
+###----------------------------------------------------------------------------
 
 
 The saturation concentration $S$ of the salt can eventually be calculated by rearranging Equation \@ref(eq:Ksp) as shown in Equation \@ref(eq:S).
@@ -342,6 +340,7 @@ The saturation concentration $S$ of the salt can eventually be calculated by rea
 
 
 
+###----------------------------------------------------------------------------
 
 For instance, a concentration of $[\text{Fe}^{3+}] = [\text{PO}_{4}^{3-}] = 1\:\mu \text{mol L}^{-1}$ and the $K_{sp}(\text{FePO}_{4}) = 9.91 \cdot 10^{-16}$ [@Lide2007] results in 
 
@@ -365,76 +364,34 @@ All observations that were affected by precipitation ($\log(\frac{Q}{K}) = 0$) w
 
 # Results
 
-## Origin of nutrients
-
-### Data integrity
-
-
+## Data
+Literature was screened for aquaponic studies to create an initial dataset for further analyses.
 
 ```{r include=FALSE}
-assumptions <- read_csv(here::here("results", "contribution_assumptions_summary2.csv")) %>% 
-  print()
-  
-read_csv(here::here("results", "contribution_assumptions_summary2.csv")) %>% 
-pivot_wider(names_from = "name", values_from = "value") %>% 
-  mutate(
-    water_per_feed_m3_kg = meanFeed_kg_d / meanFreshwater_m3_d
-  ) %>% 
-  pivot_longer(everything(),
-               names_to = "name",
-               values_to = "value") %>% 
-  print()
-```
+report_fish_species <- read_csv(here::here("results", "contribution_species.csv")) %>% 
+  group_by(group, fish_species) %>% 
+  summarise(n = n())
 
-Assumptions were derived from studies about aquaponic systems to calculate contributions of nutrient sources to daily nutrient inputs into the system.
-Analysis of the data presented in the reviewed aquaponics studies revealed that the average total water volume of the aquaculture systems was 4.53 m$^{3}$ with an average volume of the rearing compartment of 2.81 m$^3$. An average stocking density, calculated as the average of the initial and final density, of 7.69 kg m$^{-3}$, feeding rate of 2%, and water exchange rate of 3% were found. 
-
-
-
-```{r include=FALSE}
-read_csv(here::here("results", "contribution_species.csv")) %>% 
-  
+report_fish_groups <- report_fish_species %>% 
   group_by(group) %>% 
-  #mutate(sum = sum(n()))
-  summarise(
-    n = n()
-  ) %>% 
+  summarise(n = n()) %>% 
   mutate(sum_n = sum(n)) %>% 
   group_by(group) %>% 
-  summarise(perc = round(n/sum_n * 100, digits = 2))
+  summarise(
+    n = n,
+    sum_n = sum_n,
+    perc = round(n/sum_n * 100, digits = 0)
+    ) %>% 
+  pivot_wider(names_from = group, values_from = n:perc)
   
+report_fish_groups
 ```
 
-As shown in Figure \@ref(fig:speciesPlot), literature data comprised a total of nine different cultivated fish species, of which four were cyprinids, three percids, one silurid and salmonid species, respectively. Percid fish were cultivated in 63% and Silurids in 23% of the studies, while Cyprinids were used in 10% and Salmonids in only 2% of the studies.
-
+As shown in Figure \@ref(fig:speciesPlot), literature data comprised a total of `r nrow(report_fish_species)` different cultivated fish species, of which `r report_fish_groups$n_Cyprinids` were cyprinids, `r report_fish_groups$n_Percids` percids, `r report_fish_groups$n_Silurids` silurid and `r report_fish_groups$n_Salmonids` salmonid species. Percid fishes were cultivated in `r report_fish_groups$perc_Percids`% and Silurids in `r report_fish_groups$perc_Silurids`% of the studies, while Cyprinids were used in `r report_fish_groups$perc_Cyprinids`% and Salmonids in only `r report_fish_groups$perc_Salmonids`% of the studies.
 
 ```{r speciesPlot, fig.cap="Overview of species reared during aquaponic experiments", echo=FALSE}
 
 knitr::include_graphics("plots/species.png")
-
-```
-
-
-
-
-
-### Water data
-
-```{r}
-read_csv(here::here("results", "contribution_water_countries.csv")) %>% 
-  group_by(Source, Country) %>% 
-  summarise(n = n()) %>% 
-  group_by(Source) %>% 
-  summarise(n = n())
-```
-
-Literature data consisted of studies from a total of twelve countries. The country distribution of the literature data in comparison with obtained water analysis reports is shown in Figure \@ref(fig:waterCountries). 
-
-
-```{r waterCountries, fig.cap="Number of studies per country in comparison with the number of water analysis reports per country included in the source water dataset", echo=FALSE}
-
-
-knitr::include_graphics("plots/contribution_waterData_countryPlot.png")
 ```
 
 
@@ -442,56 +399,82 @@ knitr::include_graphics("plots/contribution_waterData_countryPlot.png")
 
 
 
-## Nutrient sources
-Using the assumptions derived from literature, an average biomass of 40.98 kg and daily inputs of $40.98 \text{ kg} \cdot 2\% = 0.8$ kg of feed with an average crude protein content of 41% on dry matter basis and $4.53 \text{ m}^{3} \cdot 3\% = 0.14 \text{ m}^{3}$ of freshwater were calculated. 
+## Origin of nutrients
 
-The daily feed input and crude protein content resulted in a daily N input of $\frac{0.8 \text{ kg d}^{-1} \cdot 41\%}{6.25} \cdot 1000 \frac{\text{g}}{\text{mg}} = 52.4 \text{ g d}^{-1}$. 
-Nitrification, under the assumption that This generated H$^{+}$ required $\frac{52.4 \text{ g}}{14 \text{ g mol}^{-1}} = 3.7$ mol d$^{-1}$ of H$^{+}$ to be neutralized. For this purpose, the input of the same amount of $\text{NaHCO}_{3}$, KOH or half of Ca(OH)$_{2}$ would be required, resulting in an input of 190.5 g d$^{-1}$ K or 97.6 g d$^{-1}$ of Ca.
-
+### Derived rearing assumptions
+Assumptions were derived from literature studies about aquaponics to calculate average contributions of different nutrient sources, namely the source water, aquafeeds and alkalinity supplements to total daily nutrient inputs into the system.
 
 
 ```{r include=FALSE}
-# Mean and upper and lower limits of 95% confInt.
-# Data in mg/L
-read_csv(here::here("interm", "contribution_water.csv")) %>% 
+report_assumptions_rearing <- read_csv(here::here("results", "contribution_assumptions_summary2.csv")) %>% 
+  pivot_wider(names_from = "name", values_from = "value") %>% 
   mutate(
-    lowInput_g_day = lconf * 4400 / 1000,
-    meanInput_g_day = mconf * 4400 / 1000,
-    highInput_g_day = hconf * 4400 / 1000
+    water_per_feed_m3_kg = meanFeed_kg_d / meanFreshwater_m3_d
   )
+  
+report_assumptions_rearing
+```
+
+Analysis of the data presented in the reviewed aquaponics studies revealed that the average total water volume of the aquaculture systems was `r report_assumptions_rearing$meanTotalV` $\text{m}^{3}$ with an average volume of the rearing compartment of `r report_assumptions_rearing$meanRearingV_m3` $\text{m}^3$. An average bodyweight, calculated as the average of the initial and final bodyweight, of `r report_assumptions_rearing$meanABW_g` $\text{g}$ and an average biomass of `r report_assumptions_rearing$meanABM_kg` $\text{kg}$ were found, resulting in an average stocking density of `r report_assumptions_rearing$meanAD_kg_m3` $\text{kg m}^{-3}$. 
+
+The average feeding rate was `r report_assumptions_rearing$meanFR * 100`%, which yielded a daily feed input of `r report_assumptions_rearing$meanFeed_kg_d` $\text{kg d}^{-1}$ with an average CP content of `r report_assumptions_rearing$meanCP`% on dry matter basis. This gives a daily N input of `r report_assumptions_rearing$meanFeed_kg_d * report_assumptions_rearing$meanCP / 6.25*1e3` $\text{g d}^{-1}$.
+
+Based on the average water exchange rate of `r report_assumptions_rearing$meanExchRate * 100`%, a daily freshwater input of `r report_assumptions_rearing$meanFreshwater_m3_d` $\text{m}^{3}\text{ d}^{-1}$ was computed.
+
+
+
+
+
+
+### Water, feed, and alkalinity supplements
+The average nutrient composition of both aquafeeds and source water and the lower and upper limits of the 90% confidence interval for source water are shown in Table \@ref(tab:nutrientComposition). 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+table <- read_csv("results/contribution_plotdata.csv") %>% 
+  pivot_wider(names_from = c(Contribution, water), values_from = Total) %>% 
+  group_by(nutrient) %>% 
+  summarise(
+    `Aquafeed $\\bar{x}$ $(\\text{mg d}^{-1})$` = max(`Feed_paste("Water: 5% confidence limit")`),
+    `Water 5% $(\\text{mg d}^{-1})$` = max(`Water_paste("Water: 5% confidence limit")`),
+    `Water 95% $(\\text{mg d}^{-1})$` = max(`Water_paste("Water: 95% confidence limit")`),
+    `Alkal. suppl. $\\bar{x}$ $(\\text{mg d}^{-1})$` = max(`Buffer_paste("Water: 5% confidence limit")`)
+  ) %>% 
+  mutate(
+    `Water $\\bar{x}$ $(\\text{mg d}^{-1})$` = (`Water 5% $(\\text{mg d}^{-1})$` + `Water 95% $(\\text{mg d}^{-1})$`) / 2,
+    .before = `Water 95% $(\\text{mg d}^{-1})$`) %>% 
+  mutate(
+    across(.cols = `Aquafeed $\\bar{x}$ $(\\text{mg d}^{-1})$`:`Alkal. suppl. $\\bar{x}$ $(\\text{mg d}^{-1})$`, .fns= ~round(.*1000, digits = 2))
+  ) %>% 
+  rename(Nutrient=nutrient)
+
+#table$Nutrient <- fct_relevel(table$Nutrient, c("N", "P", "K", "Ca", "Mg", "S", "B", "Fe", "Mn", "Cu", "Zn", "Mo", "Ni", "Na")
+
+knitr::kable(table, escape = FALSE, caption = "Compositions of nutrient sources and daily inputs. Shown are the averages for both aquafeeds and source water and the lower and upper limits of the \\text interval for the source water. Source water: n = 64; Aquafeeds: n = 54", label = "nutrientComposition")
 ```
 
 
-The average nutrient composition of both aquafeeds and source water and the lower and upper limits of the 95% confidence interval for source water are shown in **TABLE XXX**. 
+
+```{r, include=FALSE}
+temp <- table %>%
+  select(!matches("5%")) %>% 
+  mutate(
+    sum = rowSums(.[2:4]),
+    across(.cols = c(2:4), .fns = ~round(./sum*100, digits = 2), .names = "perc_{.col}")
+  )
+
+colnames(temp) <- c("nut", "totfeed", "totwat", "totalk", "sum", "percfeed", "percwat", "percalk")
+
+temp <- temp %>% 
+  print() %>% 
+  pivot_wider(names_from = nut, values_from = totfeed:percalk) %>% 
+  print()
+```
+
 It is evident that the highest daily nutrient input usually originates from the aquafeeds
 
 
-**Compositions of nutrient sources and daily inputs. Shown are the averages for both aquafeeds and source water and the lower and upper limits of the 95% confidence interval for the source water.**
-Source water: n = 64;Aquafeeds: n = 54
-
-|Nutrient|Aquafeeds|Source water|pH management|Aquafeeds daily|Source water daily|pH management daily|
-|---|---|---|---|---|---|---|
-|N|66.3 g kg$^{-1}$|1.2 mg L$^{-1}$ [0.8, 1.7]|-||5.680 g d$^{-1}$|-|
-|P|8.8 g kg$^{-1}$|95.2 µg L$^{-1}$ [34.4, 156.0]|-||0.419 g d$^{-1}$|-|
-|K|7.1 g kg$^{-1}$|2.6 mg L$^{-1}$ [1.8, 3.4]|||11.685 g d$^{-1}$|487.0 g d$^{-1}$|
-|Ca|15.9 g kg$^{-1}$|64.4 mg L$^{-1}$ [55.6, 73.2]|||283.477 g d$^{-1}$|249.6 g d$^{-1}$|
-|Mg|2.0 g kg$^{-1}$|11.5 mg L$^{-1}$ [9.4, 13.6]|-||50.644 g d$^{-1}$|-|
-|S|3.9 g kg$^{-1}$|14.2 mg L$^{-1}$ [10.7, 17.8]|-||62.763 g d$^{-1}$|-|
-|B|17.1 mg kg$^{-1}$|48.9 µg L$^{-1}$ [34.6, 63.3]|-||215.5 mg d$^{-1}$|-|
-|Fe|291.3 mg kg$^{-1}$|18.7 µg L$^{-1}$ [12.3, 25.1]|-||82.5 mg d$^{-1}$|-|
-|Mn|71.9 mg kg$^{-1}$|5.8 µg L$^{-1}$ [2.9, 8.7]|-||25.6 mg d$^{-1}$|-|
-|Cu|14.3 mg kg$^{-1}$|22.4 µg L$^{-1}$ [0, 45.7]|-||98.7 mg d$^{-1}$|-|
-|Zn|169.7 mg kg$^{-1}$|13.9 µg L$^{-1}$ [0, 28.2]|-||61.5 mg d$^{-1}$|-|
-|Mo|1.7 mg kg$^{-1}$|0.7 µg L$^{-1}$ [0.5, 1.0]|-||0.3 mg d$^{-1}$|-|
-|Ni|0.9 mg kg$^{-1}$|1.6 µg L$^{-1}$ [1.0, 2.2]|-||7.4 mg d$^{-1}$|-|
-|Na||25.5 mg d$^{-1}$|-||112.343 g d$^{-1}$|286.3 g d$^{-1}$|
-
-
-
-
-
 Figure \@ref(fig:contributionPlot) visualises the proportion of the daily total nutrient inputs from each nutrient source after consideration of aquafeed digestibility.
-The results confirm that aquafeeds were the main nutrient source in the reviewed studies. Considering the range of the possible nutrient contribution by source water that is given by the upper and lower limits of the 95% confidence interval, it was found that aquafeeds provided between 99.8% and 99.9% of N, 99.7% and 99.9% of P, 94.4% and 94.4% and 96.8% of K. They were thus contributing almost nearly the total amount of the most important macronutrients. In addition, aquafeeds were the main contributors to the daily total input of Fe (98.9% to 99.4%), Mn (98.5% to 99.5%), Mo (93.0% to 96.4%), and Zn (98.0% to 100%). The variability for these plant nutrients was comparably low.
+The results confirm that aquafeeds were the main nutrient source in the reviewed studies. Considering the range of the possible nutrient contribution by source water that is given by the upper and lower limits of the \\text interval, it was found that aquafeeds provided between 99.8% and 99.9% of N, 99.7% and 99.9% of P, 94.4% and 94.4% and 96.8% of K. They were thus contributing almost nearly the total amount of the most important macronutrients. In addition, aquafeeds were the main contributors to the daily total input of Fe (98.9% to 99.4%), Mn (98.5% to 99.5%), Mo (93.0% to 96.4%), and Zn (98.0% to 100%). The variability for these plant nutrients was comparably low.
 The most variable plant nutrient with respect to its source concentration was found to be Cu with a contribution of aquafeeds between 71.9% and 100% to the total daily inputs. The variability of the following plant nutrients decreased in descending order: B (68.8% to 80.1%), Ni (75.5% to 86.6%), S (64.1% to 74.8%), Mg (54.0% to 62.9%), and Ca (64.1% to 70.1%).
 Interestingly, aquafeeds were found not to be the predominant input route of Na (38.4% to 55.7%) on average. 
 show the same plots under addition of KOH and Ca(OH)$_{2}$ to adjust the pH, respectively.
@@ -643,7 +626,8 @@ knitr::include_graphics("plots/violinplot_precipitated2_vm.png")
 # Discussion
 
 
-## Sources of nutrients
+## Data integrity
+
 The contribution of different nutrient sources to the total daily nutrient inputs into an aquaponic system were compared based on assumptions derived from literature.
 Overall, the current input scenario confirms that fish feed is the major nutrient input route. Though, the results reveal that the source water is contributing an average of 50% of the total Na input, 30% of the Ca, 40% of Mg and 30% of S. Considering that salinity stress, ergo high Na concentrations, are toxic for most plants [@Wu2018], it is desirable to limit the influx into the system.
 In the following, the assumptions are discussed. The average stocking density of 12.4 kg m$^{-3}$ that was used for the nutrient contribution calculations can be considered representative for the intensive cultivation of *Oreochromis* spp. (El-Sayed, 2019). 
@@ -652,9 +636,18 @@ This is different for *Clarias gariepinus*. The latter can be cultivated at stoc
 Even though salmonids such as *Oncorhynchus mykiss* are seldom reared in aquaponic systems, they can tolerate stocking densities up to 137 kg m$^{-3}$. Though, normal stocking densities  range between 10 and 20 kg m$^{-3}$. The assumptions are rather on the lower end for salmonids [@Pennell1996].
 *Cyprinus carpio* is an irrelevant species for aquaponic systems due to its low market price. Though, it was found that fish welfare can be guaranteed at a stocking density of around 28 kg m$^{-3}$, which is 2.3 times higher than the assumed density [@Ruane2002]. 
 It can thus be expected that the contribution of feed to the total daily nutrient input in case of  *C. gariepinus*  and *C. carpio* is considerably higher than assumed due to rearing conditions in the reviewed studies that are not representative for production  at commercial scale. In contrast, the assumptions might lead to an overestimation of the contribution of aquafeeds if *S. lucioperca* is the species of choice. 
-Another aspect with respect to the contribution of feeds is that the feed composition is variable, depending on the selected species. Crude protein inclusion rates in commercial aquafeeds for the mentioned species range from $32\%$ for *C. carpio* [@Wilson2002] to $50\%$ for percids  [@Geay2015].
+Another aspect with respect to the contribution of feeds is that the feed composition is variable, depending on the selected species. Crude protein inclusion rates in commercial aquafeeds for the mentioned species range from $32\%$ for *C. carpio* [@Wilson2003] to $50\%$ for percids  [@Geay2015].
 
 
+
+% water data
+However, removing the affected observations would result in a loss a large proportion of the data.
+
+
+
+
+
+## Contribution of nutrient sources to total daily nutrient inputs
 The current input scenarios are 
 
 
@@ -708,6 +701,9 @@ Furthermore, there is no published study that is assessing the effects of organi
 
 Lastly, it is questionable whether the total concentration of the nutrients is actually of importance for plants. It was reported that a reduction of macronutrient concentrations to 50% of the control level does not have no adverse effect on growth, fruit yield and fruit quality in tomato (Siddiqi et al., 1998). The stoichiometry of nutrient solutions might thus play a more vital role for plants than currently known.
 
+
+
+## Conclusion
 
 
 

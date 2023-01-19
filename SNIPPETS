@@ -1,6 +1,6 @@
 TEXT SNIPPETS
 
-Aquaponics can be defined as the combination of an aquaculture unit and a plant production unit with the objective to convert aquaculture wastes into edible yield. Against this background, the term “edible” implies several requirements with regards to the quality of the harvest such as appearance and uniformity as defined for instance by the International Standards for Fruit and Vegetables [@OECD1962]. Furthermore, it has to be emphasized that the final product needs to be competitive in price to be marketable and thus interesting for potential adopters of the technology. Though, aquaponic systems require a high initial investment and come with comparably high labor costs due to the complexity of the system [@Turnsek2019; @Quagrainie2017]. One aspect that is contributing to high operating costs in aquaponics is the lack of simple “off-the-shelf” solutions for the management of plant nutrients. 
+Aquaponics can be defined as the combination of an aquaculture unit and a plant production unit with the objective to convert aquaculture wastes into edible yield. Against this background, the term “edible” implies several requirements with regards to the quality of the harvest such as appearance and uniformity as defined for instance by the International Standards for Fruit and Vegetables [@OECD1962]. Furthermore, it has to be emphasized that the final product needs to be competitive in price to be marketable and thus interesting for potential adopters of the technology. Though, aquaponic systems require a high initial investment and come with comparably high labor costs due to the complexity of the system [@Turnsek2019; @Quagrainie2017]. One aspect that is contributing to high operating costs in aquaponics is the lack of simple “off-the-shelf” solutions for the management of plant nutrients.
 
 
 In hydroponics, on the other hand, plant nutrients are supplied in form of commercially available and chemically fine-tuned plant fertilizers with dosage recommendations. It is usually sufficient to monitor the nutrient depletion via plant uptake by determining the electric conductivity (EC) of the nutrient solution as sum parameter [@Resh2016]. Taking into account that labour costs can be accounted for 40-50% of the total operational costs of aquaponic facilities [@Baganz2020; @Quagrainie2017] (**Engle**), an entrepreneur who is carefully weighing whether to invest in aquaponics or hydroponics might opt for the latter.
@@ -8,14 +8,14 @@ In hydroponics, on the other hand, plant nutrients are supplied in form of comme
 
  it was found that the operating costs of an aquaponic system are higher than those of a hydroponic facility (Quagrainie, 2017). This might explain why most of the existing aquaponic systems operated are operated by hobbyists, scientists or serve demonstration purposes (Pattillo, 2022).
 
-However, an early attempt to formulate a "designer diet" for aquaponics was made already three decades ago, with the result that the dissolved concentration of certain nutrients did not increase with an increase of its inclusion rate in the fish feed (Seawright, 1998). Though, the underlying constraints were not further investigated. 
+However, an early attempt to formulate a "designer diet" for aquaponics was made already three decades ago, with the result that the dissolved concentration of certain nutrients did not increase with an increase of its inclusion rate in the fish feed (Seawright, 1998). Though, the underlying constraints were not further investigated.
 
 
 
 
 
 ## Chemical modeling
-Solving equilibrium problems in systems with only one or two compounds and their species is comparably simple. However, the complexity increases dramatically in multi-compound systems, making the use of computers and dedicated software necessary. 
+Solving equilibrium problems in systems with only one or two compounds and their species is comparably simple. However, the complexity increases dramatically in multi-compound systems, making the use of computers and dedicated software necessary.
 
 
 
@@ -24,7 +24,7 @@ Solving equilibrium problems in systems with only one or two compounds and their
 
 
 # REsults part Hoagland solution
-In comparison with results for the saturation index calculation of Hoagland's nutrient solution under different pH conditions, as shown in **FIGURE XXX**, it is evident that target concentrations for Ca at pH = 7.5 and for Fe and Mn both at pH = 6.0 and pH = 7.5 exceed the maximum solubility are above the maximum solubility. In 
+In comparison with results for the saturation index calculation of Hoagland's nutrient solution under different pH conditions, as shown in **FIGURE XXX**, it is evident that target concentrations for Ca at pH = 7.5 and for Fe and Mn both at pH = 6.0 and pH = 7.5 exceed the maximum solubility are above the maximum solubility. In
 
 
 ![Comparison of mineral saturation indices calculated based on the Hoagland Solution (Resh) under pH levels representative for hydroponics (ph = 6.0) and aquaponics (pH = 7.5). Only cations where oversaturation was found are shown.](plots/scatterplot_hoagland_saturation.png)
@@ -69,9 +69,9 @@ In comparison with results for the saturation index calculation of Hoagland's nu
 
 
 
-Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. 
+Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017].
 Due to its low water demand, aquaponics is generally seen as food production system suitable for urban areas or arid regions [@Kloas2015; @Joyce2019]. Establishing an aquaponic system in these regions comes with limited access to water sources such as well water or rivers and lakes. Rainwater, on the other hand, would require large storage capacities. Tap water is thus assumed to be the most important water source.
-The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation  [@EU2020]. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. 
+The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive is defining maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation  [@EU2020]. **TABLE XXX** summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive.
 
 
 
@@ -132,4 +132,50 @@ Lastly, the third continuous nutrient input are alkalinity supplements that are 
 
 
 ###----------------------------------------------------------------------------
+
+
+
+
+```{r, include=FALSE}
+report_water_countries <- read_csv(here::here("results", "contribution_water_countries.csv")) %>%
+  group_by(Source, Country) %>%
+  summarise(n = n()) %>%
+  pivot_wider(names_from = Source, values_from = n) %>%
+  mutate(
+    sum_lit = sum(Literature, na.rm = T),
+    sum_rep = sum(Reports, na.rm=T),
+    perclit = Literature/sum_lit * 100,
+    percrep = Reports/sum_rep * 100
+    ) %>%
+  pivot_wider(names_from = Country, values_from = Literature:perc_rep)
+
+report_water_countries
+```
+
+With `r report_water_countries$perclit_Germany`% and `r report_water_countries$perclit_USA`%, respectively, most of literature studies were conducted in Germany and USA, followed by Belgium, Spain, Switzerland, and Iran with `r report_water_countries$perclit_Belgium`%, `r report_water_countries$perclit_Spain`%, `r report_water_countries$perclit_Switzerland`%, and `r report_water_countries$perclit_Iran`%, respectively. The remaining study sites were spread equally over Canada, Czechia, Finland, Israel, The Netherlands, and South Africa.
+
+
+
+
+
+###----------------------------------------------------------------------------
+
+
+
+|Nutrient|Aquafeeds|Source water|pH management|Aquafeeds daily|Source water daily|pH management daily|
+|---|---|---|---|---|---|---|
+|N|66.3 g kg$^{-1}$|1.2 mg L$^{-1}$ [0.8, 1.7]|-||5.680 g d$^{-1}$|-|
+|P|8.8 g kg$^{-1}$|95.2 µg L$^{-1}$ [34.4, 156.0]|-||0.419 g d$^{-1}$|-|
+|K|7.1 g kg$^{-1}$|2.6 mg L$^{-1}$ [1.8, 3.4]|||11.685 g d$^{-1}$|487.0 g d$^{-1}$|
+|Ca|15.9 g kg$^{-1}$|64.4 mg L$^{-1}$ [55.6, 73.2]|||283.477 g d$^{-1}$|249.6 g d$^{-1}$|
+|Mg|2.0 g kg$^{-1}$|11.5 mg L$^{-1}$ [9.4, 13.6]|-||50.644 g d$^{-1}$|-|
+|S|3.9 g kg$^{-1}$|14.2 mg L$^{-1}$ [10.7, 17.8]|-||62.763 g d$^{-1}$|-|
+|B|17.1 mg kg$^{-1}$|48.9 µg L$^{-1}$ [34.6, 63.3]|-||215.5 mg d$^{-1}$|-|
+|Fe|291.3 mg kg$^{-1}$|18.7 µg L$^{-1}$ [12.3, 25.1]|-||82.5 mg d$^{-1}$|-|
+|Mn|71.9 mg kg$^{-1}$|5.8 µg L$^{-1}$ [2.9, 8.7]|-||25.6 mg d$^{-1}$|-|
+|Cu|14.3 mg kg$^{-1}$|22.4 µg L$^{-1}$ [0, 45.7]|-||98.7 mg d$^{-1}$|-|
+|Zn|169.7 mg kg$^{-1}$|13.9 µg L$^{-1}$ [0, 28.2]|-||61.5 mg d$^{-1}$|-|
+|Mo|1.7 mg kg$^{-1}$|0.7 µg L$^{-1}$ [0.5, 1.0]|-||0.3 mg d$^{-1}$|-|
+|Ni|0.9 mg kg$^{-1}$|1.6 µg L$^{-1}$ [1.0, 2.2]|-||7.4 mg d$^{-1}$|-|
+|Na||25.5 mg d$^{-1}$|-||112.343 g d$^{-1}$|286.3 g d$^{-1}$|
 
