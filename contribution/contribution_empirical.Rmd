@@ -4,11 +4,20 @@ subtitle: "Assessment of contributions based on assumptions derived from empiric
 author: "Anıl A. Tellbüscher"
 date: '2022-07-04'
 output: html_document
+editor_options: 
+  chunk_output_type: console
+params:
+  feed_manual: !r FALSE
+  feed_manual_amount_kg: !r 100
 ---
 
 
 ```{r Setup, message=FALSE, warning=FALSE, include=FALSE}
-knitr::opts_chunk$set(include = FALSE)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  echo = FALSE
+  )
 
 # Load packages
 library(here)
@@ -257,10 +266,8 @@ assumption_summary_rearing <- assumption_summary_rearing_interm %>%
     meanInitBiomass_kg = mean(meanInitBiomass_kg, na.rm = TRUE), # kg
     
     # FEED INPUT DEPENDS ON ABM!!!
-    
-    meanABM_kg = mean(meanABM_kg, na.rm = TRUE), 
-    #meanABM_kg = 150,
-    
+    meanABM_kg = if_else(local(params$feed_manual) == TRUE, local(params$feed_manual_amount_kg), mean(meanABM_kg, na.rm = TRUE)), 
+
     
     meanBiomass_kg_Density_derived = mean(meanRearingV_m3 * density_kg_m3,na.rm = TRUE),
     meanFBM_kg = mean(meanFBM_kg, na.rm = TRUE),
