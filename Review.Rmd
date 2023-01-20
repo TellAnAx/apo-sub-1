@@ -39,7 +39,7 @@ When discussing aquafeeds as nutrient input, it is important to consider their r
 
 
 
-```{r pathwaydigestion, fig.cap="A simple graphical representation of nutrient flows and excretion patterns in aquatic animals (from Bureau and Hua, 2010).", echo=FALSE}
+```{r pathwaydigestion, fig.cap="A simple graphical representation of nutrient flows and excretion patterns in aquatic animals [@Bureau2010].", echo=FALSE}
 
 knitr::include_graphics("images/2010_Bureau.png")
 ```
@@ -58,7 +58,7 @@ Tap water can vary in its composition, depending on its origin such as surface o
 
 
 
-```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 mg/L. Y-axis: Percentage of sampling points (from Stumm and Morgan, 1996).", echo=FALSE}
+```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 $\text{mg L}^{-1}$. Y-axis: Percentage of sampling points [@Stumm1996].", echo=FALSE}
 
 knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
 ```
@@ -194,12 +194,9 @@ knitr::include_graphics("images/data_analysis_flow.png")
 
 ## Origin of nutrients
 To calculate the proportion contribution of the source water, feed and alkalinity supplements to the total daily nutrient input in the reviewed studies, their average daily inputs per volume unit had to be calculated. For this purpose, statistics describing the average experimental system, system parameters and nutrient inputs were derived from the IDS and merged with external data sources in a four-stage process.
-The first step comprised the generation of system assumptions. For this purpose, a filter was applied to the IDS, only including studies that made use of an aquaculture unit, reported the total system volume and the final bodyweight of the livestock at the end of the experiment. The resulting filtered dataset (FDS1) held 39 observations from 10 publications. 
 
-
-
-```{r Contribution: Number of publications, echo=FALSE, warning=FALSE, message=FALSE}
-read_csv(here("results", "contribution_rearing_data.csv")) %>% 
+```{r Contribution: Number of publications, message=FALSE, warning=FALSE, include=FALSE}
+report_pubs_obs <- read_csv(here("results", "contribution_rearing_data.csv")) %>% 
   summarise(
     observations = n(),
     publications = length(unique(Reference_ID))
@@ -210,7 +207,7 @@ read_csv(here("results", "contribution_rearing_data.csv")) %>%
     unique(Reference_ID)
   )
 ```
-
+The first step comprised the generation of system assumptions. For this purpose, a filter was applied to the IDS, only including studies that made use of an aquaculture unit, reported the total system volume and the final bodyweight of the livestock at the end of the experiment. The resulting filtered dataset (FDS1) held `r report_pubs_obs$observations` observations originating from `r report_pubs_obs$publications` publications. 
 FDS1 was used to calculate the average system volume ($\text{V}_{tot}$), average bodyweight ($ABW$), average number of livestock ($AN$), average livestock density ($AD$), and average water exchange rate ($AWE$). $ABW$ was defined as the mean bodyweight during the duration of experiment and was calculated as the arithmetic mean of the initial and final bodyweight. For the calculation of $AD$, $AN$ and $AWE$, \emph{NA} values were removed. 
 Eventually, the average biomass ($ABM$) was computed by multiplication of $ABW$ with $AN$ or, if only $AD$ was given, by multiplication of $AD$ with $\text{V}_{tot}$. Vice versa, in case $AD$ was not reported, it was calculated by dividing $ABM$ by $\text{V}_{tot}$. The average daily water exchange volume by multiplication of ($\text{V}_{tot}$) with $AWE$.
 
@@ -234,8 +231,7 @@ report_water_studies_total
 
 The second step was estimating the daily nutrient input via source water. For this purpose, gathered location information in the FDS was used to search for water analysis reports provided by the closest water treatment plant. Only official reports provided by local authorities and water utilities in the corresponding municipalities were used to ensure that analyses were conducted according to internationally accepted laboratory standards. Both literature data and collected water analysis reports originated from a total of `r report_water_total$Literature` countries, with `r report_water_studies_total$Literature` literature studies and `r report_water_studies_total$Reports` analysis reports. It was not possible to obtain water analysis reports from Finland, Iran, Israel and The Netherlands. Thus, reports from Austria, France, Portugal and Turkey were included instead. The country distribution of the literature data in comparison with gathered water analysis reports is shown in Figure \@ref(fig:waterCountries). 
 
-```{r waterCountries, fig.cap="Number of studies per country in comparison with the number of water analysis reports per country included in the source water dataset", echo=FALSE}
-
+```{r waterCountries, fig.cap=paste0("Number of studies per country in comparison with the number of water analysis reports per country included in the source water dataset. Literature: n = ", report_water_studies_total$Literature, "; reports: ", report_water_studies_total$Reports, "."), echo=FALSE}
 
 knitr::include_graphics("plots/contribution_waterData_countryPlot.png")
 ```
@@ -243,7 +239,7 @@ knitr::include_graphics("plots/contribution_waterData_countryPlot.png")
 In water analysis, it is common practice to report the value of the detection limit instead of the measured value in case that the analyte concentration found was below the sensitivity of the instrument used for measurement [@DIN32645]. Figure \@ref(fig:waterAnalysesPerCountry) shows the proportion of data for all considered analytes in the water analysis reports that were found to be below the detection limit. Retaining the detection limits in the dataset leads to mean concentration estimates that are too high. Therefore, concentration data was recalculated using the *cenmle()* function from the R package *NADA* by maximum likelihood estimation (MLE) [@Helsel2011]. This ensured that the estimates for nutrient concentrations in tap water were reliable. The output was eventually used to calculate the two-sided 90% confidence interval for the concentration of each nutrient to describe the concentration range that will be found in 90% of all cases where tap water is used. 
 Finally, multiplying the obtained concentrations with $AWE$ yielded the upper and lower limits of the 90% confidence interval of total daily individual plant nutrient inputs via source water.
 
-```{r waterAnalysesPerCountry, fig.cap="Proportion of water analysis observations per analyte reported to be below detection limit (n = XXX).", echo=FALSE, message=FALSE, warning=FALSE}
+```{r waterAnalysesPerCountry, fig.cap=paste0("Proportion of water analysis observations per analyte reported to be below detection limit (n = ", report_water_studies_total$Reports, ")."), echo=FALSE, message=FALSE, warning=FALSE}
 
 knitr::include_graphics("plots/contribution_waterData_belowLimit.png")
 ```
@@ -292,18 +288,19 @@ The mass of Na, K or Ca can consequently be calculated by rearranging equation \
 ## Fate and behavior of nutrients
 
 ### Assumptions and data selection
-The IDS was filtered for studies that were reporting the pH of the rearing water, did not conduct a plant growth trial and maintained aerobic conditions. The resulting FDS comprised 25 observations originating from 16 publications.
-Due to aerobic conditions, metals were assumed to be present in their reduced forms, for instance [Fe$^{3+}$] >> [Fe$^{2+}$], with values in brackets denoting for molar concentrations. The systems in all observations were considered open systems, resulting in dissolved CO$_{2}$ being in equilibrium with atmospheric CO$_{2}$ at a partial pressure of $p_{\text{CO}_{2}} = 0.054 \text{ atm}$. According to Henry's Law, this would result in a concentration of [CO$_{2}$(aq)]$_{total} = K_{H} \cdot p_{\text{CO}_{2}} = 0.018$ mol L$^{-1}$, using the Henry constant of $K_{H} = 3.4 \cdot 10^{-2} \text{ mol L}^{-1} \text{ atm}^{-1}$ [@Stumm1981].
-
 ```{r include=FALSE}
 references <- data.frame(refs = list.files("data"))
 
-references %>% 
+report_fate_pubs <- references %>% 
   separate(refs, into = c("author", "treatment"), sep = "(?<=[[:digit:]]{4})") %>% 
-  summarise(
-    unique(author)
-  )
+  summarise(author = unique(author)) %>% 
+  filter(author != "contribution" & author != "solubility" & author != "excluded") %>% 
+  summarise(authors = n())
 ```
+The IDS was filtered for studies that were reporting the pH of the rearing water, did not conduct a plant growth trial and maintained aerobic conditions. The resulting FDS comprised 25 observations originating from `r report_fate_pubs$authors` publications.
+Due to aerobic conditions, metals were assumed to be present in their reduced forms, for instance [Fe$^{3+}$] >> [Fe$^{2+}$], with values in brackets denoting for molar concentrations. The systems in all observations were considered open systems, resulting in dissolved CO$_{2}$ being in equilibrium with atmospheric CO$_{2}$ at a partial pressure of $p_{\text{CO}_{2}} = 0.054 \text{ atm}$. According to Henry's Law, this would result in a concentration of [CO$_{2}$(aq)]$_{total} = K_{H} \cdot p_{\text{CO}_{2}} = 0.018$ mol L$^{-1}$, using the Henry constant of $K_{H} = 3.4 \cdot 10^{-2} \text{ mol L}^{-1} \text{ atm}^{-1}$ [@Stumm1981].
+
+
 
 ### Complexation, mineral saturation and precipitation
 The complexation of plant nutrients by dissolved organic matter (DOM) was simulated using a Gaussian DOM model [@Grimm1991]. It was assumed that DOM is present in the systems at a concentration of 20 mg L$^{-1}$. The charge of the DOM species was calculated according to database values.
@@ -449,7 +446,7 @@ table <- read_csv("results/contribution_plotdata.csv") %>%
 
 #table$Nutrient <- fct_relevel(table$Nutrient, c("N", "P", "K", "Ca", "Mg", "S", "B", "Fe", "Mn", "Cu", "Zn", "Mo", "Ni", "Na")
 
-knitr::kable(table, escape = FALSE, caption = "Compositions of nutrient sources and daily inputs. Shown are the averages for both aquafeeds and source water and the lower and upper limits of the \\text interval for the source water. Source water: n = 64; Aquafeeds: n = 54", label = "nutrientComposition")
+knitr::kable(table, escape = FALSE, caption = paste0("Compositions of nutrient sources and daily inputs. Shown are the averages for both aquafeeds and source water and the lower and upper limits of the \\text interval for the source water. Source water: n = ", report_water_studies_total$Reports, "; Aquafeeds: n = 9"), label = "nutrientComposition")
 ```
 
 
@@ -465,45 +462,26 @@ temp <- table %>%
 colnames(temp) <- c("nut", "totfeed", "totwat", "totalk", "sum", "percfeed", "percwat", "percalk")
 
 temp <- temp %>% 
+  arrange(desc(percalk)) %>%
   print() %>% 
   pivot_wider(names_from = nut, values_from = totfeed:percalk) %>% 
   print()
 ```
 
-It is evident that the highest daily nutrient input usually originates from the aquafeeds
+
+The results show that the highest daily nutrient inputs with respect to the macronutrients N and P originated on average from aquafeeds, being `r temp$percfeed_N`% and `r temp$percfeed_P`%, respectively. Aquafeeds were also the main source of the micronutrients Fe, Mn, Cu, Zn, and Mo, with a contribution of `r temp$percfeed_Fe`%, `r temp$percfeed_Mn`%, `r temp$percfeed_Cu`%, `r temp$percfeed_Zn`% and `r temp$percfeed_Mo`%, respectively. The remaining proportion could be accounted to the source water. 
+Meanwhile, source water had a comparably high contribution to Mg (`r temp$percwat_Mg`%) and S (`r temp$percwat_S`%), delivering more than half of the daily inputs on average. Also, a considerable contribution to daily B (`r temp$percwat_B`%) and Ni (`r temp$percwat_Ni`%) inputs originated from the source water.
+It is evident from the results that the addition of alkalinity supplements heavily impacts both the 
+Inputs of the remaining two nutrients, K and Ca, were found to be heavily depending on the alkalinity supplement used. In absence of the alkalinity supplement, aquafeeds were found to have the greatest impact on K with a contribution of `r temp$totfeed_K / (temp$totfeed_K + temp$totwat_K) * 100`%, while a higher proportion of Ca (`r temp$totwat_Ca / (temp$totfeed_Ca + temp$totwat_Ca) * 100`%) would enter the system on average via the water, compared with `r temp$totfeed_Ca / (temp$totfeed_Ca + temp$totwat_Ca) * 100`% of feed contribution. The difference is more pronounced with respect to Na: `r temp$totwat_Na / (temp$totfeed_Na + temp$totwat_Na) * 100`% of the total input was calculated to originate from water while only `r temp$totfeed_Na / (temp$totfeed_Na + temp$totwat_Na) * 100`% were found to enter the system via daily feeding. 
+However, the calculated quantities of alkalinity supplements necessary to maintain a constant pH were found to dominate each input scenario, resulting in a contribution of more than 80% of the total input of K, Ca, or Na in any case. Using one of the substances mentioned in \@ref(tab:alkalinitySuppl) would result in the supplement contributing `r temp$percalk_K`%, `r temp$percalk_Ca`% or `r temp$percalk_Na`% of the total K, Ca or Na input, respectively.
+The ranges of the above-stated findings with respect to the calculated 90% confidence interval of the nutrient concentrations in source water are graphically presented in \@ref(fig:contributionPlot).
 
 
-Figure \@ref(fig:contributionPlot) visualises the proportion of the daily total nutrient inputs from each nutrient source after consideration of aquafeed digestibility.
-The results confirm that aquafeeds were the main nutrient source in the reviewed studies. Considering the range of the possible nutrient contribution by source water that is given by the upper and lower limits of the \\text interval, it was found that aquafeeds provided between 99.8% and 99.9% of N, 99.7% and 99.9% of P, 94.4% and 94.4% and 96.8% of K. They were thus contributing almost nearly the total amount of the most important macronutrients. In addition, aquafeeds were the main contributors to the daily total input of Fe (98.9% to 99.4%), Mn (98.5% to 99.5%), Mo (93.0% to 96.4%), and Zn (98.0% to 100%). The variability for these plant nutrients was comparably low.
-The most variable plant nutrient with respect to its source concentration was found to be Cu with a contribution of aquafeeds between 71.9% and 100% to the total daily inputs. The variability of the following plant nutrients decreased in descending order: B (68.8% to 80.1%), Ni (75.5% to 86.6%), S (64.1% to 74.8%), Mg (54.0% to 62.9%), and Ca (64.1% to 70.1%).
-Interestingly, aquafeeds were found not to be the predominant input route of Na (38.4% to 55.7%) on average. 
-show the same plots under addition of KOH and Ca(OH)$_{2}$ to adjust the pH, respectively.
-It becomes evident that the addition of pH adjusting substances results in them becoming the main input route of the cation they are containing (K, Ca or Na).
-decreasing the share of the feed from XXX% to YYY% if KOH is added. The use of Ca(OH)$_{2}$ leads to only half of the molar input of Ca compared to K as its hydroxide contains two hydroxide ions. However, it is still contributing almost 100% of the daily total Ca input while the shares of feed and water are dropping to XXX% and YYY%, respectively.
 
-
-```{r contributionPlot, fig.cap="Relative contribution of source water, feed and alkalinity supplements to total daily nutrient inputs in aquaculture and aquaponic systems. Shown are scenarios reflecting the lower and upper limit of the 90% confidence interval of concentration data from source water. Data derived from water analysis (n = 69) and commercial feed analysis reports (n = 9), taking digestibility and retention of feed nutrients into account by assuming 90% apparent digestibility of N, 50% apparent digestibility of all other plant nutrients, 50% retention of the digestible mass fraction by livestock and 100% purity of alkalinity supplements.", echo=FALSE}
+```{r contributionPlot, fig.cap=paste0("Relative contribution of source water, feed and alkalinity supplements to total daily nutrient inputs in aquaculture and aquaponic systems. Shown are scenarios reflecting the lower and upper limit of the 90% confidence interval of concentration data from source water. Data derived from water analysis (n = ", report_water_studies_total$Reports, ") and commercial feed analysis reports (n = 9), taking digestibility and retention of feed nutrients into account by assuming 90% apparent digestibility of N, 50% apparent digestibility of all other plant nutrients, 50% retention of the digestible mass fraction by livestock and 100% purity of alkalinity supplements."), echo=FALSE}
 
 knitr::include_graphics("plots/contribution_sources_retentionincl.png")
 ```
-
-
-
-
-```{r eval=FALSE, include=FALSE}
-
-read_csv(here::here("results", "contribution_plotdata.csv")) %>% 
-  mutate(water = factor(water, labels = c("water5", "water95"))) %>% 
-  
-  group_by(water, nutrient, Contribution) %>% 
-  summarise(
-    #contrib = Contribution,
-    #Total = unique(Total),
-    sum = sum(Total), 
-    prop_perc = Total/sum * 100
-  )
-```
-
 
 
 
@@ -535,7 +513,7 @@ The highest average affinity for the formation of complex molecules was found fo
 
 
 
-```{r species, fig.cap="Complexation of cationic plant nutrients by DOM. Shown is the complexated proportion relative to the total concentration of the affected cationic plant nutrients in solution. Cation concentrations are derived from selected aquaponic studies (n = XXX). Calculations were made using Visual MINTEQ (Gaussian DOM) under the assumption that  $20 \text{ mg L}^{-1}$ of DOM are present in each system.", echo=FALSE}
+```{r species, fig.cap=paste0("Complexation of cationic plant nutrients by DOM. Shown is the complexated proportion relative to the total concentration of the affected cationic plant nutrients in solution. Cation concentrations are derived from selected aquaponic studies (n = ", report_fate_pubs$authors, "). Calculations were made using Visual MINTEQ (Gaussian DOM) under the assumption that  $20 \text{ mg L}^{-1}$ of DOM are present in each system."), echo=FALSE}
 
 knitr::include_graphics("plots/boxplot_species_dom_vm.png")
 ```
@@ -564,7 +542,7 @@ read_csv(here::here("results", "logQK.csv")) %>%
 
 
 
-```{r saturation, fig.cap="Boxplot of mineral saturation indices of cations in relation to different anions calculated from aquaponic studies. Dashed red line describes 100% saturation. Observations above the line indicate over-, those below the line undersaturation. Observations below but close to zero indicate solubility control by formation of a precipitate by the corresponding cation-anion combination.", echo=FALSE}
+```{r saturation, fig.cap=paste0("Boxplot of mineral saturation indices of cations in relation to different anions calculated from aquaponic studies. Dashed red line describes 100% saturation. Observations above the line indicate over-, those below the line undersaturation. Observations below but close to zero indicate solubility control by formation of a precipitate by the corresponding cation-anion combination."), echo=FALSE}
 
 knitr::include_graphics("plots/boxplot_empirical_saturation_vm.png")
 ```
@@ -613,7 +591,7 @@ Much less prone for precipitation were $\text{Ca}^{2+}$, $\text{Cu}^{2+}$ and $\
 
 
 
-```{r precipitation, fig.cap="Percentage of total amounts of plant nutrients present in solution that is prone to precipitation. Data originating from n = XXX publications.", echo=FALSE}
+```{r precipitation, fig.cap=paste0("Percentage of total amounts of plant nutrients present in solution that is prone to precipitation. Data originating from n = ", report_fate_pubs$authors, " publications."), echo=FALSE}
 
 knitr::include_graphics("plots/violinplot_precipitated2_vm.png")
 ```
@@ -628,6 +606,12 @@ knitr::include_graphics("plots/violinplot_precipitated2_vm.png")
 
 ## Data integrity
 
+However, removing the affected observations would result in a loss a large proportion of the data.
+
+
+
+## Contribution of nutrient sources to total daily nutrient inputs
+
 The contribution of different nutrient sources to the total daily nutrient inputs into an aquaponic system were compared based on assumptions derived from literature.
 Overall, the current input scenario confirms that fish feed is the major nutrient input route. Though, the results reveal that the source water is contributing an average of 50% of the total Na input, 30% of the Ca, 40% of Mg and 30% of S. Considering that salinity stress, ergo high Na concentrations, are toxic for most plants [@Wu2018], it is desirable to limit the influx into the system.
 In the following, the assumptions are discussed. The average stocking density of 12.4 kg m$^{-3}$ that was used for the nutrient contribution calculations can be considered representative for the intensive cultivation of *Oreochromis* spp. (El-Sayed, 2019). 
@@ -641,14 +625,9 @@ Another aspect with respect to the contribution of feeds is that the feed compos
 
 
 % water data
-However, removing the affected observations would result in a loss a large proportion of the data.
 
+Nutrients x from source water check [@Shaw2022] for citations to [@Delaide] and [@Strauch]
 
-
-
-
-## Contribution of nutrient sources to total daily nutrient inputs
-The current input scenarios are 
 
 
 
@@ -656,9 +635,14 @@ The current input scenario lacks the consideration of the water removal step dur
 The total nutrient input calculations are therefore only valid if there is no nutrient loss through the removal of water but instead full retention of all nutrients within the system. This could be possible in systems where only evaporated water is refilled. However, such a scenario would come with a much lower water input rate than currently assumed.
 
 
+In biofilters, both nitrification and denitrification processes usually occur due to partially anoxic conditions, for instance within biofilms. Denitrification yields alkalinity [@Timmons2010]. Thus, and due to other biotic processes in the system, it is likely that the daily quantity of alkalinity supplements was overestimated.  
+
+
 
 ## Fate and behavior of nutrients
 Nutrient imbalances are mentioned as causative factor for inconsistent performance of aquaponic systems. It was thus intended to pinpoint whether those imbalances occur due to lacking supply or due to physico-chemical constraints that are controlling the maximum concentration of the affecteed nutrients. Considering that aquaponic systems contain DOM, complexation percentages of plant nutrients by DOM were calculated to identify the proportion of plant nutrients available for precipitation reactions. Saturation indices were eventually calculated to identify saturated nutrients. Those were finally assessed with respect to the percentage saturation to find out what proportion of these nutrients might remain in solution. 
+
+
 The limitations of Ca, Fe and Cu that were found in the scope of this study are in line with previous publications [@Goddek2015; Bittsanszky2016]. Empirical studies  intending to manipulate the concentrations of these compounds by increasing their inclusion rate into aquafeeds could not find an effect [@Seawright1998].
 
 
@@ -666,6 +650,12 @@ The limitations of Ca, Fe and Cu that were found in the scope of this study are 
 that could not find an increase in the concentration of these compounds in solution if the feed inclusion rate was increased (Shaw, Seawright). Nutrient imbalances appear thus to be a result of chemical constraints. It can be further hypothetised that reported nutrient losses are due to the formation of precipitates in the system [@Delaide2017]. If precipitation occurs in inaccessible places such as the inside of pipes or other surfaces, these nutrients will not be taken into account when analysing, for instace, sludge samples. The nutrients would, however, not be lost but instead they are deposited out of reach.
 On the other hand, considering the positive saturation index values that were found for Fe and Mn, it is likely that other factors are controlling their solubility. Both ions might be kept in solution due to organic matter that is a natural ligand, forming chelates. However, this would lead to an increase in dissolved phosphate that might eventually form precipitates with other compounds or could be taken up by plants. 
 
+
+Even conidering the source of input data, concentrations of DOM were at the lower edge of concentrations to be expected in RAS [@Steinberg2018]. In intensive production, stocking densities and feed loads are much higher. On the other hand, few of the reviewed studies made use of experimental systems that were already running for an extended period of time. A significant build-up of DOM is thus not expected which might justify the comparably low concentrations used in the model.
+
+DOM interactions were modeled using a Gaussian model. Nowadays, the NICA-Donnan model is mostly used. 
+
+Interestingly, $\text{Ca}^{2+}$ was most affected by precipitation with $\text{PO}_{4}^{2-}$ in the predictions while $\text{Fe}^{3+}$ was predicted to precipitate with $\text{OH}^{-}$. This would explain 
 
 
 
