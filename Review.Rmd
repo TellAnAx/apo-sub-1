@@ -58,7 +58,7 @@ Tap water can vary in its composition, depending on its origin such as surface o
 
 
 
-```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial waters. X-axis: logarithmic concentration of compounds. 1 ppm = 1 $\text{mg L}^{-1}$. Y-axis: Percentage of sampling points [@Stumm1996].", echo=FALSE}
+```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial waters. X-axis: logarithmic concentration of compounds. 1 ppm = 1 $\text{mg L}^{-1}$. Y-axis: Percentage of sampling points [@Stumm1981].", echo=FALSE}
 
 knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
 ```
@@ -585,10 +585,7 @@ temp$wat5_Mg / temp$wat95_Mg * 100
 temp$wat5_S / temp$wat95_S * 100
 ```
 
-Overall, the current input scenario confirmed that aquafeeds, after consideration of its digestibility and nutrient retention by fish, serve as major nutrient input route for N, P, K, Fe, Mn, Cu, Zn, and Mo. These results confirm prior findings [@Delaide2017]. Considering variability among locations, it could furthermore be confirmed that Ca, Mg, S, B and Na originate from source water. However, 
-
-Though, the results reveal that the source water is contributing an average of 50% of the total Na input, 30% of the Ca, 40% of Mg and 30% of S. Considering that salinity stress, ergo high Na concentrations, are toxic for most plants [@Wu2018], it is desirable to limit the influx into the system.
-
+Overall, the current input scenario confirmed that aquafeeds serve as major nutrient input route for N, P, K, Fe, Mn, Cu, Zn, and Mo after consideration of digestibility and nutrient retention by fish. These results confirm prior findings [@Delaide2017]. Considering variability among locations, it could furthermore be confirmed that Ca, Mg, S, B and Na originate from source water. However, the variability found in the case of Ca $(min(\text{Ca}) = 70\% \cdot max(\text{Ca}))$ does not reflect the usual concentration range of approximately two orders of magnitude found in terrestrial waters [@Stumm1981]. A study reviewing the Ca concentration in tap waters from the USA and Canada found a range from 1 to 135 $\text{mg L}^{-1}$ [@Morr2006]
 Considering that the obtained results were obtained making use of assumptions, these initial assumptions need to be discussed. 
 The species distribution with strong emphasis on *Oreochromis* spp. and *Clarias gariepinus* matches with survey results obtained in Europe [@Villaroel2016], even though approximately half of the studies included in the dataset were conducted in the USA. However, surveys conducted in the USA also revealed that the species mostly cultivated in aquaponic systems are *Oreochromis* spp. [@Love2015; @Pattillo2022]. On the other hand, the average stocking density of `r report_assumptions_rearing$meanAD_kg_m3` kg m$^{-3}$ that was used for the nutrient contribution calculations can neither be considered representative for the intensive cultivation of *Oreochromis* spp. nor for *Clarias gariepinus*. While densities between 10 and 50 kg m$^{-3}$ are reported as acceptable for cultivation in RAS systems [@ElSayed2019], densities of 120 kg m$^{-3}$ were reported to be tolerated by the latter species without any adverse effects on fish health [@Nieuwegiessen2009].
 Even though salmonids such as *Oncorhynchus mykiss* are seldom reared in aquaponic systems, they can tolerate stocking densities up to 137 kg m$^{-3}$. Though, normal stocking densities range between 10 and 20 kg m$^{-3}$. The assumptions are rather on the lower end for salmonids [@Pennell1996]. *Cyprinus carpio* is an irrelevant species for aquaponic systems due to its low market price. Though, it was found that fish welfare can be guaranteed at a stocking density of around 28 kg m$^{-3}$, which is $\approx 4$ times higher than the assumed density [@Ruane2002]. Consequently, it can be expected that the contribution of aquafeeds to the total daily nutrient input under intensive conditions is considerably higher than assumed. 
@@ -597,9 +594,7 @@ Though, the nutrient contribution scenario might be representative for the culti
 Another aspect with respect to the contribution of feeds is that the feed composition is variable, depending on the selected species. Crude protein inclusion rates in commercial aquafeeds for the mentioned species range from $32\%$ for *O.* spp. [@ElSayed2019; @Wilson2003] to $50\%$ for *S. lucioperca* [@Geay2015].
 
 
-
-% water data
-Using analysis reports from municipal water suppliers can be considered valid as it was found by a prior survey that educators, including research institutions, usually make use tap water [@Love2015]. 
+With respect to the acquisition of water analysis data, using analysis reports from municipal water suppliers can be considered valid as it was found by a prior survey that educators, including research institutions, usually make use tap water [@Love2015]. 
 
 - Removing the affected observations would have resulted in a loss of a large proportion of the data and, in addition, would have led to an average value that is too high because the remaining data consisted only of concentration values that are high enough to be determined.
 
