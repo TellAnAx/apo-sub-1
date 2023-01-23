@@ -58,7 +58,7 @@ Tap water can vary in its composition, depending on its origin such as surface o
 
 
 
-```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial water. X-axis: logarithmic concentration of compounds. 1 ppm = 1 $\text{mg L}^{-1}$. Y-axis: Percentage of sampling points [@Stumm1996].", echo=FALSE}
+```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial waters. X-axis: logarithmic concentration of compounds. 1 ppm = 1 $\text{mg L}^{-1}$. Y-axis: Percentage of sampling points [@Stumm1996].", echo=FALSE}
 
 knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
 ```
@@ -322,38 +322,6 @@ However, the empirical concentrations are resembling the saturation concentratio
 
 
 
-###----------------------------------------------------------------------------
-
-
-The saturation concentration $S$ of the salt can eventually be calculated by rearranging Equation \@ref(eq:Ksp) as shown in Equation \@ref(eq:S).
-
-
-
-\begin{equation}
-  S = \sqrt[m+n]{\frac{K_{sp}}{m^{m} \cdot n^{n}}}
-  (\#eq:S)
-\end{equation}
-
-
-
-
-###----------------------------------------------------------------------------
-
-For instance, a concentration of $[\text{Fe}^{3+}] = [\text{PO}_{4}^{3-}] = 1\:\mu \text{mol L}^{-1}$ and the $K_{sp}(\text{FePO}_{4}) = 9.91 \cdot 10^{-16}$ [@Lide2007] results in 
-
-
-
-\begin{equation}
-  \log(\frac{Q}{K_{sp}}) = \log{\frac{[\text{Fe}^{3+}] \cdot [\text{PO}_{4}^{3-}]}{9.91 \cdot 10^{-16} \text{ mol}^{2}\text{ L}^{-2}}} = 3.0
-  (\#eq:exampleQK)
-\end{equation}
-
-
-
-
-If $\log(\frac{Q}{K}) = 0$, the concentration of ions is higher than their solubility under equilibrium conditions. The solution is thus not thermodynamically stable and the corresponding mineral precipitates. On the other hand, if $\log(\frac{Q}{K}) < 0$, more of the ions can dissolve until the equilibrium concentration is reached. In case that $\log(\frac{Q}{K}) > 0$, there are other factors such as complexation reactions that are increasing the solubility.
-
-All observations that were affected by precipitation ($\log(\frac{Q}{K}) = 0$) were eventually tested with regards to the concentration proportion that precipitated of the affected nutrient. 
 
 
 
@@ -608,44 +576,36 @@ knitr::include_graphics("plots/violinplot_precipitated2_vm.png")
 
 # Discussion
 
-
-## Data integrity
-
-However, removing the affected observations would result in a loss a large proportion of the data.
-
-
-
-
-
 ## Contribution of nutrient sources to total daily nutrient inputs
 The contribution of different nutrient sources to the total daily nutrient inputs into an aquaponic system were compared based on assumptions derived from literature.
 
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 temp$wat5_Ca / temp$wat95_Ca * 100
 temp$wat5_Mg / temp$wat95_Mg * 100
 temp$wat5_S / temp$wat95_S * 100
 ```
 
-Overall, the current input scenario confirmed that fish feed, after consideration of its digestibility and nutrient retention by fish, is the major nutrient input route for N, P, K, Fe, Mn, Cu, Zn, and Mo. These results confirm prior findings [@Delaide2017]. Considering variability among locations, it could furthermore be confirmed that Ca, Mg, S, B and Na originate from source water. 
-
-
+Overall, the current input scenario confirmed that aquafeeds, after consideration of its digestibility and nutrient retention by fish, serve as major nutrient input route for N, P, K, Fe, Mn, Cu, Zn, and Mo. These results confirm prior findings [@Delaide2017]. Considering variability among locations, it could furthermore be confirmed that Ca, Mg, S, B and Na originate from source water. However, 
 
 Though, the results reveal that the source water is contributing an average of 50% of the total Na input, 30% of the Ca, 40% of Mg and 30% of S. Considering that salinity stress, ergo high Na concentrations, are toxic for most plants [@Wu2018], it is desirable to limit the influx into the system.
 
+Considering that the obtained results were obtained making use of assumptions, these initial assumptions need to be discussed. 
+The species distribution with strong emphasis on *Oreochromis* spp. and *Clarias gariepinus* matches with survey results obtained in Europe [@Villaroel2016], even though approximately half of the studies included in the dataset were conducted in the USA. However, surveys conducted in the USA also revealed that the species mostly cultivated in aquaponic systems are *Oreochromis* spp. [@Love2015; @Pattillo2022]. On the other hand, the average stocking density of `r report_assumptions_rearing$meanAD_kg_m3` kg m$^{-3}$ that was used for the nutrient contribution calculations can neither be considered representative for the intensive cultivation of *Oreochromis* spp. nor for *Clarias gariepinus*. While densities between 10 and 50 kg m$^{-3}$ are reported as acceptable for cultivation in RAS systems [@ElSayed2019], densities of 120 kg m$^{-3}$ were reported to be tolerated by the latter species without any adverse effects on fish health [@Nieuwegiessen2009].
+Even though salmonids such as *Oncorhynchus mykiss* are seldom reared in aquaponic systems, they can tolerate stocking densities up to 137 kg m$^{-3}$. Though, normal stocking densities range between 10 and 20 kg m$^{-3}$. The assumptions are rather on the lower end for salmonids [@Pennell1996]. *Cyprinus carpio* is an irrelevant species for aquaponic systems due to its low market price. Though, it was found that fish welfare can be guaranteed at a stocking density of around 28 kg m$^{-3}$, which is $\approx 4$ times higher than the assumed density [@Ruane2002]. Consequently, it can be expected that the contribution of aquafeeds to the total daily nutrient input under intensive conditions is considerably higher than assumed. 
 
-In the following, the assumptions are discussed. The average stocking density of 12.4 kg m$^{-3}$ that was used for the nutrient contribution calculations can be considered representative for the intensive cultivation of *Oreochromis* spp. (El-Sayed, 2019). 
-This is different for *Clarias gariepinus*. The latter can be cultivated at stocking densities that are approximately ten times higher (~120 kg m$^{-3}$) without any adverse effects on fish health [@Nieuwegiessen2009].
-*Sander lucioperca* is a species for which low stocking densities (~5 kg m$^{-3}$) are recommended [@Kestemont2015].
-Even though salmonids such as *Oncorhynchus mykiss* are seldom reared in aquaponic systems, they can tolerate stocking densities up to 137 kg m$^{-3}$. Though, normal stocking densities  range between 10 and 20 kg m$^{-3}$. The assumptions are rather on the lower end for salmonids [@Pennell1996].
-*Cyprinus carpio* is an irrelevant species for aquaponic systems due to its low market price. Though, it was found that fish welfare can be guaranteed at a stocking density of around 28 kg m$^{-3}$, which is 2.3 times higher than the assumed density [@Ruane2002]. 
-It can thus be expected that the contribution of feed to the total daily nutrient input in case of  *C. gariepinus*  and *C. carpio* is considerably higher than assumed due to rearing conditions in the reviewed studies that are not representative for production  at commercial scale. In contrast, the assumptions might lead to an overestimation of the contribution of aquafeeds if *S. lucioperca* is the species of choice. 
-Another aspect with respect to the contribution of feeds is that the feed composition is variable, depending on the selected species. Crude protein inclusion rates in commercial aquafeeds for the mentioned species range from $32\%$ for *C. carpio* [@Wilson2003] to $50\%$ for percids  [@Geay2015].
+Though, the nutrient contribution scenario might be representative for the cultivation of *Sander lucioperca*. *S. lucioperca* is a species for which comparably low stocking densities (~5 kg m$^{-3}$) are recommended [@Kestemont2015].
+Another aspect with respect to the contribution of feeds is that the feed composition is variable, depending on the selected species. Crude protein inclusion rates in commercial aquafeeds for the mentioned species range from $32\%$ for *O.* spp. [@ElSayed2019; @Wilson2003] to $50\%$ for *S. lucioperca* [@Geay2015].
 
 
 
 % water data
+Using analysis reports from municipal water suppliers can be considered valid as it was found by a prior survey that educators, including research institutions, usually make use tap water [@Love2015]. 
 
-Nutrients x from source water check [@Shaw2022] for citations to [@Delaide] and [@Strauch]
+- Removing the affected observations would have resulted in a loss of a large proportion of the data and, in addition, would have led to an average value that is too high because the remaining data consisted only of concentration values that are high enough to be determined.
+
+
+
+
 
 
 
@@ -657,11 +617,17 @@ In biofilters, both nitrification and denitrification processes usually occur du
 
 
 
+
 ## Fate and behavior of nutrients
 Nutrient imbalances are mentioned as causative factor for inconsistent performance of aquaponic systems. It was thus intended to pinpoint whether those imbalances occur due to lacking supply or due to physico-chemical constraints that are controlling the maximum concentration of the affecteed nutrients. Considering that aquaponic systems contain DOM, complexation percentages of plant nutrients by DOM were calculated to identify the proportion of plant nutrients available for precipitation reactions. Saturation indices were eventually calculated to identify saturated nutrients. Those were finally assessed with respect to the percentage saturation to find out what proportion of these nutrients might remain in solution. 
+Overall, the results showed that the concentrations of Ca, Fe, Mn, Cu and P in form of $\text{PO}_{4}^{3-}$ were likely limiting in several studies assessing aquaponic systems. These findings are in line with descriptions by previous publications [@Goddek2015; Bittsanszky2016]. In addition, evidence was found that the formation of precipitates, namely oxides, hydroxides and phosphates, is the causative, limiting factor. 
 
 
-The limitations of Ca, Fe and Cu that were found in the scope of this study are in line with previous publications [@Goddek2015; Bittsanszky2016]. Empirical studies  intending to manipulate the concentrations of these compounds by increasing their inclusion rate into aquafeeds could not find an effect [@Seawright1998].
+
+The formation of amorphous $\text{Fe(OH)}_{3}$ is indeed likely under the given conditions due to hydrolytic polymerization of $\text{[Fe(H}_{2}\text{O)}_{6}\text{]}^{3+}$, which is the dissolved form of $text{Fe}^{3+}$ under ambient conditions, while the formation of Hematite or Goethite would require the supply of energy [@Cornell1989]. Other studies furthermore report the formation of complexes with DOM such as fulvic acid, resulting in a significant increase of the maximum concentration [@Cerozi2020]. Complexation is one of the most important processes in terms of Fe solubilisation [@Schwertmann1991]. The negligible complexation by DOM that was found in the scope of this study might be a result of inappropriate model selection. Models such as the NICA-Donnan model [@Koopal2005] might be more suitable for the prediction of DOM interactions with cations in solution.  
+
+
+Interestingly, considering empirical studies intending to manipulate the concentrations of plant nutrients in solution by increasing their inclusion rate into aquafeeds or rearing more fish, resulting in higher feed inputs, Ca concentrations remained constant while a threshold of $\text{PO}_{4}^{3-}$ was not reached [@Seawright1998; @Shaw2022].
 
 
 
@@ -671,20 +637,17 @@ On the other hand, considering the positive saturation index values that were fo
 
 Even conidering the source of input data, concentrations of DOM were at the lower edge of concentrations to be expected in RAS [@Steinberg2018]. In intensive production, stocking densities and feed loads are much higher. On the other hand, few of the reviewed studies made use of experimental systems that were already running for an extended period of time. A significant build-up of DOM is thus not expected which might justify the comparably low concentrations used in the model.
 
-DOM interactions were modeled using a Gaussian model. Nowadays, the NICA-Donnan model is mostly used. 
 
-Interestingly, $\text{Ca}^{2+}$ was most affected by precipitation with $\text{PO}_{4}^{2-}$ in the predictions while $\text{Fe}^{3+}$ was predicted to precipitate with $\text{OH}^{-}$. This would explain 
 
 
 
 
 ## Implications for the formulation of tailored aquaponics feeds
 The formulation of a dedicated aquaponics feed is seen as potentially user-friendly and rapid way of adding nutrients to the system, resulting in close-to optimum concentrations for the plants.
+An alkaline metal that is of interest with respect to aquapfeeds tailored for aquaponics is Na. The nutrient contribution scenarios showed that source water likely had the largest impact on the Na concentrations found in solution. However, 
+It is reasonable to focus on well-soluble nutrients that were not found to be constrained by precipitation reactions. Potential candidates that are fulfilling these requirements are alkaline metals such as K. Empirical studies confirmed that the concentration of K in solution can be altered by different increasing the aquafeed supply or the inclusion rate of K in the feed [@Seawright1998; @Shaw2022]. However, considering the contribution of feed in comparison with alkalinity supplements containing K, it is a question of costs whether it is reasonable to create a feed with a 
 
-It is reasonable to focus on well-soluble nutrients that were not found to be constrained by precipitation reactions. Potential candidates that are fulfilling these requirements are alkaline metals such as K. The solubility of salts containing K is usually within the range of several grams per liter. Losses of K due to the formation of precipitates is thus unlikely. Other studies confirmed that the concentration of K in solution can be altered by different inclusion rates of K [@Seawright1998; @Shaw2022]. The same was also suggested by the nutrient release coefficient concept that was recently suggested [@Cerozi2022].
-However, considering the contribution of feed in comparison to the contribution of KOH, if used for pH management, it is questionable what makes more sense
 
-Another alkaline metal that is of interest with respect to aquapfeeds tailored for aquaponics is Na. 
 
 Explicitly considering an increased delivery of plant nutrients other than K might be counterproductive, considering the potential precipitation of these nutrients. 
 
