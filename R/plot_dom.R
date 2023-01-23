@@ -33,7 +33,7 @@ boxplot_dom <- read_csv("results/dom.csv") %>%
   scale_fill_brewer(palette = "Set1", direction = -1) +
   
   labs(
-    x = "Percentage of total conc.",
+    x = "Percentage of total conc. complexed",
     y = "Complexed cation"
   ) + 
   

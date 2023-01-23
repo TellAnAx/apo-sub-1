@@ -4,7 +4,7 @@ boxplot_saturation <- read_csv(here::here("results", "logQK.csv")) %>%
   
   
   
-  #filter(logQK > -1) %>% 
+  #filter(logQK > -3) %>% 
   
   
   
@@ -34,25 +34,30 @@ boxplot_saturation <- read_csv(here::here("results", "logQK.csv")) %>%
     anion = factor(
       anion,
       levels = c(
-        "H+1",
+        "OH-",
         "PO4-3",
         "CO3-2",
         "SO4-2",
-        "NO3-1"
+        "NO3-1",
+        "H3BO3",
+        "O-2"
       ),
       labels = c(
-        expression(H^{"+"}),
+        expression(OH^{"-"}),
         expression(PO[4]^{3*"-"}),
         expression(CO[3]^{2*"-"}),
         expression(SO[4]^{2*"-"}),
-        expression(NO[3]^{"-"})
+        expression(NO[3]^{"-"}),
+        expression(B(OH[4])^{"-"}),
+        expression(O^{2*"-"})
       ),
       exclude = c(
-        "H2O",
-        "H3BO3"
+        "H2O"
       )
     )
   ) %>% 
+  
+  filter(logQK > -25) %>% 
   
   ggplot(aes(x = anion, y = logQK, fill = anion)) +
   geom_boxplot() +
@@ -61,6 +66,9 @@ boxplot_saturation <- read_csv(here::here("results", "logQK.csv")) %>%
   scale_x_discrete(labels = rlang::parse_exprs) + 
   facet_wrap(facets = vars(cation), labeller = label_parsed) +
   
+  lims(
+    y = c(-5, 1.5)
+  ) + 
   labs(
     x = "Anion",
     y = 'log(Q/K)'
