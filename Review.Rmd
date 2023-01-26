@@ -23,75 +23,53 @@ library(bookdown)
 library(png)
 ```
 
+# Abstract
+
+
+
 
 
 # Introduction
-Aquaponics is a hybrid food production system, coupling aquaculture and soilless horticulture (hydroponics). In comparison with uncoupled, independent systems, advocates of the aquaponics principle with an aquaculture background claim that added value is created by preventing the release of aquaculture wastes into the environment but converting them into edible yield instead [@Turnsek2020]. Furthermore, it was found that there is no significant difference in the yield of several leafy greens such as lettuce, spinach, basil, dill, coriander, parsley, rook and even fruiting plants such as tomato that can be achieved in aquaponic versus hydroponic systems [@Lennard2019; @Atique2022; @Anderson2017; @Maucieri2019a; @Suhl2016; @Pantanella2012]. This is noteworthy against the background that nutrient deficiencies are frequently reported when comparing the nutrient concentrations in aquaponic systems with those usually targeted in hydroponics [@Lunda2019; @Robaina2019; @Graber2009; @Bittsanszky2016]. On the other hand, the system's complexity adds extra costs to aquaponics. Achieving similar yield is thus seen as insufficient to render aquaponics competitive under present circumstances when compared with conventional hydroponics [@Quagrainie2017]. Interestingly, aquaponics seems to offer the potential to reach even higher yields than in hydroponics if certain nutrients are amended. This was described for lettuce [@Monsees2019; @Delaide2016], basil [@Rodgers2022] and tomato [@Roosta2013]. However, a simple “off-the-shelf” solution for the management of plant nutrients that is as easy to use as the commercially available and fine-tuned plant fertilizers used in hydroponics is largely lacking. The development of a specific feed for aquaponic systems, hereinafter denoted as aquafeed, is thought to be such a solution [@Lennard2017; @Eck2019]. 
+Aquaponics is a hybrid food production system, coupling aquaculture and soilless horticulture (hydroponics). Compared with uncoupled, independent systems, advocates of the aquaponics principle with an aquaculture background claim that added value is created by preventing the release of aquaculture wastes into the environment but converting them into edible yield instead [@Turnsek2020]. Furthermore, it was found that there is no significant difference in the yield of several leafy greens such as lettuce, spinach, basil, dill, coriander, parsley, rook and even fruiting plants such as tomato that can be achieved in aquaponic versus hydroponic systems [@Lennard2019; @Atique2022; @Anderson2017; @Maucieri2019a; @Suhl2016; @Pantanella2012]. This is noteworthy against the background that nutrient deficiencies are frequently reported when comparing the nutrient concentrations in aquaponic systems with those usually targeted in hydroponics [@Lunda2019; @Robaina2019; @Graber2009; @Bittsanszky2016]. As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B) [@Marschner2012]. The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion [@Mengel2001].
+A major problem regarding the commercial viability of aquaponic systems arises from the system's complexity, adding extra costs to the budget. Achieving similar yields as hydroponics is thus seen as insufficient to render aquaponics competitive under present circumstances compared to conventional hydroponics [@Quagrainie2017]. Interestingly, aquaponics seems to offer the potential to reach even higher yields than hydroponics if certain nutrients are amended as described for lettuce [@Monsees2019; @Delaide2016], basil [@Rodgers2022] and tomato [@Roosta2013]. This raises the issue of whether it is possible to streamline nutrient inputs in such way that extraordinary manual interventions become obsolete.
 
-As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B) [@Marschner2012]. The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion [@Mengel2001].
+## Nutrient sources
+Nutrients enter aquaponic systems through the source water, alkalinity supplements for pH control and the daily ration of feed for the aquatic livestock, hereinafter denoted as aquafeed [@Eck2019; @Robaina2019; @Rakocy2006]. 
 
-In aquaponic systems, the main sources of nutrients are considered to be aquafeeds and the source water [@Eck2019; @Robaina2019]. In addition, alkalinity supplements can play an important role in the supply of nutrients [@Rakocy2006]. However, the contribution of each of these nutrient sources to the total nutrient input and its variability remains unclear. Only one study compared the amount of nutrients originating from the aquafeed "as is" with that from the source water to the best of the authors knowledge [@Delaide2017].
-
-However, when discussing aquafeeds as nutrient input route, it is important to consider the digestibility and retention of particular nutrients because plant nutrients are only available for plant uptake via the roots if they are present in dissolved form. As shown in Figure \@ref(fig:pathwaydigestion), excretion of the indigestible mass fraction of the ingested feed takes place in form of solid matter while the digestible mass fraction is eventually utilized to sustain the basal metabolism, somatic growth and reproductive activity of the animal. The metabolic end products are then excreted in the form of dissolved matter via the gills and the urinary system [@Evans2005; @Hardy2003a].
-
-
-
-```{r pathwaydigestion, fig.cap="A simple graphical representation of nutrient flows and excretion patterns in aquatic animals [@Bureau2010].", echo=FALSE}
-
-knitr::include_graphics("images/2010_Bureau.png")
-```
-
-
-
-N that is, for the most part, present as crude protein (CP) in aquafeeds, is usually well-digestible, with apparent digestibility coefficients (ADC) of feed ingredients usually being above 70% and on average approximately 90% [@IAFFD2021; @Guillaume2001]. The excretion of N as end product of the protein and amino acid catabolism takes place in form of ammonia ($\text{NH}_{3}$) and, to a small extent, urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski2003]. 
-
-A less digestible nutrient is P with ADC ranging from 70% to only 40% and a resulting excretion of 30% to 60% of the supply [@Lall2003; @Sugiura2018]. Especially plant ingredients in aquafeeds can cause low ADC if they are rich in phytic acid. Phytic acid is poorly digestible and can furthermore reduce the digestibility of minerals in the feed. This might also explain contradictory information in literature with reported renal excretion rates of 90% of the total excreta [@Lall2003] in contrast to  estimates of 28% of excretion taking place in dissolved form and 30% to 64% excreted as particulate P [@Dabrowski2003].
-
-In terms of digestibility, information about the remaining plant nutrients is scarce. Variability of ADC among different feed ingredients was shown in Atlantic salmon (\emph{Salmo salar}) for Ca, Mg, Fe, Mn and Zn, with an ADC ranging between 30% to 50% [@Sugiura1998].
-
-Excretion of the earth alkaline metals Ca and Mg primarily occurs in dissolved form via the gills and urine [@Lall2003; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while renal excretion was found to be negligible [@Lall2003]. Cu is predominantly excreted via the bile [@Bury2003]. Excess dietary Cu is not taken up but excreted as feces. Thus the Cu inclusion rate in aquafeeds is reduced to minimize its release into the environment [@Lall2003]. Zn is mostly excreted renally and via the gills [@Lall2003].
-
-Even though the source water is seen as of minor importance in terms of nutrient influx, it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. Water can vary in its composition, depending on its origin such as surface or groundwater. The extent of the variability of terrestrial waters in their chemical composition is shown in Figure \@ref(fig:waterConcFreq). Weathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
-
-
+Water is seen as of minor importance in terms of nutrient influx [@Schmautz2016]. However, it was found that it introduces a comparably large proportion of some plant nutrients such as Ca, Mg and S [@Delaide2017]. Though, water can vary in its composition, depending on its origin. A glimpse of the extent of variability of terrestrial waters in their chemical composition is provided by Figure \@ref(fig:waterConcFreq). Weathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
 
 ```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial waters. X-axis: logarithmic concentration of compounds. 1 ppm = 1 $\text{mg L}^{-1}$. Y-axis: Percentage of sampling points [@Stumm1981].", echo=FALSE}
 
 knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
 ```
 
+The term alkalinity supplements summarises a range of alkaline substances that are used to maintain a stable pH in the water [@Timmons2010]. Nitrification leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, a stable pH has to be maintained to ensure both high nitrification performance and the welfare of the livestock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided in aquaponic systems due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used. These come with the benefit of providing an additional source of nutrients besides increasing the pH.
 
 
 
+nutrients are considered to originate mostly from aquafeeds and the source water [@Eck2019; @Robaina2019]. In addition, alkalinity supplements can play a vital role in the supply of nutrients [@Rakocy2006]. The development of a specific feed for aquaponic systems, hereinafter denoted as aquafeed, is thought to be a feasible solution [@Lennard2017; @Eck2019]. 
 
-The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive defines maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation [@EU2020]. Table \@ref(tab:nutCompTab) summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive. 
+When discussing aquafeeds as nutrient input route, it is important to consider pathways of diet utilization, as shown in Figure \@ref(fig:pathwaydigestion). Uneaten feed and the indigestible mass fraction of ingested feed make up the solid wastes. The digestible mass fraction is meanwhile utilized to sustain the animals' basal metabolism, somatic growth and reproductive activity. Metabolic end products are then excreted via the gills and the urinary system in form of dissolved matter [@Evans2005; @Hardy2003a]. Only the dissolved fraction of the nutrients is immediately available for plant uptake via the root system.
 
+```{r pathwaydigestion, fig.cap="A simple graphical representation of nutrient flows and excretion patterns in aquatic animals [@Bureau2010].", echo=FALSE}
 
-
-
-```{r nutCompTab, echo=FALSE, message=FALSE, warning=FALSE}
-
-table <- read_csv2(here("tables", "nutrientCompositionFeedWater.csv"))
-
-knitr::kable(table, escape = FALSE, caption = "Average plant nutrient composition found in trout, salmon, and eel grower feeds [@Tacon1983] and maximum allowable concentrations (MAC) of substances considered as plant nutrients defined by the EU Drinking Water Directive [@EU2020].", label = "nutCompTab")
+knitr::include_graphics("images/2010_Bureau.png")
 ```
 
-[^1]: Calculated based on an aquafeed with 40% CP (dry matter base) and the Kjeldahl factor 6.25.
-[^2]: Calculated as [TIN] = [$\text{NH}_{4}^{+}$] + [$\text{NO}_{2}^{-}$] + [$\text{NO}_{3}^{-}$].
+The availability of digestibility, retentiton and excretion data for individual nutrients, with the former expressed with apparent digestibility coefficients (ADC), depends on whether the nutrient is essential and has to be considered for feed formulation. 
+N that is, for the most part, present as crude protein (CP) in aquafeeds, is generally well-digestible, with ADCs usually being above 70% and on average approximately 90% [@IAFFD2021; @Guillaume2001]. The excretion of N as end product of the protein and amino acid catabolism takes place in form of ammonia ($\text{NH}_{3}$) and, to a small extent, urea. The predominant excretory site are the gills, followed by renal excretion [@Dabrowski2003]. 
+A less digestible nutrient is P with ADC ranging from 70% to only 40% and a resulting excretion of 30% to 60% of the supply [@Lall2003; @Sugiura2018]. Especially plant ingredients in aquafeeds can cause low ADC if they are rich in phytic acid. Phytic acid is poorly digestible and can furthermore reduce the digestibility of minerals in the feed. This might also explain contradictory information in literature with reported renal excretion rates of 90% of the total excreta [@Lall2003] in contrast to estimates of 28% of excretion taking place in dissolved form and 30% to 64% excreted as particulate P [@Dabrowski2003].
+Studies about ADCs of the remaining plant nutrients are scarce. Variability of ADC among different feed ingredients was shown in Atlantic salmon (\emph{Salmo salar}) for Ca, Mg, Fe, Mn and Zn, with ADCs ranging between 30% to 50% [@Sugiura1998]. Excretion of the earth alkaline metals Ca and Mg primarily occurs in dissolved form via the gills and urine [@Lall2003; @Oikari1985]. Mn, in contrast, is mostly excreted in solid form as feces, while renal excretion was found to be negligible [@Lall2003]. Cu is predominantly excreted via the bile [@Bury2003]. Excess dietary Cu is not taken up but excreted as feces. Cu inclusion rates in aquafeeds are thus reduced to minimize its release into the environment [@Lall2003]. Zn is mostly excreted renally and via the gills [@Lall2003].
 
 
 
-Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, a stable pH has to be maintained to ensure both high nitrification performance and the welfare of the livestock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided in aquaponic systems due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used. These come with the benefit of providing an additional source of nutrients besides increasing the pH.
-Table \@ref(tab:alkalinitySuppl) summarises some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
 
 
 
-```{r alkalinitySuppl, echo=FALSE, message=FALSE, warning=FALSE}
 
-table <- read_csv2(here("tables", "alkalinitySupplements.csv"))
 
-knitr::kable(table, escape = FALSE, caption = "Properties and prices of some Na based alkalinity supplements used in aquaculture and their K and Ca based alternatives for aquaponics (adapted from Bisogni and Timmons, 1994). Prices from https://www.alibaba.com (accessed January 14th, 2023). All chemicals food grade and with a minimum order quantity of one kilogram. Reported is the cheapest sales price.", label = "alkalinitySuppl")
-```
+
+
 
 
 
@@ -139,12 +117,6 @@ DOM is a collective term for a multitude of not closer defined disolved carbon-b
 
 
 ## Objectives
-
-The term “off-the-shelf” solution implies that its application leads to comparable results over a broad range of conditions. Therefore, the following considerations are of striking importance within the context of an improved nutrient supply in aquaponics:
-
-1. It is necessary to identify the nutrients that can be supplied without facing over- or undersupply. Thus, the **source of nutrients** and their variability must be examined closely.
-2. It must be taken into account that physico-chemical constraints might limit the concentration of a substance in solution. The **fate and behavior of the nutrients** has to be considered.
-
 This study reviews aquaponics studies in an attempt to exemplary identify the average contribution of different nutrient sources and their variability with respect to the total daily nutrient inputs. Furthermore, given the stated differences between hydroponic and aquaponic systems, it is intended to determine saturation levels of plant nutrients under standard aquaponic conditions. Recommendations with regards to the potential formulation of tailored aquafeeds and nutrient management in aquaponics shall eventually be developed to enhance the overall performance and profitability of aquaponic systems.
 
 

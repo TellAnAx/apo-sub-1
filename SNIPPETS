@@ -1,5 +1,22 @@
 TEXT SNIPPETS
 
+
+
+OBJECTIVES
+
+The development of a specific feed for aquaponic systems, hereinafter denoted as aquafeed, is thought to be such a solution [@Lennard2017; @Eck2019].
+
+However, a simple “off-the-shelf” solution for managing plant nutrients that is as easy to use as commercially available plant fertilizers while producing comparable results over a broad range of conditions is largely lacking.
+To achieve this, it is necessary to identify **nutrient sources** and their variability to ensure those nutrients can be supplied without facing the risk of over- or undersupply. Furthermore, the **fate and behavior of the nutrients** has to be considered, taking into account that physico-chemical constraints might limit the concentration of a substance in solution.
+
+
+
+However, the contribution of each of these nutrient sources to the total nutrient input and its variability remains unclear. Only one study compared the amount of nutrients originating from the aquafeed "as is" with that from the source water to the best of the authors knowledge [@Delaide2017].
+
+
+
+INTRODUCTION
+
 Aquaponics can be defined as the combination of an aquaculture unit and a plant production unit with the objective to convert aquaculture wastes into edible yield. Against this background, the term “edible” implies several requirements with regards to the quality of the harvest such as appearance and uniformity as defined for instance by the International Standards for Fruit and Vegetables [@OECD1962]. Furthermore, it has to be emphasized that the final product needs to be competitive in price to be marketable and thus interesting for potential adopters of the technology. Though, aquaponic systems require a high initial investment and come with comparably high labor costs due to the complexity of the system [@Turnsek2019; @Quagrainie2017]. One aspect that is contributing to high operating costs in aquaponics is the lack of simple “off-the-shelf” solutions for the management of plant nutrients.
 
 
@@ -12,11 +29,54 @@ However, an early attempt to formulate a "designer diet" for aquaponics was made
 
 
 
-
+###----------------------------------------------------------------------------
 
 ## Chemical modeling
 Solving equilibrium problems in systems with only one or two compounds and their species is comparably simple. However, the complexity increases dramatically in multi-compound systems, making the use of computers and dedicated software necessary.
 
+
+###----------------------------------------------------------------------------
+
+# Source water as nutrient source
+Even though the source water is seen as of minor importance in terms of nutrient influx in direct comparison with aquafeeds [@Schmautz2016], it was found that a comparably large proportion of some plant nutrients such as Ca, Mg and S, can originate from source water [@Delaide2017]. Though, to the best of the authors knowledge, there was no study conducted yet that is assessing the variability of the water composition with respect to its origin. A glimpse of the extent of variability of terrestrial waters in their chemical composition is provided by Figure \@ref(fig:waterConcFreq). Weathering of rock, ion exchange, redox reactions and the buildup of biomass are the main processes that are affecting the concentrations of the shown compounds [@Stumm1981]. The highest variability can be found in anionic compounds such as nitrate ($\text{NO}_{3}^{-}$) and sulfate ($\text{SO}_{4}^{2-}$) and the cationic alkaline earth metals $\text{Ca}^{2+}$ and $\text{Mg}^{2+}$ that are covering a concentration range of approximately two orders of magnitude.
+
+```{r waterConcFreq, fig.cap="Cumulative frequency distribution of chemical compounds in terrestrial waters. X-axis: logarithmic concentration of compounds. 1 ppm = 1 $\text{mg L}^{-1}$. Y-axis: Percentage of sampling points [@Stumm1981].", echo=FALSE}
+
+knitr::include_graphics("images/Stumm_Morgan_Aquatic_Chemistry_p873.png")
+```
+The quality of tap water is usually rigidly regulated by the authorities. In Europe, the Drinking Water Directive defines maximum allowable concentrations (MAC), setting threshold concentrations for several substances that could affect the consumers' health. Other MAC such as for Fe are of technical nature, where exceeding the limit could indicate for instance damages in the municipal water installation [@EU2020]. Table \@ref(tab:nutCompTab) summarizes MAC of plant nutrients that are regulated by the Drinking Water Directive.
+
+```{r nutCompTab, echo=FALSE, message=FALSE, warning=FALSE}
+
+table <- read_csv2(here("tables", "nutrientCompositionFeedWater.csv"))
+
+knitr::kable(table, escape = FALSE, caption = "Average plant nutrient composition found in trout, salmon, and eel grower feeds [@Tacon1983] and maximum allowable concentrations (MAC) of substances considered as plant nutrients defined by the EU Drinking Water Directive [@EU2020].", label = "nutCompTab")
+```
+
+[^1]: Calculated based on an aquafeed with 40% CP (dry matter base) and the Kjeldahl factor 6.25.
+[^2]: Calculated as [TIN] = [$\text{NH}_{4}^{+}$] + [$\text{NO}_{2}^{-}$] + [$\text{NO}_{3}^{-}$].
+
+###----------------------------------------------------------------------------
+
+
+
+# Alkalinity supplements as nutrient source
+Lastly, the third continuous nutrient input are alkalinity supplements that are used to maintain a stable pH in the system [@Timmons2010]. The activity of nitrifying bacteria in the biofilter leads to a decrease in pH over time and consequently to a decrease in the activity of the nitrifyers [@Ward2011]. Thus, a stable pH has to be maintained to ensure both high nitrification performance and the welfare of the livestock. For this purpose, several Na-based alkalinity supplements such as sodium hydrogen carbonate (baking soda, NaHCO$_{3}$) are commonly used in aquaculture due to their high and rapid solubility and a comparably cheap price. However, high daily Na inputs should be avoided in aquaponic systems due to its phytotoxicity at high concentrations [@Maathuis2014]. Therefore, several other supplements based on K or Ca are used. These come with the benefit of providing an additional source of nutrients besides increasing the pH.
+
+
+
+Table \@ref(tab:alkalinitySuppl) summarizes some supplements, their properties and prices. These substances come with the advantage of providing additional plant nutrients while increasing the pH.
+
+
+
+```{r alkalinitySuppl, echo=FALSE, message=FALSE, warning=FALSE}
+
+table <- read_csv2(here("tables", "alkalinitySupplements.csv"))
+
+knitr::kable(table, escape = FALSE, caption = "Properties and prices of some Na based alkalinity supplements used in aquaculture and their K and Ca based alternatives for aquaponics (adapted from Bisogni and Timmons, 1994). Prices from https://www.alibaba.com (accessed January 14th, 2023). All chemicals food grade and with a minimum order quantity of one kilogram. Reported is the cheapest sales price.", label = "alkalinitySuppl")
+```
+
+###----------------------------------------------------------------------------
 
 
 
@@ -30,7 +90,7 @@ In comparison with results for the saturation index calculation of Hoagland's nu
 ![Comparison of mineral saturation indices calculated based on the Hoagland Solution (Resh) under pH levels representative for hydroponics (ph = 6.0) and aquaponics (pH = 7.5). Only cations where oversaturation was found are shown.](plots/scatterplot_hoagland_saturation.png)
 
 
-
+###----------------------------------------------------------------------------
 
 
 
@@ -200,7 +260,7 @@ The saturation concentration $S$ of the salt can eventually be calculated by rea
 
 ###----------------------------------------------------------------------------
 
-For instance, a concentration of $[\text{Fe}^{3+}] = [\text{PO}_{4}^{3-}] = 1\:\mu \text{mol L}^{-1}$ and the $K_{sp}(\text{FePO}_{4}) = 9.91 \cdot 10^{-16}$ [@Lide2007] results in 
+For instance, a concentration of $[\text{Fe}^{3+}] = [\text{PO}_{4}^{3-}] = 1\:\mu \text{mol L}^{-1}$ and the $K_{sp}(\text{FePO}_{4}) = 9.91 \cdot 10^{-16}$ [@Lide2007] results in
 
 
 
@@ -214,4 +274,4 @@ For instance, a concentration of $[\text{Fe}^{3+}] = [\text{PO}_{4}^{3-}] = 1\:\
 
 If $\log(\frac{Q}{K}) = 0$, the concentration of ions is higher than their solubility under equilibrium conditions. The solution is thus not thermodynamically stable and the corresponding mineral precipitates. On the other hand, if $\log(\frac{Q}{K}) < 0$, more of the ions can dissolve until the equilibrium concentration is reached. In case that $\log(\frac{Q}{K}) > 0$, there are other factors such as complexation reactions that are increasing the solubility.
 
-All observations that were affected by precipitation ($\log(\frac{Q}{K}) = 0$) were eventually tested with regards to the concentration proportion that precipitated of the affected nutrient. 
+All observations that were affected by precipitation ($\log(\frac{Q}{K}) = 0$) were eventually tested with regards to the concentration proportion that precipitated of the affected nutrient.
