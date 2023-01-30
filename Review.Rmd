@@ -28,6 +28,15 @@ library(png)
 
 
 
+# Abstract
+Developing a dedicated feed for aquaponics was seen as promising "off-the-shelf" solution for nutrient management in aquaponic systems but a formulation that yields comparable results over a broad range of systems needs to take the variability in inputs originating from other nutrient sources into account. Furthermore, prior studies showed that concentrations of some plant nutrients cannot be increased by elevated inclusion rates in the feed. This raises the question whether nutritent imbalances might originate from physico-chemical constraints rather than suboptimal inputs. 
+Literature data were collected and amended with water analysis reports to develop nutrient input scenarios representative for the respective studies. The data was eventually used to model precipitation under the given conditions.
+It was found that 
+
+
+When trying to improve system performance via formulation of a tailored aquafeed, reducing inclusion rates of nutrients affected by precipitation (Ca, Fe) appears to be more meaningful than increasing inclusion rates of well-soluble nutrients (K, Mg). These can instead be supplied via alkalinity supplements.
+
+
 
 
 
@@ -595,7 +604,7 @@ Inclusion rates of nutrients that are confirmed to be affected by precipitation 
 
 ## Implications for the management of aquaponic systems
 The findings of this study can be generalised in terms of recommendations for nutrient management and system design in aquaponic systems.
-The idea behind the design of on-demand coupled aquaponic systems as alternative to permanently coupled systems was to be able to maintain optimum conditions for both livestock and plants with respect to pH. Though, increasing the pH induces new problems by increasing the concentration of $\text{PO}_{4}^{3-}$ and $\text{OH}^{-}$, thus lowering the saturation concentration of other dissolved cations such as $\text{Fe}^{3+}$. The consequence is uncontrolled precipitation of affected nutrients within the aquaculture unit. Avoiding this could be achieved by decreasing the pH, thus leading to a shift in $\text{PO}_{4}^{3-}$ and $\text{OH}^{-}$ equilibrium concentrations, in permanently coupled systems. The impaired nitrification performance, meanwhile, could be counteracted by creation of microenvironments within the biofilter [@Gieseke2006]. Meanwhile, nutrients might be more efficiently utilized in on-demand coupled systems by means of "nutrient harvesting" from the aquaculture unit: controlled precipitation of nutrients could be induced, for instance in a settler, so that the sludge/precipitate mix can be used for consequent remineralisation at lower pH. This could be done via flocculation/coagulation [@Ebeling2003].
+The idea behind the design of on-demand coupled aquaponic systems as alternative to permanently coupled systems was to be able to maintain optimum conditions for both livestock and plants with respect to pH. Though, increasing the pH induces new problems by increasing the concentration of $\text{PO}_{4}^{3-}$ and $\text{OH}^{-}$, thus lowering the saturation concentration of other dissolved cations such as $\text{Fe}^{3+}$. The consequence is uncontrolled precipitation of affected nutrients within the aquaculture unit. Avoiding this could be achieved by decreasing the pH, thus leading to a shift in $\text{PO}_{4}^{3-}$ and $\text{OH}^{-}$ equilibrium concentrations, in permanently coupled systems. The impaired nitrification performance, meanwhile, could be counteracted by creation of microenvironments within the biofilter [@Gieseke2006]. Meanwhile, nutrients might be more efficiently utilized in on-demand coupled systems by means of "nutrient harvesting" from the aquaculture unit: controlled precipitation of nutrients could be induced, for instance in a settler, so that the sludge/precipitate mix can be used for consequent remineralisation at lower pH. This could be done via flocculation/coagulation [@Ebeling2003]. 
 The best way to avoid precipitation of nutrients is, however, their application as foliar sprays. Good results were achieved with this technique [@Roosta2013; @Roosta2014a]. A further discussion of the pros and cons in terms of efficiency are out of scope of this study. 
 
 
