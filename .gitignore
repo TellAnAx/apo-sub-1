@@ -45,7 +45,7 @@ vignettes/*.pdf
 .Thumbs.db
 Thumbs.db
 
-# R projects 
+# R projects
 *.Rproj
 
 # Synology
@@ -58,3 +58,4 @@ Review.html
 
 # Miscellaneous
 development/
+plots/
