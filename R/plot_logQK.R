@@ -1,12 +1,6 @@
 library(rlang)
 
-boxplot_saturation <- read_csv(here::here("results", "logQK.csv")) %>% 
-  
-  
-  
-  #filter(logQK > -3) %>% 
-  
-  
+boxplot_saturation <- read_csv(here::here("results", "logQK.csv")) %>%
   
   mutate(
     cation = factor(
@@ -86,3 +80,28 @@ boxplot_saturation <- read_csv(here::here("results", "logQK.csv")) %>%
 boxplot_saturation
 
 ggsave(here::here("plots", "boxplot_empirical_saturation_vm.png"))
+
+
+
+
+
+boxplot_saturation + 
+  labs(
+    title = paste("Mineral saturation indices"),
+    subtitle = paste("Calculated using data from aquaponic studies")
+  ) +
+  theme(
+    	text = element_text(size = 20) # change font size of all text
+    #	axis.text = element_text(size = 20) # change font size of axis text
+    # axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1), # rotate axis labels
+    #	axis.title = element_text(size = 20), # change font size of axis title
+    #	plot.title = element_text(size = 20) # change font size of plot titles
+    # legend.position = "top", # change position of the legend
+    #	legend.text = element_text(size = 20), # change font size of legend text
+    #	legend.title = element_text(size = 20) # change font size of legend title
+  )
+
+ggsave(
+  here::here("plots", "presentation_boxplot_empirical_saturation_vm.png"),
+  width = 25, height = 15, units = "cm"
+  )
