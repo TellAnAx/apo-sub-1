@@ -58,4 +58,4 @@ Review.html
 
 # Miscellaneous
 development/
-plots/
+plots/*.png
