@@ -42,7 +42,7 @@ boxplot_saturation <- read_csv(here::here("results", "logQK.csv")) %>%
         expression(CO[3]^{2*"-"}),
         expression(SO[4]^{2*"-"}),
         expression(NO[3]^{"-"}),
-        expression(B(OH[4])^{"-"}),
+        expression(B(OH)[4]^{"-"}),
         expression(O^{2*"-"})
       ),
       exclude = c(
