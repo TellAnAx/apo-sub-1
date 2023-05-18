@@ -6,9 +6,11 @@ date: "26.01.2023"
 bibliography: format/references.bib
 csl: format/aquaculture-environment-interactions.csl
 output:
-  #redoc::redoc
-  bookdown::word_document2:
-    reference_docx: format/word_style.docx
+  bookdown::pdf_document2:
+    includes:
+      in_header: format/latex_preamble.tex
+  #bookdown::word_document2:
+  #  reference_docx: format/word_style.docx
   
   
 ---
@@ -25,7 +27,6 @@ library(gdata)
 library(viridis)
 library(RColorBrewer)
 library(bookdown)
-#library(redoc)
 library(png)
 ```
 
@@ -34,6 +35,7 @@ library(png)
 
 
 # Introduction
+\ce{NO3-} \SI{10}{\gram}
 Aquaponics is a hybrid food production system, coupling aquaculture and soilless horticulture (hydroponics). Compared with uncoupled, independent systems, advocates of the aquaponics principle with an aquaculture background claim that added value is created by preventing the release of aquaculture wastes into the environment but converting them into edible yield instead [@Turnsek2020]. Furthermore, it was found that there is no significant difference in the yield of several leafy greens such as lettuce, spinach, basil, dill, coriander, parsley, rook and even fruiting plants such as tomato that can be achieved in aquaponic versus hydroponic systems [@Lennard2019; @Atique2022; @Anderson2017; @Maucieri2019a; @Suhl2016; @Pantanella2012]. This is noteworthy against the background that nutrient deficiencies are frequently reported when comparing the nutrient concentrations in aquaponic systems with those usually targeted in hydroponics [@Lunda2019; @Robaina2019; @Graber2009; @Bittsanszky2016]. As of today, the essentiality of 15 elements that are usually grouped into macro- and micronutrients, according to their abundance in plant tissues, is established for higher plants. Elements classified as macronutrients are carbon (C), hydrogen (H), oxygen (O), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), magnesium (Mg), and sulfur (S), while the micronutrients comprise iron (Fe), manganese (Mn), copper (Cu), zinc (Zn), molybdenum (Mo), and boron (B) [@Marschner2012]. The essentiality of nickel (Ni) and chloride (Cl) is currently under discussion [@Mengel2001].
 A major problem regarding the commercial viability of aquaponic systems arises from the system's complexity, adding extra costs to the budget. Achieving similar yields as hydroponics is thus seen as insufficient to render aquaponics competitive under present circumstances compared to conventional hydroponics [@Quagrainie2017]. Interestingly, aquaponics seems to offer the potential to reach even higher yields than hydroponics if certain nutrients are amended as described for lettuce [@Monsees2019; @Delaide2016], basil [@Rodgers2022] and tomato [@Roosta2013]. This raises the issue of whether it is possible to streamline nutrient inputs in such way that extraordinary manual interventions become obsolete.
 
@@ -353,19 +355,19 @@ Based on the average water exchange rate of `r report_assumptions_rearing$meanEx
 ### Water, feed, and alkalinity supplements
 The average nutrient composition of both aquafeeds and source water and the lower and upper limits of the 90% confidence interval for source water are shown in Table \@ref(tab:nutrientComposition). Figure \@ref(fig:contributionPlot) provides an additional graphical presentation of the findings with emphasis on the variability of nutrient contributions by source water.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 table <- read_csv("results/contribution_plotdata_retention.csv") %>% 
   pivot_wider(names_from = c(Contribution, water), values_from = Total) %>% 
   group_by(nutrient) %>% 
   summarise(
     `Aquafeed $\\bar{x}$ $(\\text{mg d}^{-1})$` = max(`Feed_paste("Water: 5% confidence limit")`),
-    `Water 5% $(\\text{mg d}^{-1})$` = max(`Water_paste("Water: 5% confidence limit")`),
-    `Water 95% $(\\text{mg d}^{-1})$` = max(`Water_paste("Water: 95% confidence limit")`),
+    `Water 5 $(\\text{mg d}^{-1})$` = max(`Water_paste("Water: 5% confidence limit")`),
+    `Water 95 $(\\text{mg d}^{-1})$` = max(`Water_paste("Water: 95% confidence limit")`),
     `Alkal. suppl. $\\bar{x}$ $(\\text{mg d}^{-1})$` = max(`Buffer_paste("Water: 5% confidence limit")`)
   ) %>% 
   mutate(
-    `Water $\\bar{x}$ $(\\text{mg d}^{-1})$` = (`Water 5% $(\\text{mg d}^{-1})$` + `Water 95% $(\\text{mg d}^{-1})$`) / 2,
-    .before = `Water 95% $(\\text{mg d}^{-1})$`) %>% 
+    `Water $\\bar{x}$ $(\\text{mg d}^{-1})$` = (`Water 5 $(\\text{mg d}^{-1})$` + `Water 95 $(\\text{mg d}^{-1})$`) / 2,
+    .before = `Water 95 $(\\text{mg d}^{-1})$`) %>% 
   mutate(
     across(.cols = `Aquafeed $\\bar{x}$ $(\\text{mg d}^{-1})$`:`Alkal. suppl. $\\bar{x}$ $(\\text{mg d}^{-1})$`, .fns= ~round(.*1000, digits = 2))
   ) %>% 
@@ -378,7 +380,7 @@ knitr::kable(table, escape = FALSE, caption = paste0("Compositions of nutrient s
 
 
 
-```{r, include=FALSE}
+```{r include=FALSE}
 colnames(table) <- c("nut", "feed", "wat5", "wat", "wat95", "alk")
 
 temp <- table %>% 
@@ -557,7 +559,7 @@ knitr::include_graphics("plots/violinplot_precipitated2_vm.png")
 ## Contribution of nutrient sources to total daily nutrient inputs
 The contribution of different nutrient sources to the total daily nutrient inputs into an aquaponic system were compared based on assumptions derived from literature.
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 temp$wat5_Ca / temp$wat95_Ca * 100
 temp$wat5_Mg / temp$wat95_Mg * 100
 temp$wat5_S / temp$wat95_S * 100
