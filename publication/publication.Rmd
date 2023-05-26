@@ -2,23 +2,19 @@
 title: Sources, behavior and fate of nutrients and their implications for the formulation of aquafeeds and nutrient management tailored for aquaponic systems
 author:
   - name: Anıl Axel Tellbüscher
-    email: alice@example.com
-    affiliation: Some Institute of Technology
-    correspondingauthor: true
+    email: atellbuscher@frov.jcu.cz
+    affiliation: USB
     footnote: 1
-  - name: Jan Mraz
-    email: bob@example.com
-    affiliation: Another University
-  - name: Cat Memes
-    email: cat@example.com
-    affiliation: Another University
+  - name: Radek Gebauer
+    email: rgebauer@frov.jcu.cz
+    affiliation: USB
     footnote: 2
-  - name: Derek Zoolander
-    email: derek@example.com
-    affiliation: Some Institute of Technology
-    footnote: 2
+  - name: Jan Mráz
+    email: jmraz@frov.jcu.cz
+    affiliation: USB
+    correspondingauthor: true
 address:
-  - code: Some Institute of Technology
+  - code: USB
     address: Department, Street, City, State, Zip
   - code: Another University
     address: Department, Street, City, State, Zip
